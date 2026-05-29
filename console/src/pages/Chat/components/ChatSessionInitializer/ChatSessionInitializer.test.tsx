@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { MemoryRouter, useLocation, Routes, Route } from "react-router-dom";
 import { render } from "@testing-library/react";
 import ChatSessionInitializer from "./index";
-import * as chatModule from "../../sessionApi";
 import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListController";
 
 // ── Types ────────────────────────────────────────────────────────────────────

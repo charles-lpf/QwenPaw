@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useChatSessionListController } from "./useChatSessionListController";
 import * as sessionApiModule from "../../sessionApi";
-import * as chatApiModule from "../../../../api/modules/chat";
 import type { ExtendedChatSession } from "./useChatSessionListController";
 
 // ── Mocks ────────────────────────────────────────────────────────────────────
@@ -261,7 +260,6 @@ describe("useChatSessionListController", () => {
     });
 
     it("navigates to next session when deleting current", async () => {
-      const remainingSessions = sessionsFixture.filter((s) => s.id !== "s1");
       const mockSetCurrentSessionId = vi.fn();
 
       const { result } = renderHook(() =>

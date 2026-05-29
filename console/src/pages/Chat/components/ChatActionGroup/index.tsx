@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IconButton } from "@agentscope-ai/design";
 import {
-  SparkHistoryLine,
   SparkNewChatFill,
   SparkSearchLine,
 } from "@agentscope-ai/icons";

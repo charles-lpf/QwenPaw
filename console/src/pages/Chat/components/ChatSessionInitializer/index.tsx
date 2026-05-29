@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useChatAnywhereSessionsState } from "@agentscope-ai/chat";
 import sessionApi from "../../sessionApi";
-import type { ExtendedChatSession } from "../../ChatSessionList/useChatSessionListController";
+import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListController";
 
 /**
  * URL chatId → context currentSessionId (one direction of bidirectional sync).
