@@ -75,12 +75,9 @@ const ChatActionGroup: React.FC<ChatActionGroupProps> = ({
     const createNewSessionFlag = location.state?.createNewSession;
     if (!createNewSessionFlag) return;
 
-    void createSession().then((sessions) => {
-      // createSession returns the updated sessionList
-      // Get the first session (the newly created one)
-      const newSession = sessions?.[0];
-      if (newSession?.id) {
-        changeCurrentSessionId(newSession.id);
+    void createSession().then((sessionId) => {
+      if (sessionId) {
+        changeCurrentSessionId(sessionId);
       }
       // Clear the flag by navigating with cleared state
       window.history.replaceState(window.history.state, "", location.pathname);
