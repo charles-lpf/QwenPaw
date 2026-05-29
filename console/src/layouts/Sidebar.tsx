@@ -103,6 +103,13 @@ export default function Sidebar({
   const [sidebarSessions, setSidebarSessions] = useState<
     IAgentScopeRuntimeWebUISession[]
   >([]);
+  const [agentMenuOpenKeys, setAgentMenuOpenKeys] = useState<string[]>(
+    DEFAULT_OPEN_KEYS,
+  );
+  const [settingsMenuOpenKeys, setSettingsMenuOpenKeys] = useState<string[]>([
+    ...DEFAULT_OPEN_KEYS,
+    ...(pluginRoutes.length > 0 ? ["plugins-group"] : []),
+  ]);
   // const [hasInboxUnread, setHasInboxUnread] = useState(false);
 
   const sidebarCurrentSessionId = useMemo(() => {
@@ -823,7 +830,8 @@ export default function Sidebar({
             <Menu
               mode="inline"
               selectedKeys={[selectedKey]}
-              openKeys={DEFAULT_OPEN_KEYS}
+              openKeys={agentMenuOpenKeys}
+              onOpenChange={(keys) => setAgentMenuOpenKeys(keys)}
               onClick={({ key }) => {
                 const path = KEY_TO_PATH[String(key)];
                 if (path) navigate(path);
@@ -838,10 +846,8 @@ export default function Sidebar({
           <Menu
             mode="inline"
             selectedKeys={[selectedKey]}
-            openKeys={[
-              ...DEFAULT_OPEN_KEYS,
-              ...(pluginRoutes.length > 0 ? ["plugins-group"] : []),
-            ]}
+            openKeys={settingsMenuOpenKeys}
+            onOpenChange={(keys) => setSettingsMenuOpenKeys(keys)}
             onClick={({ key }) => {
               const path = KEY_TO_PATH[String(key)] ?? `/${String(key)}`;
               navigate(path);

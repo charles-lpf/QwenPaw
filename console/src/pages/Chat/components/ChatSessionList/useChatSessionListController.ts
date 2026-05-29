@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import type { IAgentScopeRuntimeWebUISession } from "@agentscope-ai/chat";
+import { useChatAnywhereSessions } from "@agentscope-ai/chat";
 import type { ChatStatus } from "../../../../api/types/chat";
 import { chatApi } from "../../../../api/modules/chat";
 import sessionApi from "../../sessionApi";
@@ -56,6 +57,7 @@ export function useChatSessionListController({
   poll = true,
 }: UseChatSessionListControllerParams) {
   const navigate = useNavigate();
+  const { createSession: contextCreateSession } = useChatAnywhereSessions();
   const controllerIdRef = useRef(
     `chat-session-list-${Math.random().toString(36).slice(2)}`,
   );
@@ -229,8 +231,12 @@ export function useChatSessionListController({
           navigate(`/chat/${targetId}`, { replace: true });
           setCurrentSessionId?.(nextSession.id);
         } else {
+          // No more sessions: navigate to /chat (Welcome) and auto-create
+          // a new session so user can continue chatting.
           navigate("/chat", { replace: true });
-          setCurrentSessionId?.(undefined);
+          await refreshSessions();
+          // Use context's createSession so currentSessionId is properly set
+          await contextCreateSession();
         }
       }
 
