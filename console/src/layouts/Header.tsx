@@ -81,6 +81,10 @@ export default function Header({
   const [updateMarkdown] = useState<string>("");
   const menuRestoreClickCountRef = useRef(0);
   const menuRestoreTimerRef = useRef<number | null>(null);
+  const currentLanguage = i18n.resolvedLanguage || i18n.language || "";
+  const assistantTitle = currentLanguage.startsWith("zh")
+    ? "AI个人助理"
+    : "AIPersonalAssistant";
 
   useEffect(() => {
     api
@@ -247,12 +251,12 @@ export default function Header({
             type="button"
             className={styles.personalAssistantTitle}
             onClick={handleAssistantTitleClick}
-            aria-label="AIPersonalAssistant"
+            aria-label={assistantTitle}
           >
             <span className={styles.aiIcon}>
               <img src="/sparkles.svg" alt="" width={16} height={16} />
             </span>
-            AIPersonalAssistant
+            {assistantTitle}
           </button>
         </div>
         <Space size="middle">
