@@ -66,10 +66,7 @@ const ChatActionGroup: React.FC<ChatActionGroupProps> = ({
   const [searchOpen, setSearchOpen] = useState(false);
   const [planOpen, setPlanOpen] = useState(false);
   const location = useLocation();
-  const {
-    createSession,
-    changeCurrentSessionId,
-  } = useChatAnywhereSessions();
+  const { createSession } = useChatAnywhereSessions();
 
   useEffect(() => {
     const createNewSessionFlag = location.state?.createNewSession;

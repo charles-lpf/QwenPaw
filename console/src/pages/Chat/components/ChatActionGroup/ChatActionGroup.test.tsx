@@ -11,10 +11,10 @@ describe("ChatActionGroup", () => {
     expect(() => renderWithProviders(<ChatActionGroup />)).not.toThrow();
   });
 
-  it("renders history icon button", () => {
+  it("renders search icon button", () => {
     renderWithProviders(<ChatActionGroup />);
     expect(
-      document.querySelector('[data-icon="SparkHistoryLine"]'),
+      document.querySelector('[data-icon="SparkSearchLine"]'),
     ).toBeInTheDocument();
   });
 

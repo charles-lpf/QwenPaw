@@ -80,6 +80,7 @@
   white-space: nowrap;
   font-size: 13px;
   line-height: 20px;
+  pointer-events: none;
 }
 
 .sidebarEditInput {
@@ -96,12 +97,14 @@
   align-items: center;
   justify-content: center;
   color: var(--qp-color-primary);
+  pointer-events: none;
 }
 
 .sidebarActions {
   position: absolute;
   right: 5px;
   top: 50%;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 2px;
@@ -129,6 +132,12 @@
   &:hover {
     color: var(--qp-color-primary);
     background: rgba(var(--qp-color-primary-rgb), 0.12);
+  }
+
+  &:disabled {
+    color: rgba(26, 23, 22, 0.28);
+    cursor: not-allowed;
+    background: transparent;
   }
 }
 
@@ -229,6 +238,11 @@
     &:hover {
       color: var(--qp-color-primary-hover);
       background: rgba(var(--qp-color-primary-rgb), 0.20);
+    }
+
+    &:disabled {
+      color: rgba(255, 255, 255, 0.28);
+      background: transparent;
     }
   }
 

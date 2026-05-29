@@ -10,6 +10,7 @@ const mockNavigate = vi.fn();
 const mockPreloadSession = vi.fn();
 const mockFinishSessionSwitch = vi.fn();
 const mockGetSessionList = vi.fn();
+const mockRemoveSession = vi.fn();
 const mockDeleteChat = vi.fn().mockResolvedValue(undefined);
 
 vi.mock("react-router-dom", () => ({
@@ -19,6 +20,7 @@ vi.mock("react-router-dom", () => ({
 vi.mock("../../sessionApi", () => ({
   default: {
     getSessionList: () => mockGetSessionList(),
+    removeSession: (...args: any[]) => mockRemoveSession(...args),
     isSessionSwitching: false,
     preloadSession: (...args: any[]) => mockPreloadSession(...args),
     finishSessionSwitch: () => mockFinishSessionSwitch(),
@@ -54,6 +56,9 @@ describe("useChatSessionListController", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockGetSessionList.mockResolvedValue(sessionsFixture);
+    mockRemoveSession.mockImplementation((session: { id: string }) =>
+      Promise.resolve(sessionsFixture.filter((item) => item.id !== session.id)),
+    );
   });
 
   afterEach(() => {
@@ -238,7 +243,7 @@ describe("useChatSessionListController", () => {
   });
 
   describe("handleDelete", () => {
-    it("deletes via backend id and refreshes list", async () => {
+    it("removes via sessionApi and updates local list", async () => {
       const mockRefresh = vi.fn();
       const { result } = renderHook(() =>
         useChatSessionListController({
@@ -255,8 +260,14 @@ describe("useChatSessionListController", () => {
         await result.current.handleDelete("s1");
       });
 
-      expect(mockDeleteChat).toHaveBeenCalledWith("uuid-1");
-      expect(mockRefresh).toHaveBeenCalled();
+      expect(mockRemoveSession).toHaveBeenCalledWith(
+        expect.objectContaining({ id: "s1", realId: "uuid-1" }),
+      );
+      expect(mockDeleteChat).not.toHaveBeenCalled();
+      expect(mockRefresh).toHaveBeenCalledWith([
+        sessionsFixture[1],
+        sessionsFixture[2],
+      ]);
     });
 
     it("navigates to next session when deleting current", async () => {
@@ -281,6 +292,33 @@ describe("useChatSessionListController", () => {
         replace: true,
       });
       expect(mockSetCurrentSessionId).toHaveBeenCalledWith("s2");
+    });
+
+    it("does not delete the final remaining session", async () => {
+      const onlySession = [
+        makeSession({ id: "s1", name: "Only Session", realId: "uuid-1" }),
+      ];
+
+      const { result } = renderHook(() =>
+        useChatSessionListController({
+          sessions: onlySession,
+          setSessions: vi.fn(),
+          currentSessionId: "s1",
+          setCurrentSessionId: vi.fn(),
+          active: false,
+          poll: false,
+        }),
+      );
+
+      await act(async () => {
+        await result.current.handleDelete("s1");
+      });
+
+      expect(mockRemoveSession).not.toHaveBeenCalled();
+      expect(mockDeleteChat).not.toHaveBeenCalled();
+      expect(mockNavigate).not.toHaveBeenCalledWith("/chat", {
+        replace: true,
+      });
     });
   });
 });

@@ -210,17 +210,22 @@ export function useChatSessionListController({
 
   const handleDelete = useCallback(
     async (sessionId: string) => {
+      if (sessions.length <= 1) return;
+
       const session = sessions.find((s) => s.id === sessionId) as
         | ExtendedChatSession
         | undefined;
       const backendId = session ? getBackendId(session) : null;
+      const nextSessions = await sessionApi.removeSession({
+        ...(session || {}),
+        id: sessionId,
+      });
+      setSessions(nextSessions);
 
-      if (backendId) {
-        await chatApi.deleteChat(backendId);
-      }
-
-      const nextSessions = sessions.filter((s) => s.id !== sessionId);
-      const deletingCurrent = currentSessionId === sessionId;
+      const deletingCurrent =
+        currentSessionId === sessionId ||
+        currentSessionId === backendId ||
+        (!!session?.realId && currentSessionId === session.realId);
 
       if (deletingCurrent) {
         const nextSession = nextSessions[0] as ExtendedChatSession | undefined;
@@ -228,22 +233,17 @@ export function useChatSessionListController({
           const targetId = nextSession.realId || nextSession.id;
           navigate(`/chat/${targetId}`, { replace: true });
           setCurrentSessionId?.(nextSession.id);
-        } else {
-          // No more sessions: navigate to /chat. The library's useMount
-          // will auto-create a session when session list is empty.
-          navigate("/chat", { replace: true });
         }
       }
 
-      await refreshSessions();
       notifySessionListChanged();
     },
     [
       sessions,
       currentSessionId,
       navigate,
+      setSessions,
       setCurrentSessionId,
-      refreshSessions,
       notifySessionListChanged,
     ],
   );

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { MemoryRouter, useLocation, Routes, Route } from "react-router-dom";
-import { render } from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 import ChatSessionInitializer from "./index";
 import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListController";
 
@@ -34,18 +34,31 @@ const mockState = {
   pendingNewSessionId: null as string | null,
 };
 
-const mockSetCurrentSessionId = vi.fn();
+const {
+  mockSetCurrentSessionId,
+  mockSetSessions,
+  mockGetSessionList,
+  mockCreateSession,
+} = vi.hoisted(() => ({
+  mockSetCurrentSessionId: vi.fn(),
+  mockSetSessions: vi.fn(),
+  mockGetSessionList: vi.fn(),
+  mockCreateSession: vi.fn(),
+}));
 
 vi.mock("@agentscope-ai/chat", () => ({
   useChatAnywhereSessionsState: vi.fn(() => ({
     sessions: mockState.sessions,
     currentSessionId: mockState.currentSessionId,
     setCurrentSessionId: mockSetCurrentSessionId,
+    setSessions: mockSetSessions,
   })),
 }));
 
 vi.mock("../../sessionApi", () => ({
   default: {
+    getSessionList: mockGetSessionList,
+    createSession: mockCreateSession,
     get isSessionSwitching() {
       return mockState.isSessionSwitching;
     },
@@ -96,10 +109,19 @@ function TestRouter({
 describe("ChatSessionInitializer", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    sessions.length = 0;
+    sessions.push(
+      makeSession("s1", "Session One"),
+      makeSession("uuid-2", "Session Two", "uuid-2"),
+      makeSession("s3", "Session Three"),
+    );
+    mockState.sessions = sessions;
     mockState.currentSessionId = null;
     mockState.isSessionSwitching = false;
     mockState.lastNavigatedChatId = null;
     mockState.pendingNewSessionId = null;
+    mockGetSessionList.mockResolvedValue(sessions);
+    mockCreateSession.mockResolvedValue([]);
   });
 
   afterEach(() => {
@@ -130,6 +152,23 @@ describe("ChatSessionInitializer", () => {
       expect(getByTestId("location")).toHaveTextContent("/chat/uuid-2");
       // Should set currentSessionId to session.id (which equals realId in this case)
       expect(mockSetCurrentSessionId).toHaveBeenCalledWith("uuid-2");
+    });
+
+    it("matches a restored backend session by local timestamp sessionId", () => {
+      const restoredSession = {
+        ...makeSession("backend-chat-id", "My Skills"),
+        sessionId: "1234567890",
+      } as MockSession;
+      mockState.sessions = [restoredSession];
+
+      const { getByTestId } = render(
+        <TestRouter initialPath="/chat/1234567890">
+          <ChatSessionInitializer />
+        </TestRouter>,
+      );
+
+      expect(getByTestId("location")).toHaveTextContent("/chat/1234567890");
+      expect(mockSetCurrentSessionId).toHaveBeenCalledWith("backend-chat-id");
     });
 
     it("does not trigger when isSessionSwitching is true", () => {
@@ -184,11 +223,11 @@ describe("ChatSessionInitializer", () => {
   });
 
   describe("/chat (no id)", () => {
-    it("clears currentSessionId when navigating to /chat", () => {
-      // Set a current session
-      mockState.currentSessionId = "s1";
-      // Not a fresh new session
-      mockState.pendingNewSessionId = null;
+    it("creates the first session when entering with no sessions", async () => {
+      const newSession = makeSession("new-local-session", "New Chat");
+      mockState.sessions = [];
+      mockGetSessionList.mockResolvedValue([]);
+      mockCreateSession.mockResolvedValue([newSession]);
 
       render(
         <TestRouter initialPath="/chat">
@@ -196,7 +235,39 @@ describe("ChatSessionInitializer", () => {
         </TestRouter>,
       );
 
-      expect(mockSetCurrentSessionId).toHaveBeenCalledWith(undefined);
+      await waitFor(() => expect(mockCreateSession).toHaveBeenCalledOnce());
+      expect(mockSetSessions).toHaveBeenCalledWith([newSession]);
+      expect(mockSetCurrentSessionId).toHaveBeenCalledWith("new-local-session");
+    });
+
+    it("selects an existing session when the backend list is not empty", async () => {
+      mockState.sessions = [];
+      mockGetSessionList.mockResolvedValue(sessions);
+
+      render(
+        <TestRouter initialPath="/chat">
+          <ChatSessionInitializer />
+        </TestRouter>,
+      );
+
+      await waitFor(() => expect(mockGetSessionList).toHaveBeenCalledOnce());
+      expect(mockCreateSession).not.toHaveBeenCalled();
+      expect(mockSetSessions).toHaveBeenCalledWith(sessions);
+      expect(mockSetCurrentSessionId).toHaveBeenCalledWith("s1");
+    });
+
+    it("does not create a session when one is already selected", () => {
+      mockState.sessions = [];
+      mockState.currentSessionId = "s1";
+
+      render(
+        <TestRouter initialPath="/chat">
+          <ChatSessionInitializer />
+        </TestRouter>,
+      );
+
+      expect(mockGetSessionList).not.toHaveBeenCalled();
+      expect(mockCreateSession).not.toHaveBeenCalled();
     });
   });
 });

@@ -11,7 +11,7 @@ import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListC
  * to avoid triggering the effect when the context changes from the other direction
  * (context → URL via onSessionSelected), which would cause circular re-loads.
  *
- * NOTE: The library's useMount now auto-creates a session when session list is empty.
+ * Ensure the first empty-project visit has one usable chat session.
  */
 const ChatSessionInitializer: React.FC = () => {
   const location = useLocation();
@@ -20,16 +20,65 @@ const ChatSessionInitializer: React.FC = () => {
     return match?.[1];
   }, [location.pathname]);
 
-  const { sessions, currentSessionId, setCurrentSessionId } =
+  const { sessions, currentSessionId, setCurrentSessionId, setSessions } =
     useChatAnywhereSessionsState();
 
   const currentSessionIdRef = useRef(currentSessionId);
   currentSessionIdRef.current = currentSessionId;
+  const creatingSessionRef = useRef(false);
 
   /** Track the last chatId for which we called setCurrentSessionId, so that
    *  subsequent sessions array reference changes (from polling in pinned drawer)
    *  don't re-trigger setCurrentSessionId and cause infinite getSession loops. */
   const lastAppliedChatIdRef = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (
+      chatId ||
+      sessions.length > 0 ||
+      currentSessionIdRef.current ||
+      creatingSessionRef.current
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+    creatingSessionRef.current = true;
+
+    const ensureInitialSession = async () => {
+      try {
+        const latestSessions = await sessionApi.getSessionList();
+        if (cancelled) return;
+
+        if (latestSessions.length > 0) {
+          setSessions(latestSessions);
+          setCurrentSessionId(latestSessions[0]?.id);
+          return;
+        }
+
+        const createdSessions = await sessionApi.createSession({
+          name: "",
+          messages: [],
+        });
+        if (cancelled) return;
+
+        setSessions(createdSessions);
+        setCurrentSessionId(createdSessions[0]?.id);
+      } catch (error) {
+        console.error("Failed to create initial chat session:", error);
+      } finally {
+        if (!cancelled) {
+          creatingSessionRef.current = false;
+        }
+      }
+    };
+
+    void ensureInitialSession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [chatId, sessions.length, setCurrentSessionId, setSessions]);
 
   useEffect(() => {
     if (!chatId) {
@@ -63,11 +112,14 @@ const ChatSessionInitializer: React.FC = () => {
       return;
     }
 
-    // Match by session.id OR session.realId (for URL-driven switching from sidebar)
+    // Match by session.id, realId, or backend sessionId. The sessionId branch
+    // restores chats whose URL still contains the local timestamp id after
+    // their backend chat has been created.
     const matching = sessions.find(
       (s) =>
         s.id === chatId ||
-        (s as ExtendedChatSession).realId === chatId,
+        (s as ExtendedChatSession).realId === chatId ||
+        (s as ExtendedChatSession).sessionId === chatId,
     ) as ExtendedChatSession | undefined;
 
     if (matching && currentSessionIdRef.current !== matching.id) {

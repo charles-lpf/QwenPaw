@@ -41,6 +41,8 @@ interface ChatSessionItemProps {
   onEdit?: (sessionId: string, currentName: string) => void;
   /** Delete button callback — receives sessionId */
   onDelete?: (sessionId: string) => void;
+  /** Whether delete is disabled, e.g. when this is the last session */
+  deleteDisabled?: boolean;
   /** Pin button callback — receives sessionId */
   onPin?: (sessionId: string) => void;
   /** Edit input value change callback */
@@ -82,9 +84,10 @@ const ChatSessionItem: React.FC<ChatSessionItemProps> = (props) => {
   const handleDelete = useCallback(
     (event: React.MouseEvent) => {
       event.stopPropagation();
+      if (props.deleteDisabled) return;
       props.onDelete?.(props.sessionId);
     },
-    [props.onDelete, props.sessionId],
+    [props.deleteDisabled, props.onDelete, props.sessionId],
   );
 
   const handlePin = useCallback(
@@ -219,6 +222,7 @@ const ChatSessionItem: React.FC<ChatSessionItemProps> = (props) => {
           <IconButton
             bordered={false}
             size="small"
+            disabled={props.deleteDisabled}
             icon={<SparkDeleteLine />}
             onClick={handleDelete}
           />

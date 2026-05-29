@@ -8,10 +8,16 @@ vi.mock("@agentscope-ai/design", () => ({
   IconButton: ({
     onClick,
     icon,
+    disabled,
   }: {
     onClick?: (e: React.MouseEvent) => void;
     icon: React.ReactNode;
-  }) => <button onClick={onClick}>{icon}</button>,
+    disabled?: boolean;
+  }) => (
+    <button disabled={disabled} onClick={onClick}>
+      {icon}
+    </button>
+  ),
 }));
 
 // mock getChannelIconUrl and ChannelIcon to avoid network requests
@@ -82,6 +88,24 @@ describe("ChatSessionItem", () => {
     );
     expect(onDelete).toHaveBeenCalledOnce();
     expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("disables delete button when deleteDisabled is true", () => {
+    const onDelete = vi.fn();
+    renderWithProviders(
+      <ChatSessionItem
+        {...baseProps}
+        deleteDisabled
+        onDelete={onDelete}
+      />,
+    );
+
+    const deleteButton = document
+      .querySelector('[data-icon="SparkDeleteLine"]')!
+      .closest("button")!;
+    expect(deleteButton).toBeDisabled();
+    fireEvent.click(deleteButton);
+    expect(onDelete).not.toHaveBeenCalled();
   });
 
   it("editing mode shows Input instead of name text", () => {

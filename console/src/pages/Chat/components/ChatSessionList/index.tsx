@@ -70,6 +70,7 @@ const DrawerSessionRow = React.memo(function DrawerSessionRow({
         pinned={session.pinned}
         active={session.id === data.controller.currentSessionId}
         disabled={isDisabled}
+        deleteDisabled={data.sessions.length <= 1}
         editing={isEditing}
         editValue={isEditing ? data.controller.editValue : undefined}
         onClick={data.controller.handleSessionClick}
@@ -97,6 +98,7 @@ function SidebarSessionItem({
   const isDisabled =
     !!controller.switchingSessionId &&
     session.id !== controller.switchingSessionId;
+  const deleteDisabled = controller.sortedSessions.length <= 1;
 
   const className = [
     styles.sidebarItem,
@@ -187,6 +189,7 @@ function SidebarSessionItem({
             <button
               type="button"
               className={styles.sidebarActionButton}
+              disabled={deleteDisabled}
               onClick={(event) =>
                 stopAction(event, () => controller.handleDelete(session.id))
               }
@@ -248,6 +251,7 @@ export function buildChatSessionContextMenuItems({
       key: "delete",
       label: t("chat.contextMenu.delete", "Delete"),
       danger: true,
+      disabled: sessions.length <= 1,
       onClick: () => controller.handleDelete(sessionId),
     },
   ];

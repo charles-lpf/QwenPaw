@@ -295,9 +295,12 @@ const resolveRealId = (
   sessionList: IAgentScopeRuntimeWebUISession[],
   tempSessionId: string,
 ): { list: IAgentScopeRuntimeWebUISession[]; realId: string | null } => {
-  // 1) Exact match: a session whose id already equals the temp timestamp
-  //    (e.g. after applyChatsToSessionList merged it).
-  let realSession = sessionList.find((s) => s.id === tempSessionId);
+  // 1) Exact match after applyChatsToSessionList merged a backend chat into a
+  // local timestamp entry. A pure local timestamp without realId is not enough.
+  let realSession = sessionList.find((s) => {
+    const ext = s as ExtendedSession;
+    return s.id === tempSessionId && !!ext.realId;
+  });
 
   // 2) Fallback: match by sessionId, but only consider sessions that have
   //    NOT yet been resolved (no realId) to avoid stealing another session's
@@ -306,14 +309,23 @@ const resolveRealId = (
     realSession = sessionList.find(
       (s) =>
         (s as ExtendedSession).sessionId === tempSessionId &&
-        !(s as ExtendedSession).realId,
+        !(s as ExtendedSession).realId &&
+        !isLocalTimestamp(s.id),
     );
   }
 
   if (!realSession) return { list: sessionList, realId: null };
 
+  const realExt = realSession as ExtendedSession;
+  if (realExt.realId) {
+    return {
+      list: [realSession, ...sessionList.filter((s) => s !== realSession)],
+      realId: realExt.realId,
+    };
+  }
+
   const realUUID = realSession.id;
-  (realSession as ExtendedSession).realId = realUUID;
+  realExt.realId = realUUID;
   realSession.id = tempSessionId;
   return {
     list: [realSession, ...sessionList.filter((s) => s !== realSession)],
@@ -357,35 +369,6 @@ function clearPendingUserMessage(sessionId: string): void {
 
 class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
   private sessionList: IAgentScopeRuntimeWebUISession[] = [];
-
-  /**
-   * Pending resolvers waiting for a specific session's realId.
-   * Used to replace setTimeout-based busy-wait with event-driven notification.
-   */
-  private realIdResolvers: Map<string, Array<() => void>> = new Map();
-
-  /** Notify any pending waiters that a session's realId has been resolved. */
-  private notifyRealIdResolved(sessionId: string): void {
-    const resolvers = this.realIdResolvers.get(sessionId);
-    if (resolvers) {
-      this.realIdResolvers.delete(sessionId);
-      for (const resolve of resolvers) resolve();
-    }
-  }
-
-  /** Wait until a session's realId is available (set by updateSession). */
-  private waitForRealId(sessionId: string): Promise<void> {
-    const session = this.sessionList.find((x) => x.id === sessionId) as
-      | ExtendedSession
-      | undefined;
-    if (session?.realId) return Promise.resolve();
-
-    return new Promise<void>((resolve) => {
-      const existing = this.realIdResolvers.get(sessionId) || [];
-      existing.push(resolve);
-      this.realIdResolvers.set(sessionId, existing);
-    });
-  }
 
   /**
    * When set, getSessionList will move the matching session to the front on the first call,
@@ -591,10 +574,20 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
    * a local timestamp). Returns null when not yet resolved or not found.
    */
   getRealIdForSession(sessionId: string): string | null {
-    const s = this.sessionList.find((x) => x.id === sessionId) as
+    const s = this.sessionList.find((x) => {
+      const ext = x as ExtendedSession;
+      return (
+        x.id === sessionId ||
+        ext.sessionId === sessionId ||
+        ext.realId === sessionId
+      );
+    }) as
       | ExtendedSession
       | undefined;
-    return s?.realId ?? null;
+    if (!s) return null;
+    if (s.realId) return s.realId;
+    if (s.sessionId === sessionId && !isLocalTimestamp(s.id)) return s.id;
+    return null;
   }
 
   /** Apply listChats to sessionList; merge realId and generating by session_id. */
@@ -610,6 +603,12 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
     // sessions sharing the same sessionId (channel:user_id) don't all
     // resolve to the same existing entry — the root cause of #3843.
     const matchedExistingIds = new Set<string>();
+
+    const pendingSession = this.pendingNewSessionId
+      ? (this.sessionList.find(
+          (s) => s.id === this.pendingNewSessionId,
+        ) as ExtendedSession | undefined)
+      : undefined;
 
     this.sessionList = newList.map((s) => {
       const sExt = s as ExtendedSession;
@@ -634,15 +633,35 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
       matchedExistingIds.add(existing.id);
 
       const next = { ...s } as ExtendedSession;
-      if (existing.realId) {
+      const existingLocalResolvedBySessionId =
+        isLocalTimestamp(existing.id) && sExt.sessionId === existing.id;
+      if (existing.realId || existingLocalResolvedBySessionId) {
         next.id = existing.id;
-        next.realId = existing.realId;
+        next.realId = existing.realId ?? s.id;
       }
       if (existing.generating !== undefined) {
         next.generating = existing.generating;
       }
+      if (existing.messages?.length && !next.messages?.length) {
+        next.messages = existing.messages;
+      }
       return next as IAgentScopeRuntimeWebUISession;
     });
+
+    if (
+      pendingSession &&
+      !this.sessionList.some((s) => {
+        const ext = s as ExtendedSession;
+        return (
+          s.id === pendingSession.id ||
+          ext.sessionId === pendingSession.id ||
+          ext.realId === pendingSession.id
+        );
+      })
+    ) {
+      this.sessionList.unshift(pendingSession);
+    }
+
     if (this.preferredChatId) {
       const preferredId = this.preferredChatId;
       this.preferredChatId = null;
@@ -743,32 +762,50 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
   ): Promise<IAgentScopeRuntimeWebUISession> {
     // --- Local timestamp ID (New Chat before first reply) ---
     if (isLocalTimestamp(sessionId)) {
-      const fromList = this.sessionList.find((s) => s.id === sessionId) as
-        | ExtendedSession
-        | undefined;
+      const findLocalOrResolved = () =>
+        this.sessionList.find((s) => {
+          const ext = s as ExtendedSession;
+          return (
+            s.id === sessionId ||
+            ext.realId === sessionId ||
+            ext.sessionId === sessionId
+          );
+        }) as ExtendedSession | undefined;
+
+      let fromList = findLocalOrResolved();
+
+      if (fromList && fromList.sessionId === sessionId && fromList.id !== sessionId) {
+        fromList.realId = fromList.realId ?? fromList.id;
+        fromList.id = sessionId;
+      }
+
+      fromList = findLocalOrResolved();
+
+      const fromListRealId = fromList?.realId;
 
       // If realId is already resolved, use it directly to fetch history.
-      if (fromList?.realId) {
-        return this.fetchAndBuildSession(sessionId, fromList.realId, fromList);
+      if (fromListRealId) {
+        return this.fetchAndBuildSession(sessionId, fromListRealId, fromList);
       }
 
-      if (this.pendingNewSessionId === sessionId) {
-        return this.getLocalSession(sessionId);
-      }
+      // A numeric URL can be a pending local session, or a previously-sent
+      // local session whose backend chat was created after the first resolve
+      // attempt. Always refresh before returning the pending local session so
+      // SPA route switches can recover without requiring a full page reload.
+      await this.getSessionList();
+      this.resolveAndNotify(sessionId);
 
-      // Pure local session (not yet sent to backend): wait until updateSession
-      // resolves the realId, then fetch history with the real UUID.
-      await this.waitForRealId(sessionId);
-
-      const refreshed = this.sessionList.find((s) => s.id === sessionId) as
-        | ExtendedSession
-        | undefined;
+      const refreshed = findLocalOrResolved();
       if (refreshed?.realId) {
         return this.fetchAndBuildSession(
           sessionId,
           refreshed.realId,
           refreshed,
         );
+      }
+
+      if (this.pendingNewSessionId === sessionId) {
+        return this.getLocalSession(sessionId);
       }
 
       return this.getLocalSession(sessionId);
@@ -780,11 +817,18 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
     }
 
     // --- Regular backend UUID ---
-    const fromList = this.sessionList.find((s) => s.id === sessionId) as
-      | ExtendedSession
-      | undefined;
+    const fromList = this.sessionList.find((s) => {
+      const ext = s as ExtendedSession;
+      return s.id === sessionId || ext.realId === sessionId;
+    }) as
+        | ExtendedSession
+        | undefined;
 
-    return this.fetchAndBuildSession(sessionId, sessionId, fromList);
+    return this.fetchAndBuildSession(
+      fromList?.id ?? sessionId,
+      fromList?.realId ?? sessionId,
+      fromList,
+    );
   }
 
   /**
@@ -798,16 +842,30 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
       if (this.pendingNewSessionId === tempId) {
         this.pendingNewSessionId = null;
       }
-      this.notifyRealIdResolved(tempId);
       this.onSessionIdResolved?.(tempId, realId);
     }
   }
 
   async updateSession(session: Partial<IAgentScopeRuntimeWebUISession>) {
-    session.messages = [];
-    const index = this.sessionList.findIndex((s) => s.id === session.id);
+    const index = this.sessionList.findIndex((s) => {
+      const ext = s as ExtendedSession;
+      return (
+        s.id === session.id ||
+        ext.realId === session.id ||
+        ext.sessionId === session.id
+      );
+    });
 
     if (index > -1) {
+      const previous = this.sessionList[index] as ExtendedSession;
+      if (
+        session.id &&
+        previous.sessionId === session.id &&
+        previous.id !== session.id
+      ) {
+        previous.realId = previous.realId ?? previous.id;
+        previous.id = session.id;
+      }
       this.sessionList[index] = { ...this.sessionList[index], ...session };
 
       const existing = this.sessionList[index] as ExtendedSession;
@@ -853,19 +911,41 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
     if (!session.id) return [...this.sessionList];
 
     const { id: sessionId } = session;
+    const providedSession = session as ExtendedSession;
 
-    const existing = this.sessionList.find((s) => s.id === sessionId) as
+    const existing = this.sessionList.find((s) => {
+      const ext = s as ExtendedSession;
+      return (
+        s.id === sessionId ||
+        ext.realId === sessionId ||
+        ext.sessionId === sessionId
+      );
+    }) as
       | ExtendedSession
       | undefined;
 
     const deleteId =
-      existing?.realId ?? (isLocalTimestamp(sessionId) ? null : sessionId);
+      existing?.realId ??
+      (existing && !isLocalTimestamp(existing.id) ? existing.id : null) ??
+      providedSession.realId ??
+      (isLocalTimestamp(sessionId) ? null : sessionId);
 
     if (deleteId) await api.deleteChat(deleteId);
 
-    this.sessionList = this.sessionList.filter((s) => s.id !== sessionId);
+    if (this.pendingNewSessionId === sessionId) {
+      this.pendingNewSessionId = null;
+    }
 
-    const resolvedId = existing?.realId ?? sessionId;
+    this.sessionList = this.sessionList.filter((s) => {
+      const ext = s as ExtendedSession;
+      return (
+        s.id !== sessionId &&
+        ext.realId !== sessionId &&
+        ext.sessionId !== sessionId
+      );
+    });
+
+    const resolvedId = existing?.realId ?? providedSession.realId ?? sessionId;
     this.onSessionRemoved?.(resolvedId);
 
     return [...this.sessionList];
