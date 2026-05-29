@@ -34,7 +34,7 @@ from ...config.config import load_agent_config, get_model_max_input_length
 from ...constant import TRUNCATION_NOTICE_MARKER
 
 if TYPE_CHECKING:
-    from ..react_agent import QwenPawAgent
+    from ..react_agent import PersonalAssistantAgent
 
 logger = logging.getLogger(__name__)
 
@@ -649,7 +649,7 @@ class LightContextManager(BaseContextManager):
     # ------------------------------------------------------------------
 
     @staticmethod
-    async def _print_status_message(agent: "QwenPawAgent", text: str) -> None:
+    async def _print_status_message(agent: "PersonalAssistantAgent", text: str) -> None:
         msg = Msg(
             name=agent.name,
             role="assistant",
@@ -659,7 +659,7 @@ class LightContextManager(BaseContextManager):
 
     async def pre_reply(
         self,
-        agent: "QwenPawAgent",
+        agent: "PersonalAssistantAgent",
         kwargs: dict[str, Any],
     ) -> dict[str, Any] | None:
         """Augment ``msg`` with retrieved memory results before reply.
@@ -706,7 +706,7 @@ class LightContextManager(BaseContextManager):
 
     async def pre_reasoning(
         self,
-        agent: "QwenPawAgent",
+        agent: "PersonalAssistantAgent",
         kwargs: dict[str, Any],
     ) -> dict[str, Any] | None:
         """Check context size and compact memory when threshold is exceeded.
@@ -940,7 +940,7 @@ class LightContextManager(BaseContextManager):
 
     async def post_acting(
         self,
-        agent: "QwenPawAgent",
+        agent: "PersonalAssistantAgent",
         kwargs: dict[str, Any],
         output: Any,
     ) -> Msg | None:
@@ -972,7 +972,7 @@ class LightContextManager(BaseContextManager):
 
     async def post_reply(
         self,
-        agent: "QwenPawAgent",
+        agent: "PersonalAssistantAgent",
         kwargs: dict[str, Any],
         output: Any,
     ) -> Msg | None:

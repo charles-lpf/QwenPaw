@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""``qwenpaw acp`` — run QwenPaw as an ACP agent over stdio."""
+"""``qwenpaw acp`` - run AIPersonalAssistant as an ACP agent over stdio."""
 from __future__ import annotations
 
 import asyncio
@@ -31,7 +31,7 @@ def acp_cmd(
     workspace: str | None,
     debug: bool,
 ) -> None:
-    """Start QwenPaw as an ACP agent (stdio)."""
+    """Start AIPersonalAssistant as an ACP agent (stdio)."""
     from pathlib import Path
 
     level = logging.DEBUG if debug else logging.WARNING
@@ -42,10 +42,10 @@ def acp_cmd(
 
     workspace_dir = Path(workspace) if workspace else None
 
-    from ..agents.acp.server import run_qwenpaw_agent
+    from ..agents.acp.server import run_personal_assistant_agent
 
     asyncio.run(
-        run_qwenpaw_agent(
+        run_personal_assistant_agent(
             agent_id=agent,
             workspace_dir=workspace_dir,
         ),

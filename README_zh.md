@@ -328,7 +328,7 @@ docker run -p 127.0.0.1:8088:8088 \
 
 - **移除隔离属性（不推荐大多数用户）**
   在终端运行：
-  `xattr -cr /Applications/AI Personal Assistant.app`
+  `xattr -cr /Applications/AIPersonalAssistant.app`
   （或使用解压后的 `.app` 路径）。这会清除“从互联网下载”的隔离标志，使警告通常不会出现，但不如使用 **右键 → 打开** 安全和可控。
 
 详细使用说明、故障排除和常见问题，请参见 [桌面应用指南](https://ai-personal-assistant.agentscope.io/docs/desktop)。

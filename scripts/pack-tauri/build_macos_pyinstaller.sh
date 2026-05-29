@@ -116,7 +116,7 @@ cd ..
 echo "Tauri app built"
 echo ""
 
-APP_PATH="${BUNDLE_DIR}/macos/AI Personal Assistant.app"
+APP_PATH="${BUNDLE_DIR}/macos/AIPersonalAssistant.app"
 if [ ! -d "${APP_PATH}" ]; then
     echo "ERROR: No Tauri macOS app found at ${APP_PATH}"
     exit 1
@@ -147,7 +147,7 @@ STAGED_APP_PATH="${DIST_DIR}/$(basename "${APP_PATH}")"
 echo ".app copied to ${STAGED_APP_PATH}"
 
 # Create ZIP archive
-ZIP_NAME="${DIST_ROOT}/AI-Personal-Assistant-Tauri-${VERSION}-macOS.zip"
+ZIP_NAME="${DIST_ROOT}/AIPersonalAssistant-Tauri-${VERSION}-macOS.zip"
 if [ -f "${ZIP_NAME}" ]; then
     rm -f "${ZIP_NAME}"
 fi

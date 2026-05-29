@@ -247,12 +247,12 @@ export default function Header({
             type="button"
             className={styles.personalAssistantTitle}
             onClick={handleAssistantTitleClick}
-            aria-label="AI个人助理"
+            aria-label="AIPersonalAssistant"
           >
             <span className={styles.aiIcon}>
               <img src="/sparkles.svg" alt="" width={16} height={16} />
             </span>
-            AI个人助理
+            AIPersonalAssistant
           </button>
         </div>
         <Space size="middle">

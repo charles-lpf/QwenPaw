@@ -11,7 +11,7 @@ try {
   exit 0
 }
 
-$targets = Get-CimInstance Win32_Process -Filter "Name = 'qwenpaw-backend.exe'" |
+$targets = Get-CimInstance Win32_Process -Filter "Name = 'ai-personal-assistant-backend.exe'" |
   Where-Object {
     if (-not $_.ExecutablePath) {
       return $false

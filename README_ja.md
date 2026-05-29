@@ -330,7 +330,7 @@ ReleasesからAI Personal Assistant macOSアプリをダウンロードすると
 
 - **検疫属性の削除（ほとんどのユーザーには非推奨）**
   ターミナルで実行:
-  `xattr -cr /Applications/AI Personal Assistant.app`
+  `xattr -cr /Applications/AIPersonalAssistant.app`
   （または解凍後の `.app` へのパスを使用）。これにより「インターネットからダウンロードされた」検疫フラグがクリアされ、通常は警告が表示されなくなりますが、**右クリック → 開く** を使用するよりも安全性と制御性が低くなります。
 
 詳細な使用方法、トラブルシューティング、よくある問題については、[デスクトップアプリケーションガイド](https://ai-personal-assistant.agentscope.io/docs/desktop)を参照してください。

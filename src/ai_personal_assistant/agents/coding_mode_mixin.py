@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Coding Mode mixin for QwenPawAgent.
+"""Coding Mode mixin for PersonalAssistantAgent.
 
 Provides one behaviour activated when ``coding_mode.enabled`` is
 ``True`` in the agent configuration:
@@ -135,7 +135,7 @@ Do NOT read or write here unless the user explicitly asks.
 class CodingModeMixin:
     """Mixin that adds Coding Mode features to a ReActAgent.
 
-    At runtime this class is mixed into ``QwenPawAgent`` and combined
+    At runtime this class is mixed into ``PersonalAssistantAgent`` and combined
     with ``ToolGuardMixin`` and ``ReActAgent`` via MRO. Currently only
     overrides ``_build_sys_prompt`` to inject a coding persona block.
     """
@@ -217,7 +217,7 @@ class CodingModeMixin:
         return bool(getattr(cm, "enabled", False))
 
     # ------------------------------------------------------------------
-    # Tool registration hook (called from QwenPawAgent._create_toolkit)
+    # Tool registration hook (called from PersonalAssistantAgent._create_toolkit)
     # ------------------------------------------------------------------
 
     def _register_coding_mode_tools(

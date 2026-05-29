@@ -327,7 +327,7 @@ When you download the AI Personal Assistant macOS app from Releases, macOS may s
 
 - **Remove quarantine attribute (not recommended for most users)**
   In Terminal run:
-  `xattr -cr /Applications/AI Personal Assistant.app`
+  `xattr -cr /Applications/AIPersonalAssistant.app`
   (or use the path to the `.app` after unzipping). This clears the "downloaded from the internet" quarantine flag so the warning usually does not appear, but is less safe and controllable than using **Right-click → Open**.
 
 For detailed usage instructions, troubleshooting, and common issues, see the [Desktop Application Guide](https://ai-personal-assistant.agentscope.io/docs/desktop).

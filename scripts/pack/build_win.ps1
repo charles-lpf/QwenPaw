@@ -158,7 +158,7 @@ if (Test-Path $pythonExe) {
 }
 
 # Main launcher .bat (will be hidden by VBS)
-$LauncherBat = Join-Path $EnvRoot "AI Personal Assistant.bat"
+$LauncherBat = Join-Path $EnvRoot "AIPersonalAssistant.bat"
 @"
 @echo off
 cd /d "%~dp0"
@@ -194,7 +194,7 @@ if not exist "%USERPROFILE%\.ai-personal-assistant\config.json" (
 "@ | Set-Content -Path $LauncherBat -Encoding ASCII
 
 # Debug launcher .bat (shows console)
-$DebugBat = Join-Path $EnvRoot "AI Personal Assistant (Debug).bat"
+$DebugBat = Join-Path $EnvRoot "AIPersonalAssistant (Debug).bat"
 @"
 @echo off
 cd /d "%~dp0"
@@ -224,7 +224,7 @@ if defined CERT_FILE (
 )
 
 echo ====================================
-echo AI Personal Assistant - Debug Mode
+echo AIPersonalAssistant - Debug Mode
 echo ====================================
 echo Working Directory: %cd%
 echo Python: "%~dp0python.exe"
@@ -239,20 +239,20 @@ if not exist "%USERPROFILE%\.ai-personal-assistant\config.json" (
   echo [Init] Creating config...
   "%~dp0python.exe" -u -m ai_personal_assistant init --defaults --accept-security
 )
-echo [Launch] Starting AI Personal Assistant with log-level=%QWENPAW_LOG_LEVEL%...
+echo [Launch] Starting AIPersonalAssistant with log-level=%QWENPAW_LOG_LEVEL%...
 echo Press Ctrl+C to stop
 echo.
 "%~dp0python.exe" -u -m ai_personal_assistant desktop --log-level %QWENPAW_LOG_LEVEL%
 echo.
-echo [Exit] AI Personal Assistant closed
+echo [Exit] AIPersonalAssistant closed
 pause
 "@ | Set-Content -Path $DebugBat -Encoding ASCII
 
 # VBScript launcher (no console window)
-$LauncherVbs = Join-Path $EnvRoot "AI Personal Assistant.vbs"
+$LauncherVbs = Join-Path $EnvRoot "AIPersonalAssistant.vbs"
 @"
 Set WshShell = CreateObject("WScript.Shell")
-batPath = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName) & "\AI Personal Assistant.bat"
+batPath = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName) & "\AIPersonalAssistant.bat"
 WshShell.Run Chr(34) & batPath & Chr(34), 0, False
 Set WshShell = Nothing
 "@ | Set-Content -Path $LauncherVbs -Encoding ASCII
@@ -295,7 +295,7 @@ if (-not $Version) {
 if (-not $Version) { $Version = "0.0.0"; Write-Host "[build_win] WARN: Using fallback version 0.0.0" }
 Write-Host "[build_win] Version determined: $Version"
 Write-Host "[build_win] AIPA_VERSION=$Version OUTPUT_EXE will be under $Dist"
-$OutInstaller = Join-Path (Join-Path $RepoRoot $Dist) "AI-Personal-Assistant-Setup-$Version.exe"
+$OutInstaller = Join-Path (Join-Path $RepoRoot $Dist) "AIPersonalAssistant-Setup-$Version.exe"
 # Pass absolute paths to NSIS (keep backslashes).
 $UnpackedFull = (Resolve-Path $EnvRoot).Path
 $OutputExeNsi = [System.IO.Path]::GetFullPath($OutInstaller)

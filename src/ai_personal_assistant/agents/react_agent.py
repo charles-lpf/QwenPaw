@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""QwenPaw Agent - Main agent implementation.
+"""AIPersonalAssistant Agent - Main agent implementation.
 
-This module provides the main QwenPawAgent class built on ReActAgent,
+This module provides the main PersonalAssistantAgent class built on ReActAgent,
 with integrated tools, skills, and memory management.
 """
 
@@ -79,8 +79,8 @@ logger = logging.getLogger(__name__)
 NamesakeStrategy = Literal["override", "skip", "raise", "rename"]
 
 
-class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
-    """QwenPaw Agent with integrated tools, skills, and memory management.
+class PersonalAssistantAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
+    """AIPersonalAssistant agent with integrated tools, skills, and memory management.
 
     This agent extends ReActAgent with:
     - Built-in tools (shell, file operations, browser, etc.)
@@ -93,7 +93,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
 
     MRO note
     ~~~~~~~~
-    MRO: QwenPawAgent → CodingModeMixin → ToolGuardMixin → ReActAgent.
+    MRO: PersonalAssistantAgent → CodingModeMixin → ToolGuardMixin → ReActAgent.
     Each ``_acting`` override **must** call ``super()._acting(...)`` so
     the full chain stays active.
     """
@@ -111,7 +111,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
         task_tracker: Any | None = None,
         plan_notebook: Any | None = None,
     ):
-        """Initialize QwenPawAgent.
+        """Initialize PersonalAssistantAgent.
 
         Args:
             agent_config: Agent profile configuration containing all settings
@@ -188,7 +188,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
         )
         # Initialize parent ReActAgent
         init_kwargs: dict[str, Any] = {
-            "name": agent_config.name or "QwenPaw",
+            "name": agent_config.name or "AIPersonalAssistant",
             "model": model,
             "sys_prompt": sys_prompt,
             "toolkit": toolkit,
@@ -754,7 +754,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
         inp = tool_call.get("input")
         if not isinstance(inp, dict):
             return
-        for key in QwenPawAgent._PLAN_JSON_KEYS:
+        for key in PersonalAssistantAgent._PLAN_JSON_KEYS:
             val = inp.get(key)
             if isinstance(val, str):
                 try:
@@ -1282,7 +1282,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
         round of calls has ended.
         """
         if isinstance(msg.content, str):
-            msg.content += QwenPawAgent._ROUND_END_NOTICE
+            msg.content += PersonalAssistantAgent._ROUND_END_NOTICE
             return msg
 
         filtered = [
@@ -1301,7 +1301,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
             )
 
         filtered.append(
-            {"type": "text", "text": QwenPawAgent._ROUND_END_NOTICE},
+            {"type": "text", "text": PersonalAssistantAgent._ROUND_END_NOTICE},
         )
         msg.content = filtered
         return msg
@@ -1449,7 +1449,7 @@ class QwenPawAgent(CodingModeMixin, ToolGuardMixin, ReActAgent):
             return msg
 
         # Normal message processing
-        logger.info("QwenPawAgent.reply: max_iters=%s", self.max_iters)
+        logger.info("PersonalAssistantAgent.reply: max_iters=%s", self.max_iters)
 
         request_context = getattr(self, "_request_context", {}) or {}
         channel_name = request_context.get("channel", "console")

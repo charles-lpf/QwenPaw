@@ -64,16 +64,16 @@ pub(super) fn create(app: &tauri::AppHandle) -> Result<Command, String> {
 #[cfg(not(debug_assertions))]
 fn packaged_backend_executable(app: &tauri::AppHandle) -> Result<PathBuf, String> {
     let executable_name = if cfg!(windows) {
-        "qwenpaw-backend.exe"
+        "ai-personal-assistant-backend.exe"
     } else {
-        "qwenpaw-backend"
+        "ai-personal-assistant-backend"
     };
     let path = app
         .path()
         .resource_dir()
         .map_err(|err| format!("failed to resolve resource directory: {err}"))?
         .join("binaries")
-        .join("qwenpaw-backend")
+        .join("ai-personal-assistant-backend")
         .join(executable_name);
 
     if path.is_file() {

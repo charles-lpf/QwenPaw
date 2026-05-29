@@ -372,22 +372,22 @@ def setup_acp_auto_approve() -> None:
 def setup_tool_and_prompt_hooks() -> (  # pylint: disable=too-many-statements
     None
 ):
-    """Monkey-patch QwenPawAgent to add cloudpaw tools and prompt sections."""
+    """Monkey-patch PersonalAssistantAgent to add cloudpaw tools and prompt sections."""
     # IaC operations are delegated to iac-code via the built-in async
     # `delegate_external_agent` tool (qwenpaw >= v1.1.7b1).  No CloudPaw-side
     # ACP wrapper is required — the plugin only enables the built-in tool
     # with `async_execution=True` via constants.py.
     try:
-        from ai_personal_assistant.agents.react_agent import QwenPawAgent
+        from ai_personal_assistant.agents.react_agent import PersonalAssistantAgent
     except ImportError as exc:
         logger.error(
-            "Cannot import QwenPawAgent; tool/prompt hooks skipped: %s",
+            "Cannot import PersonalAssistantAgent; tool/prompt hooks skipped: %s",
             exc,
         )
         return
 
-    _original_create_toolkit = QwenPawAgent._create_toolkit
-    _original_build_sys_prompt = QwenPawAgent._build_sys_prompt
+    _original_create_toolkit = PersonalAssistantAgent._create_toolkit
+    _original_build_sys_prompt = PersonalAssistantAgent._build_sys_prompt
 
     def _patched_create_toolkit(self, *args, **kwargs):
         namesake_strategy = kwargs.get("namesake_strategy", "skip")
@@ -491,7 +491,7 @@ def setup_tool_and_prompt_hooks() -> (  # pylint: disable=too-many-statements
 
         return sys_prompt
 
-    _original_interrupt = QwenPawAgent.interrupt
+    _original_interrupt = PersonalAssistantAgent.interrupt
 
     async def _patched_interrupt(self, msg=None):
         """Cancel async tasks on stop (e.g. delegate_external_agent)."""
@@ -508,11 +508,11 @@ def setup_tool_and_prompt_hooks() -> (  # pylint: disable=too-many-statements
                     )
         await _original_interrupt(self, msg)
 
-    QwenPawAgent._create_toolkit = _patched_create_toolkit
-    QwenPawAgent._build_sys_prompt = _patched_build_sys_prompt
-    QwenPawAgent.interrupt = _patched_interrupt
+    PersonalAssistantAgent._create_toolkit = _patched_create_toolkit
+    PersonalAssistantAgent._build_sys_prompt = _patched_build_sys_prompt
+    PersonalAssistantAgent.interrupt = _patched_interrupt
     logger.info(
-        "Patched QwenPawAgent with cloudpaw tools, prompt hooks, "
+        "Patched PersonalAssistantAgent with cloudpaw tools, prompt hooks, "
         "and interrupt",
     )
 

@@ -33,7 +33,7 @@ from .mission_dispatch import (
 from .session import SafeJSONSession
 from .utils import build_env_context
 from ..channels.schema import DEFAULT_CHANNEL
-from ...agents.react_agent import QwenPawAgent
+from ...agents.react_agent import PersonalAssistantAgent
 from ...exceptions import convert_model_exception
 from ...agents.utils.file_handling import (
     read_text_file_with_encoding_fallback,
@@ -133,9 +133,9 @@ class AgentRunner(Runner):
         if self._agent_name is None:
             try:
                 cfg = load_agent_config(self.agent_id)
-                self._agent_name = cfg.name if cfg and cfg.name else "QwenPaw"
+                self._agent_name = cfg.name if cfg and cfg.name else "AIPersonalAssistant"
             except Exception:
-                self._agent_name = "QwenPaw"
+                self._agent_name = "AIPersonalAssistant"
         return self._agent_name
 
     def invalidate_agent_name_cache(self) -> None:
@@ -661,7 +661,7 @@ class AgentRunner(Runner):
                     )
                     plan_notebook = None
 
-            agent = QwenPawAgent(
+            agent = PersonalAssistantAgent(
                 agent_config=agent_config,
                 env_context=env_context,
                 mcp_clients=mcp_clients,

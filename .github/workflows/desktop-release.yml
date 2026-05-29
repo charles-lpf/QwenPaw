@@ -1,9 +1,9 @@
-# Build QwenPaw Desktop:
+# Build AIPersonalAssistant Desktop:
 # - Legacy desktop: Windows (conda-pack + NSIS), macOS (conda-pack -> .app)
 # - Tauri desktop: Windows/macOS app bundles with PyInstaller backend sidecar
 # Runs on release publish and manual dispatch.
 
-name: QwenPaw Desktop Build
+name: AIPersonalAssistant Desktop Build
 
 on:
   release:
@@ -86,8 +86,8 @@ jobs:
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
-          name: QwenPaw-Desktop-Windows-${{ steps.version.outputs.version }}
-          path: dist/QwenPaw-Setup-*.exe
+          name: AIPersonalAssistant-Desktop-Windows-${{ steps.version.outputs.version }}
+          path: dist/AIPersonalAssistant-Setup-*.exe
 
   build-macos:
     runs-on: macos-14
@@ -130,8 +130,8 @@ jobs:
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
         with:
-          name: QwenPaw-Desktop-macOS-${{ steps.version.outputs.version }}
-          path: dist/QwenPaw-*.zip
+          name: AIPersonalAssistant-Desktop-macOS-${{ steps.version.outputs.version }}
+          path: dist/AIPersonalAssistant-*.zip
 
   build-tauri-windows:
     runs-on: windows-latest
@@ -190,15 +190,15 @@ jobs:
           if (-not $installer) {
             throw "No Tauri Windows installer found"
           }
-          $target = "dist/QwenPaw-Tauri-${{ steps.version.outputs.version }}-Windows-setup.exe"
+          $target = "dist/AIPersonalAssistant-Tauri-${{ steps.version.outputs.version }}-Windows-setup.exe"
           Copy-Item -Force $installer.FullName $target
           Write-Host "Staged Tauri Windows installer: $target"
 
       - name: Upload Tauri Windows artifact
         uses: actions/upload-artifact@v4
         with:
-          name: QwenPaw-Desktop-Tauri-Windows-${{ steps.version.outputs.version }}
-          path: dist/QwenPaw-Tauri-*-Windows-setup.exe
+          name: AIPersonalAssistant-Desktop-Tauri-Windows-${{ steps.version.outputs.version }}
+          path: dist/AIPersonalAssistant-Tauri-*-Windows-setup.exe
 
   build-tauri-macos:
     runs-on: macos-14
@@ -243,8 +243,8 @@ jobs:
       - name: Upload Tauri macOS artifact
         uses: actions/upload-artifact@v4
         with:
-          name: QwenPaw-Desktop-Tauri-macOS-${{ steps.version.outputs.version }}
-          path: dist/QwenPaw-Tauri-*-macOS.zip
+          name: AIPersonalAssistant-Desktop-Tauri-macOS-${{ steps.version.outputs.version }}
+          path: dist/AIPersonalAssistant-Tauri-*-macOS.zip
 
   upload-release:
     needs: [build-windows, build-macos, build-tauri-windows, build-tauri-macos]
@@ -258,19 +258,19 @@ jobs:
 
       - name: Move artifacts to root for upload
         run: |
-          mv QwenPaw-Desktop-Windows-*/QwenPaw-Setup-*.exe . 2>/dev/null || true
-          mv QwenPaw-Desktop-macOS-*/QwenPaw-*.zip . 2>/dev/null || true
-          mv QwenPaw-Desktop-Tauri-Windows-*/QwenPaw-Tauri-*-Windows-setup.exe . 2>/dev/null || true
-          mv QwenPaw-Desktop-Tauri-macOS-*/QwenPaw-Tauri-*-macOS.zip . 2>/dev/null || true
+          mv AIPersonalAssistant-Desktop-Windows-*/AIPersonalAssistant-Setup-*.exe . 2>/dev/null || true
+          mv AIPersonalAssistant-Desktop-macOS-*/AIPersonalAssistant-*.zip . 2>/dev/null || true
+          mv AIPersonalAssistant-Desktop-Tauri-Windows-*/AIPersonalAssistant-Tauri-*-Windows-setup.exe . 2>/dev/null || true
+          mv AIPersonalAssistant-Desktop-Tauri-macOS-*/AIPersonalAssistant-Tauri-*-macOS.zip . 2>/dev/null || true
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            QwenPaw-Setup-*.exe
-            QwenPaw-[0-9]*-macOS.zip
-            QwenPaw-Tauri-*-Windows-setup.exe
-            QwenPaw-Tauri-*-macOS.zip
+            AIPersonalAssistant-Setup-*.exe
+            AIPersonalAssistant-[0-9]*-macOS.zip
+            AIPersonalAssistant-Tauri-*-Windows-setup.exe
+            AIPersonalAssistant-Tauri-*-macOS.zip
           fail-on-unmatched-files: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -311,10 +311,10 @@ jobs:
             -L CH
 
       - name: Process and upload Windows artifacts
-        if: hashFiles('QwenPaw-Desktop-Windows-*/*.exe') != ''
+        if: hashFiles('AIPersonalAssistant-Desktop-Windows-*/*.exe') != ''
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          WIN_EXE=$(find QwenPaw-Desktop-Windows-* -name "QwenPaw-Setup-*.exe" | head -1)
+          WIN_EXE=$(find AIPersonalAssistant-Desktop-Windows-* -name "AIPersonalAssistant-Setup-*.exe" | head -1)
 
           if [ -z "$WIN_EXE" ]; then
             echo "No Windows exe found, skipping"
@@ -331,32 +331,32 @@ jobs:
             --output win-metadata.json
 
           ossutil cp "$WIN_EXE" \
-            "oss://ai-personal-assistant-download/files/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/win/AIPersonalAssistant-Setup-${VERSION}.exe" \
             --acl public-read \
             --force
 
           ossutil cp "$WIN_EXE" \
-            "oss://ai-personal-assistant-download/files/apps/desktop/win/QwenPaw-Setup-latest.exe" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/win/AIPersonalAssistant-Setup-latest.exe" \
             --acl public-read \
             --force
 
           ossutil cp win-metadata.json \
-            "oss://ai-personal-assistant-download/metadata/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/win/AIPersonalAssistant-Setup-${VERSION}.exe.json" \
             --acl public-read \
             --force
 
           ossutil cp win-metadata.json \
-            "oss://ai-personal-assistant-download/metadata/apps/desktop/win/QwenPaw-Setup-latest.exe.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/win/AIPersonalAssistant-Setup-latest.exe.json" \
             --acl public-read \
             --force
 
           echo "✓ Windows artifacts uploaded"
 
       - name: Process and upload macOS artifacts
-        if: hashFiles('QwenPaw-Desktop-macOS-*/*.zip') != ''
+        if: hashFiles('AIPersonalAssistant-Desktop-macOS-*/*.zip') != ''
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          MAC_ZIP=$(find QwenPaw-Desktop-macOS-* -name "QwenPaw-*.zip" | head -1)
+          MAC_ZIP=$(find AIPersonalAssistant-Desktop-macOS-* -name "AIPersonalAssistant-*.zip" | head -1)
 
           if [ -z "$MAC_ZIP" ]; then
             echo "No macOS zip found, skipping"
@@ -373,29 +373,29 @@ jobs:
             --output mac-metadata.json
 
           ossutil cp "$MAC_ZIP" \
-            "oss://ai-personal-assistant-download/files/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/mac/AIPersonalAssistant-${VERSION}-macOS.zip" \
             --acl public-read \
             --force
 
           ossutil cp "$MAC_ZIP" \
-            "oss://ai-personal-assistant-download/files/apps/desktop/mac/QwenPaw-latest-macOS.zip" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/mac/AIPersonalAssistant-latest-macOS.zip" \
             --acl public-read \
             --force
 
           ossutil cp mac-metadata.json \
-            "oss://ai-personal-assistant-download/metadata/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/mac/AIPersonalAssistant-${VERSION}-macOS.zip.json" \
             --acl public-read \
             --force
 
           ossutil cp mac-metadata.json \
-            "oss://ai-personal-assistant-download/metadata/apps/desktop/mac/QwenPaw-latest-macOS.zip.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/mac/AIPersonalAssistant-latest-macOS.zip.json" \
             --acl public-read \
             --force
 
           echo "✓ macOS artifacts uploaded"
 
       - name: Process and upload Tauri artifacts
-        if: hashFiles('QwenPaw-Desktop-Tauri-*/*') != ''
+        if: hashFiles('AIPersonalAssistant-Desktop-Tauri-*/*') != ''
         run: |
           VERSION="${{ steps.version.outputs.version }}"
 
@@ -441,19 +441,19 @@ jobs:
           }
 
           upload_tauri_artifact \
-            "QwenPaw-Desktop-Tauri-Windows-*" \
-            "QwenPaw-Tauri-*-Windows-setup.exe" \
+            "AIPersonalAssistant-Desktop-Tauri-Windows-*" \
+            "AIPersonalAssistant-Tauri-*-Windows-setup.exe" \
             "win-tauri" \
-            "QwenPaw-Tauri-${VERSION}-Windows-setup.exe" \
-            "QwenPaw-Tauri-latest-Windows-setup.exe" \
+            "AIPersonalAssistant-Tauri-${VERSION}-Windows-setup.exe" \
+            "AIPersonalAssistant-Tauri-latest-Windows-setup.exe" \
             "win-tauri-metadata.json"
 
           upload_tauri_artifact \
-            "QwenPaw-Desktop-Tauri-macOS-*" \
-            "QwenPaw-Tauri-*-macOS.zip" \
+            "AIPersonalAssistant-Desktop-Tauri-macOS-*" \
+            "AIPersonalAssistant-Tauri-*-macOS.zip" \
             "mac-tauri" \
-            "QwenPaw-Tauri-${VERSION}-macOS.zip" \
-            "QwenPaw-Tauri-latest-macOS.zip" \
+            "AIPersonalAssistant-Tauri-${VERSION}-macOS.zip" \
+            "AIPersonalAssistant-Tauri-latest-macOS.zip" \
             "mac-tauri-metadata.json"
 
       - name: Update desktop index
@@ -472,7 +472,7 @@ jobs:
 
           if [ -f "win-metadata.json" ]; then
             python scripts/pack/generate_oss_metadata.py \
-              --file "$(find QwenPaw-Desktop-Windows-* -name 'QwenPaw-Setup-*.exe' | head -1)" \
+              --file "$(find AIPersonalAssistant-Desktop-Windows-* -name 'AIPersonalAssistant-Setup-*.exe' | head -1)" \
               --product desktop \
               --platform win \
               --version "$VERSION" \
@@ -483,7 +483,7 @@ jobs:
 
           if [ -f "mac-metadata.json" ]; then
             python scripts/pack/generate_oss_metadata.py \
-              --file "$(find QwenPaw-Desktop-macOS-* -name 'QwenPaw-*.zip' | head -1)" \
+              --file "$(find AIPersonalAssistant-Desktop-macOS-* -name 'AIPersonalAssistant-*.zip' | head -1)" \
               --product desktop \
               --platform mac \
               --version "$VERSION" \
@@ -512,13 +512,13 @@ jobs:
 
           merge_tauri_metadata \
             "win-tauri-metadata.json" \
-            "QwenPaw-Desktop-Tauri-Windows-*" \
-            "QwenPaw-Tauri-*-Windows-setup.exe" \
+            "AIPersonalAssistant-Desktop-Tauri-Windows-*" \
+            "AIPersonalAssistant-Tauri-*-Windows-setup.exe" \
             "win-tauri"
           merge_tauri_metadata \
             "mac-tauri-metadata.json" \
-            "QwenPaw-Desktop-Tauri-macOS-*" \
-            "QwenPaw-Tauri-*-macOS.zip" \
+            "AIPersonalAssistant-Desktop-Tauri-macOS-*" \
+            "AIPersonalAssistant-Tauri-*-macOS.zip" \
             "mac-tauri"
 
           ossutil cp desktop-index.json \
@@ -585,7 +585,7 @@ jobs:
         id: get_version
         run: |
           # 借用打包导出的版本号命名，确保版本标签具有业务意义
-          WIN_DIR=$(ls -d artifacts/QwenPaw-Desktop-Windows-* | head -1)
+          WIN_DIR=$(ls -d artifacts/AIPersonalAssistant-Desktop-Windows-* | head -1)
           VER=${WIN_DIR##*-}
           echo "version=$VER" >> $GITHUB_OUTPUT
 
@@ -593,7 +593,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: "v${{ steps.get_version.outputs.version }}-build-${{ github.run_number }}"
-          name: "QwenPaw 自动化构建版 v${{ steps.get_version.outputs.version }} (#${{ github.run_number }})"
+          name: "AIPersonalAssistant 自动化构建版 v${{ steps.get_version.outputs.version }} (#${{ github.run_number }})"
           draft: false
           prerelease: true # 设为预发布版本，避免混淆正式生产包
           files: |

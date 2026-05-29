@@ -2553,7 +2553,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "qwenpaw-desktop"
+name = "ai-personal-assistant-desktop"
 version = "0.1.0"
 dependencies = [
  "log",
