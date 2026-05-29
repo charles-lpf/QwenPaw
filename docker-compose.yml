@@ -1,25 +1,25 @@
 version: '3.8'
 
 volumes:
-  qwenpaw-data:
-    name: qwenpaw-data
-  qwenpaw-secrets:
-    name: qwenpaw-secrets
-  qwenpaw-backups:
-    name: qwenpaw-backups
+  ai-personal-assistant-data:
+    name: ai-personal-assistant-data
+  ai-personal-assistant-secrets:
+    name: ai-personal-assistant-secrets
+  ai-personal-assistant-backups:
+    name: ai-personal-assistant-backups
 
 services:
-  qwenpaw:
-    image: agentscope/qwenpaw:latest
-    container_name: qwenpaw
+  ai-personal-assistant:
+    image: agentscope/ai-personal-assistant:latest
+    container_name: ai-personal-assistant
     restart: always
     ports:
       - "127.0.0.1:8088:8088"
     # environment:
-    #   - QWENPAW_AUTH_ENABLED=true
-    #   - QWENPAW_AUTH_USERNAME=admin
-    #   - QWENPAW_AUTH_PASSWORD=yourpassword
+    #   - AIPA_AUTH_ENABLED=true
+    #   - AIPA_AUTH_USERNAME=admin
+    #   - AIPA_AUTH_PASSWORD=yourpassword
     volumes:
-      - qwenpaw-data:/app/working
-      - qwenpaw-secrets:/app/working.secret
-      - qwenpaw-backups:/app/working.backups
+      - ai-personal-assistant-data:/app/working
+      - ai-personal-assistant-secrets:/app/working.secret
+      - ai-personal-assistant-backups:/app/working.backups

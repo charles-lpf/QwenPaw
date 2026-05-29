@@ -63,7 +63,7 @@ jobs:
               rel="${f#dist/plugins/}"
               echo "Uploading $f -> files/plugins/${rel}"
               ossutil cp "$f" \
-                "oss://qwenpaw-download/files/plugins/${rel}" \
+                "oss://ai-personal-assistant-download/files/plugins/${rel}" \
                 --acl public-read \
                 --force \
                 --meta "Cache-Control:public, max-age=31536000, immutable"
@@ -73,29 +73,29 @@ jobs:
           for kind in bundle tool; do
             kind_root="dist/plugins/${kind}"
             # Drop legacy flat zips at {kind}/ (pre per-plugin directory layout).
-            remote_flat=$(ossutil ls "oss://qwenpaw-download/files/plugins/${kind}/" -s 2>/dev/null \
-              | grep -E "^oss://qwenpaw-download/files/plugins/${kind}/[^/]+\.zip$" \
+            remote_flat=$(ossutil ls "oss://ai-personal-assistant-download/files/plugins/${kind}/" -s 2>/dev/null \
+              | grep -E "^oss://ai-personal-assistant-download/files/plugins/${kind}/[^/]+\.zip$" \
               | sed 's|.*/||' \
               | sort -u || true)
             for name in $remote_flat; do
               echo "Removing legacy flat OSS object: ${kind}/${name}"
               ossutil rm \
-                "oss://qwenpaw-download/files/plugins/${kind}/${name}" \
+                "oss://ai-personal-assistant-download/files/plugins/${kind}/${name}" \
                 --force
             done
             for plugin_dir in "$kind_root"/*/; do
               [ -d "$plugin_dir" ] || continue
               plugin_id=$(basename "$plugin_dir")
               local_names=$(find "$plugin_dir" -maxdepth 1 -type f -name '*.zip' -exec basename {} \; 2>/dev/null | sort || true)
-              remote_names=$(ossutil ls "oss://qwenpaw-download/files/plugins/${kind}/${plugin_id}/" -s 2>/dev/null \
-                | grep -E "^oss://qwenpaw-download/files/plugins/${kind}/${plugin_id}/[^/]+\.zip$" \
+              remote_names=$(ossutil ls "oss://ai-personal-assistant-download/files/plugins/${kind}/${plugin_id}/" -s 2>/dev/null \
+                | grep -E "^oss://ai-personal-assistant-download/files/plugins/${kind}/${plugin_id}/[^/]+\.zip$" \
                 | sed 's|.*/||' \
                 | sort -u || true)
               for name in $remote_names; do
                 if ! echo "$local_names" | grep -qx "$name"; then
                   echo "Removing stale OSS object: ${kind}/${plugin_id}/${name}"
                   ossutil rm \
-                    "oss://qwenpaw-download/files/plugins/${kind}/${plugin_id}/${name}" \
+                    "oss://ai-personal-assistant-download/files/plugins/${kind}/${plugin_id}/${name}" \
                     --force
                 fi
               done
@@ -105,14 +105,14 @@ jobs:
       - name: Upload plugins index (short-cache)
         run: |
           ossutil cp dist/plugins/index.json \
-            "oss://qwenpaw-download/metadata/plugins/index.json" \
+            "oss://ai-personal-assistant-download/metadata/plugins/index.json" \
             --acl public-read \
             --force \
             --meta "Cache-Control:public, max-age=60, must-revalidate"
 
       - name: Patch main metadata index to advertise plugins product
         run: |
-          ossutil cp "oss://qwenpaw-download/metadata/index.json" \
+          ossutil cp "oss://ai-personal-assistant-download/metadata/index.json" \
             main-index.json 2>/dev/null || cat > main-index.json << 'EOF'
           {
             "version": "1.0",
@@ -140,7 +140,7 @@ jobs:
           PYTHON
 
           ossutil cp main-index.json \
-            "oss://qwenpaw-download/metadata/index.json" \
+            "oss://ai-personal-assistant-download/metadata/index.json" \
             --acl public-read \
             --force \
             --meta "Cache-Control:public, max-age=60, must-revalidate"

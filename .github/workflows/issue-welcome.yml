@@ -251,7 +251,7 @@ jobs:
                 comment += `### 📋 关于 Bug Report 模板 / About Bug Report Template\n\n`;
                 comment += `我们注意到你的 issue 似乎与 bug 相关，但没有使用 Bug Report 模板。为了帮助我们更快地定位和修复问题，请确保你的 bug report 包含以下信息：\n`;
                 comment += `We noticed your issue seems to be bug-related, but doesn't use the Bug Report template. To help us reproduce and fix the issue faster, please make sure your bug report includes:\n\n`;
-                comment += `- ✅ **QwenPaw 版本 / Version** (使用 \`qwenpaw --version\` 查看)\n`;
+                comment += `- ✅ **QwenPaw 版本 / Version** (使用 \`ai-personal-assistant --version\` 查看)\n`;
                 comment += `- ✅ **操作系统 / OS** (macOS/Linux/Windows 及版本)\n`;
                 comment += `- ✅ **复现步骤 / Steps to Reproduce** (详细的步骤)\n`;
                 comment += `- ✅ **实际结果 vs 预期结果 / Actual vs Expected**\n`;
@@ -315,7 +315,7 @@ jobs:
               if (needBugTemplateReminder) {
                 comment += `### 📋 About Bug Report Template\n\n`;
                 comment += `We noticed your issue seems to be bug-related, but doesn't use the Bug Report template. To help us reproduce and fix the issue faster, please make sure your bug report includes:\n\n`;
-                comment += `- ✅ **QwenPaw Version** (use \`qwenpaw --version\`)\n`;
+                comment += `- ✅ **QwenPaw Version** (use \`ai-personal-assistant --version\`)\n`;
                 comment += `- ✅ **Operating System** (macOS/Linux/Windows and version)\n`;
                 comment += `- ✅ **Steps to Reproduce** (detailed steps)\n`;
                 comment += `- ✅ **Actual vs Expected Behavior**\n`;

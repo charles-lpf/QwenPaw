@@ -52,7 +52,7 @@ Reports that miss these requirements may be closed as `invalid` or `no-action`.
 
 ## Alignment with `qwenpaw init`
 
-The security model and recommended baseline in this document are **aligned with** what users see and accept during **`qwenpaw init`**. The init flow shows a security notice that covers: single-operator boundary; shared delegated authority when multiple people message the same instance; restricting channels and users (allowlists); using separate config/credentials and OS users or hosts per trust boundary; least privilege and sandboxing; keeping secrets out of the working directory and skill-accessible paths; and reviewing config and skills regularly. When updating either this document or the `SECURITY_WARNING` in `src/qwenpaw/cli/init_cmd.py`, keep the **concepts and recommendations** consistent so operators get the same message in both places.
+The security model and recommended baseline in this document are **aligned with** what users see and accept during **`qwenpaw init`**. The init flow shows a security notice that covers: single-operator boundary; shared delegated authority when multiple people message the same instance; restricting channels and users (allowlists); using separate config/credentials and OS users or hosts per trust boundary; least privilege and sandboxing; keeping secrets out of the working directory and skill-accessible paths; and reviewing config and skills regularly. When updating either this document or the `SECURITY_WARNING` in `src/ai_personal_assistant/cli/init_cmd.py`, keep the **concepts and recommendations** consistent so operators get the same message in both places.
 
 ## Security & Trust
 
@@ -149,7 +149,7 @@ Skills are loaded and run **in-process** (or under the same trust boundary) as t
 - **Model**: Use a capable model when the agent has tools or handles untrusted input.
 - **Review**: Review your config and skills regularly.
 
-For more operational and hardening guidance, see the [documentation](https://qwenpaw.agentscope.io/) and any security-related docs linked from the repo.
+For more operational and hardening guidance, see the [documentation](https://ai-personal-assistant.agentscope.io/) and any security-related docs linked from the repo.
 
 ## Runtime Requirements
 

@@ -8,7 +8,7 @@ Run from **repo root**.
 bash scripts/wheel_build.sh
 ```
 
-- Builds the console frontend (`console/`), copies `console/dist` to `src/qwenpaw/console/dist`, then builds the wheel. Output: `dist/*.whl`.
+- Builds the console frontend (`console/`), copies `console/dist` to `src/ai_personal_assistant/console/dist`, then builds the wheel. Output: `dist/*.whl`.
 
 ## Build website
 
@@ -24,8 +24,8 @@ bash scripts/website_build.sh
 bash scripts/docker_build.sh [IMAGE_TAG] [EXTRA_ARGS...]
 ```
 
-- Default tag: `qwenpaw:latest`. Uses `deploy/Dockerfile` (multi-stage: builds console then Python app).
-- Example: `bash scripts/docker_build.sh myreg/qwenpaw:v1 --no-cache`.
+- Default tag: `ai-personal-assistant:latest`. Uses `deploy/Dockerfile` (multi-stage: builds console then Python app).
+- Example: `bash scripts/docker_build.sh myreg/ai-personal-assistant:v1 --no-cache`.
 
 ## Run Test
 

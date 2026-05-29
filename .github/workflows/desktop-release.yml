@@ -31,7 +31,7 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $content = Get-Content src/qwenpaw/__version__.py -Raw
+          $content = Get-Content src/ai-personal-assistant/__version__.py -Raw
           if ($content -match '__version__\s*=\s*"([^"]+)"') {
             $v = $Matches[1]
           } else {
@@ -53,7 +53,7 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.10"
-          activate-environment: "qwenpaw-build"
+          activate-environment: "ai-personal-assistant-build"
           condarc-file: .github/condarc
           conda-remove-defaults: false
 
@@ -70,7 +70,7 @@ jobs:
 
       - name: Build Windows installer
         shell: pwsh
-        run: conda run -n qwenpaw-build pwsh -File ./scripts/pack/build_win.ps1
+        run: conda run -n ai-personal-assistant-build pwsh -File ./scripts/pack/build_win.ps1
 
       - name: List dist (on failure)
         if: failure()
@@ -99,7 +99,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/qwenpaw/__version__.py)" >> $GITHUB_OUTPUT
+        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai-personal-assistant/__version__.py)" >> $GITHUB_OUTPUT
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -113,7 +113,7 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.10"
-          activate-environment: "qwenpaw-build"
+          activate-environment: "ai-personal-assistant-build"
           condarc-file: .github/condarc
           conda-remove-defaults: false
 
@@ -125,7 +125,7 @@ jobs:
           NODE_OPTIONS: "--max-old-space-size=8192"
         run: |
           chmod +x scripts/pack/build_macos.sh
-          conda run -n qwenpaw-build bash -c 'CREATE_ZIP=1 ./scripts/pack/build_macos.sh'
+          conda run -n ai-personal-assistant-build bash -c 'CREATE_ZIP=1 ./scripts/pack/build_macos.sh'
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
@@ -145,7 +145,7 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $content = Get-Content src/qwenpaw/__version__.py -Raw
+          $content = Get-Content src/ai-personal-assistant/__version__.py -Raw
           if ($content -match '__version__\s*=\s*"([^"]+)"') {
             $v = $Matches[1]
           } else {
@@ -210,7 +210,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/qwenpaw/__version__.py)" >> $GITHUB_OUTPUT
+        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai-personal-assistant/__version__.py)" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -290,7 +290,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/qwenpaw/__version__.py)" >> $GITHUB_OUTPUT
+        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai-personal-assistant/__version__.py)" >> $GITHUB_OUTPUT
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -331,22 +331,22 @@ jobs:
             --output win-metadata.json
 
           ossutil cp "$WIN_EXE" \
-            "oss://qwenpaw-download/files/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe" \
             --acl public-read \
             --force
 
           ossutil cp "$WIN_EXE" \
-            "oss://qwenpaw-download/files/apps/desktop/win/QwenPaw-Setup-latest.exe" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/win/QwenPaw-Setup-latest.exe" \
             --acl public-read \
             --force
 
           ossutil cp win-metadata.json \
-            "oss://qwenpaw-download/metadata/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe.json" \
             --acl public-read \
             --force
 
           ossutil cp win-metadata.json \
-            "oss://qwenpaw-download/metadata/apps/desktop/win/QwenPaw-Setup-latest.exe.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/win/QwenPaw-Setup-latest.exe.json" \
             --acl public-read \
             --force
 
@@ -373,22 +373,22 @@ jobs:
             --output mac-metadata.json
 
           ossutil cp "$MAC_ZIP" \
-            "oss://qwenpaw-download/files/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip" \
             --acl public-read \
             --force
 
           ossutil cp "$MAC_ZIP" \
-            "oss://qwenpaw-download/files/apps/desktop/mac/QwenPaw-latest-macOS.zip" \
+            "oss://ai-personal-assistant-download/files/apps/desktop/mac/QwenPaw-latest-macOS.zip" \
             --acl public-read \
             --force
 
           ossutil cp mac-metadata.json \
-            "oss://qwenpaw-download/metadata/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip.json" \
             --acl public-read \
             --force
 
           ossutil cp mac-metadata.json \
-            "oss://qwenpaw-download/metadata/apps/desktop/mac/QwenPaw-latest-macOS.zip.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/mac/QwenPaw-latest-macOS.zip.json" \
             --acl public-read \
             --force
 
@@ -423,19 +423,19 @@ jobs:
               --output "${metadata}"
 
             ossutil cp "${artifact}" \
-              "oss://qwenpaw-download/files/apps/desktop/${platform}/${versioned_name}" \
+              "oss://ai-personal-assistant-download/files/apps/desktop/${platform}/${versioned_name}" \
               --acl public-read \
               --force
             ossutil cp "${artifact}" \
-              "oss://qwenpaw-download/files/apps/desktop/${platform}/${latest_name}" \
+              "oss://ai-personal-assistant-download/files/apps/desktop/${platform}/${latest_name}" \
               --acl public-read \
               --force
             ossutil cp "${metadata}" \
-              "oss://qwenpaw-download/metadata/apps/desktop/${platform}/${versioned_name}.json" \
+              "oss://ai-personal-assistant-download/metadata/apps/desktop/${platform}/${versioned_name}.json" \
               --acl public-read \
               --force
             ossutil cp "${metadata}" \
-              "oss://qwenpaw-download/metadata/apps/desktop/${platform}/${latest_name}.json" \
+              "oss://ai-personal-assistant-download/metadata/apps/desktop/${platform}/${latest_name}.json" \
               --acl public-read \
               --force
           }
@@ -460,7 +460,7 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.version }}"
 
-          ossutil cp "oss://qwenpaw-download/metadata/apps/desktop/index.json" \
+          ossutil cp "oss://ai-personal-assistant-download/metadata/apps/desktop/index.json" \
             desktop-index.json 2>/dev/null || cat > desktop-index.json << 'EOF'
           {
             "product": "desktop",
@@ -522,7 +522,7 @@ jobs:
             "mac-tauri"
 
           ossutil cp desktop-index.json \
-            "oss://qwenpaw-download/metadata/apps/desktop/index.json" \
+            "oss://ai-personal-assistant-download/metadata/apps/desktop/index.json" \
             --acl public-read \
             --force
 
@@ -530,7 +530,7 @@ jobs:
 
       - name: Update main index
         run: |
-          ossutil cp "oss://qwenpaw-download/metadata/index.json" \
+          ossutil cp "oss://ai-personal-assistant-download/metadata/index.json" \
             main-index.json 2>/dev/null || cat > main-index.json << 'EOF'
           {
             "version": "1.0",
@@ -562,7 +562,7 @@ jobs:
           PYTHON
 
           ossutil cp main-index.json \
-            "oss://qwenpaw-download/metadata/index.json" \
+            "oss://ai-personal-assistant-download/metadata/index.json" \
             --acl public-read \
             --force
 

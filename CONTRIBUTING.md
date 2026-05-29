@@ -4,7 +4,7 @@
 
 Thank you for your interest in contributing to QwenPaw! QwenPaw is an open-source **personal AI assistant** that runs in your own environment—on your machine or in the cloud. It connects to DingTalk, Feishu, QQ, Discord, iMessage, and other chat apps, supports scheduled tasks and heartbeat, and extends its capabilities through **Skills**. We warmly welcome contributions that help make QwenPaw more useful for everyone: whether you add a new channel, a new model provider, a Skill, improve docs, or fix bugs.
 
-**Quick links:** [GitHub](https://github.com/agentscope-ai/QwenPaw) · [Docs](https://qwenpaw.agentscope.io/) · [License: Apache 2.0](LICENSE)
+**Quick links:** [GitHub](https://github.com/agentscope-ai/AI-Personal-Assistant) · [Docs](https://ai-personal-assistant.agentscope.io/) · [License: Apache 2.0](LICENSE)
 
 ---
 
@@ -16,7 +16,7 @@ To keep collaboration smooth and maintain quality, please follow these guideline
 
 Before starting:
 
-- **Check [Open Issues](https://github.com/agentscope-ai/QwenPaw/issues)** and any [Projects](https://github.com/agentscope-ai/QwenPaw/projects) or roadmap labels.
+- **Check [Open Issues](https://github.com/agentscope-ai/AI-Personal-Assistant/issues)** and any [Projects](https://github.com/agentscope-ai/AI-Personal-Assistant/projects) or roadmap labels.
 - **If a related issue exists** and is open or unassigned: comment to say you want to work on it to avoid duplicate effort.
 - **If no related issue exists**: open a new issue describing your proposal. The maintainers will respond and can help align with the project direction.
 
@@ -101,7 +101,7 @@ Contributed model providers should have the following characteristics:
 1. (Required) Natively compatible with the OpenAI `chat.completions` API or Anthropic `messages` API. If this condition is not met, please create an issue for discussion first. Directly adding an incompatible provider will significantly increase maintenance costs.
 2. (Recommended) Support the `/model/list` endpoint to automatically obtain the model list. Although not mandatory, this will greatly enhance the user experience.
 
-If the above conditions are met, you can create a new Provider instance in `src/qwenpaw/providers/provider_manager.py` and register it in the `ProviderManager` class to make it a built-in provider in QwenPaw.
+If the above conditions are met, you can create a new Provider instance in `src/ai_personal_assistant/providers/provider_manager.py` and register it in the `ProviderManager` class to make it a built-in provider in QwenPaw.
 
 If you wish to submit a Pull Request, please ensure that the following conditions are met.
 
@@ -116,11 +116,11 @@ If you wish to submit a Pull Request, please ensure that the following condition
 Channels are how QwenPaw talks to **DingTalk, Feishu, QQ, Discord, iMessage**, etc. You can add a new channel so QwenPaw can work with your favorite IM or bot platform.
 
 - **Protocol:** All channels use a unified in-process contract: **native payload → `content_parts`** (e.g. `TextContent`, `ImageContent`, `FileContent`). The agent receives `AgentRequest` with these content parts; replies are sent back via the channel’s send path.
-- **Implementation:** Implement a **subclass of `BaseChannel`** (in `src/qwenpaw/app/channels/base.py`):
+- **Implementation:** Implement a **subclass of `BaseChannel`** (in `src/ai_personal_assistant/app/channels/base.py`):
   - Set the class attribute `channel` to a unique channel key (e.g. `"telegram"`).
   - Implement the lifecycle and message handling (e.g. receive → `content_parts` → `process` → send response).
   - Use the manager’s queue and consumer loop if the channel is long-lived (default).
-- **Discovery:** Built-in channels are registered in `src/qwenpaw/app/channels/registry.py`. **Custom channels** are loaded from the working directory: place a module (e.g. `custom_channels/telegram.py` or a package `custom_channels/telegram/`) that defines a `BaseChannel` subclass with a `channel` attribute.
+- **Discovery:** Built-in channels are registered in `src/ai_personal_assistant/app/channels/registry.py`. **Custom channels** are loaded from the working directory: place a module (e.g. `custom_channels/telegram.py` or a package `custom_channels/telegram/`) that defines a `BaseChannel` subclass with a `channel` attribute.
 - **CLI:** Users install/add channels with:
   - `qwenpaw channels install <key>` — create a template or copy from `--path` / `--url`
   - `qwenpaw channels add <key>` — install and add to config
@@ -139,7 +139,7 @@ If you contribute a **new built-in channel**, add it to the registry and, if nee
   - **`SKILL.md`** — Markdown instructions for the agent. Use YAML front matter for at least `name` and `description`; optional `metadata` (e.g. for Console).
   - **`references/`** (optional) — Reference documents the agent can use.
   - **`scripts/`** (optional) — Scripts or tools the skill uses.
-- **Location:** Built-in skills live under `src/qwenpaw/agents/skills/<skill_name>/`. The app merges built-in and user **customized_skills** from the working dir into **active_skills**; no extra registration is needed beyond placing a valid `SKILL.md` in a directory.
+- **Location:** Built-in skills live under `src/ai_personal_assistant/agents/skills/<skill_name>/`. The app merges built-in and user **customized_skills** from the working dir into **active_skills**; no extra registration is needed beyond placing a valid `SKILL.md` in a directory.
 - **Content:** Write clear, task-oriented instructions. Describe **when** the skill should be used and **how** (steps, commands, file formats). Avoid overly niche or personal workflows if targeting the **base** repository; those are great as custom or community Skills.
 - **Skills Hub:** QwenPaw supports importing skills from a community hub (e.g. ClawHub). If you want your skill to be installable via hub, follow the same `SKILL.md` + `references/`/`scripts/` layout and the hub’s packaging format.
 
@@ -199,7 +199,7 @@ If you add or change platform support, please test on the affected OS and mentio
 ### Other Contributions
 
 - **MCP (Model Context Protocol):** QwenPaw supports runtime **MCP tool** discovery and hot-plug. Contributing new MCP servers or tools (or docs on how to attach them) helps users extend the agent without changing core code.
-- **Documentation:** Fixes and improvements to [the docs](https://qwenpaw.agentscope.io/) (under `website/public/docs/`) and README are always welcome.
+- **Documentation:** Fixes and improvements to [the docs](https://ai-personal-assistant.agentscope.io/) (under `website/public/docs/`) and README are always welcome.
 - **Bug fixes and refactors:** Small fixes, clearer error messages, and refactors that keep behavior the same are valuable. Prefer opening an issue for larger refactors so we can align on approach.
 - **Examples and workflows:** Tutorials or example workflows (e.g. “daily digest to DingTalk”, “local model + cron”) can be documented or linked from the repo/docs.
 - **Any other useful things!**
@@ -228,8 +228,8 @@ If you add or change platform support, please test on the affected OS and mentio
 
 ## Getting Help
 
-- **Discussions:** [GitHub Discussions](https://github.com/agentscope-ai/QwenPaw/discussions)
-- **Bugs and features:** [GitHub Issues](https://github.com/agentscope-ai/QwenPaw/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/agentscope-ai/AI-Personal-Assistant/discussions)
+- **Bugs and features:** [GitHub Issues](https://github.com/agentscope-ai/AI-Personal-Assistant/issues)
 - **Community:** DingTalk group (see [README](README.md)) and [Discord](https://discord.gg/eYMpfnkG8h)
 
 Thank you for contributing to QwenPaw. Your work helps make it a better assistant for everyone. 🐾

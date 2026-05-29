@@ -43,15 +43,15 @@ jobs:
 
       - name: Copy console build into package
         run: |
-          rm -rf src/qwenpaw/console/*
-          mkdir -p src/qwenpaw/console
-          cp -R console/dist/* src/qwenpaw/console/
+          rm -rf src/ai-personal-assistant/console/*
+          mkdir -p src/ai-personal-assistant/console
+          cp -R console/dist/* src/ai-personal-assistant/console/
 
       - name: Bundle docs into package
         run: |
-          rm -rf src/qwenpaw/docs
-          mkdir -p src/qwenpaw/docs
-          cp website/public/docs/*.md src/qwenpaw/docs/
+          rm -rf src/ai-personal-assistant/docs
+          mkdir -p src/ai-personal-assistant/docs
+          cp website/public/docs/*.md src/ai-personal-assistant/docs/
 
       - name: Install build dependencies
         run: |
@@ -65,7 +65,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.force_push_to_pypi != 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: qwenpaw-wheel
+          name: ai-personal-assistant-wheel
           path: dist/*.whl
           retention-days: 30
 
