@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { useChatAnywhereSessionsState } from "@agentscope-ai/chat";
+import { useChatAnywhereSessions, useChatAnywhereSessionsState } from "@agentscope-ai/chat";
 import sessionApi from "../../sessionApi";
 import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListController";
 
@@ -24,6 +24,7 @@ const ChatSessionInitializer: React.FC = () => {
 
   const { sessions, currentSessionId, setCurrentSessionId } =
     useChatAnywhereSessionsState();
+  const { createSession } = useChatAnywhereSessions();
 
   const currentSessionIdRef = useRef(currentSessionId);
   currentSessionIdRef.current = currentSessionId;
@@ -55,10 +56,9 @@ const ChatSessionInitializer: React.FC = () => {
     if (!sessions.length) {
       // If we're at /chat URL (no chatId) and no sessions, auto-create one
       // This handles: page refresh with no sessions, first visit, etc.
-      // Use sessionApi.createSession() directly to ensure window.currentSessionId is set
       if (!chatId && !autoCreatedForEmptyRef.current) {
         autoCreatedForEmptyRef.current = true;
-        void sessionApi.createSession({});
+        void createSession();
       }
       return;
     }
@@ -105,15 +105,16 @@ const ChatSessionInitializer: React.FC = () => {
       lastAppliedChatIdRef.current = chatId;
     } else {
       // Session not found: URL has stale session id (e.g., after deleting all
-      // sessions and refreshing). Auto-create a new session and set it.
-      // This ensures messages can be sent successfully.
-      const newSessionId = Date.now().toString();
-      sessionApi.pendingNewSessionId = newSessionId;
-      setCurrentSessionId(newSessionId);
+      // sessions and refreshing). Create a new session using the context's
+      // createSession to ensure proper synchronization with Context state.
+      if (!autoCreatedForEmptyRef.current) {
+        autoCreatedForEmptyRef.current = true;
+        void createSession();
+      }
     }
     // Intentionally exclude currentSessionId from deps: only react to URL / session list changes.
     // currentSessionId is read via ref to avoid circular triggers.
-  }, [chatId, sessions, setCurrentSessionId]);
+  }, [chatId, sessions, setCurrentSessionId, createSession]);
 
   return null;
 };
