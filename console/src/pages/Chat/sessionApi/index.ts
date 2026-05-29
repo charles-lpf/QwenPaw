@@ -844,8 +844,30 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
     // Also needed so that getSession(timestampId) can find this session
     // before the backend UUID is resolved.
     this.sessionList = [extended, ...this.sessionList];
-
     this.onSessionCreated?.(session.id);
+
+    // Call backend API to create real session (for AI to respond)
+    try {
+      const backendSession = await api.createChat({
+        session_id: `${DEFAULT_CHANNEL}:${DEFAULT_USER_ID}`,
+        user_id: DEFAULT_USER_ID,
+        channel: DEFAULT_CHANNEL,
+        name: session.name,
+      });
+      if (backendSession?.id) {
+        // Update local session with backend UUID
+        const index = this.sessionList.findIndex((s) => s.id === session.id);
+        if (index > -1) {
+          (this.sessionList[index] as ExtendedSession).id = backendSession.id;
+          (this.sessionList[index] as ExtendedSession).realId = backendSession.id;
+        }
+        this.pendingNewSessionId = backendSession.id;
+        this.updateWindowVariables(this.sessionList[index] as ExtendedSession);
+      }
+    } catch (error) {
+      console.error("Failed to create session on backend:", error);
+    }
+
     return [...this.sessionList];
   }
 
