@@ -9,7 +9,10 @@ html {
   --qp-bg-chat: #f6f4fc;
   --qp-bg-selected: #f0ecfb;
   --qp-bg-card: #ffffff;
+  --qp-bg-card-muted: #fbf9ff;
+  --qp-bg-disabled: #f1eef8;
   --qp-border: #e5e2ea;
+  --qp-border-strong: #d8d2e5;
   --qp-text-primary: #1e1930;
   --qp-text-secondary: #6f6882;
   --qp-text-muted: #9488b1;
@@ -20,9 +23,53 @@ html {
   --color-primary: var(--qp-color-primary);
   --colorPrimary: var(--qp-color-primary);
   --colorBgBase: var(--qp-bg-card);
+  --color-bg-base: var(--qp-bg-card);
+  --colorBgContainer: var(--qp-bg-card);
+  --color-bg-container: var(--qp-bg-card);
+  --colorBgElevated: var(--qp-bg-card);
+  --color-bg-elevated: var(--qp-bg-card);
+  --colorBgLayout: var(--qp-bg-chat);
+  --color-bg-layout: var(--qp-bg-chat);
+  --colorBgContainerDisabled: var(--qp-bg-disabled);
+  --color-bg-container-disabled: var(--qp-bg-disabled);
   --colorText: var(--qp-text-primary);
+  --color-text: var(--qp-text-primary);
   --colorTextSecondary: var(--qp-text-secondary);
+  --color-text-secondary: var(--qp-text-secondary);
+  --colorTextTertiary: var(--qp-text-muted);
+  --color-text-tertiary: var(--qp-text-muted);
+  --colorBorder: var(--qp-border-strong);
+  --color-border: var(--qp-border-strong);
+  --colorBorderSecondary: var(--qp-border);
+  --color-border-secondary: var(--qp-border);
+  --colorFillTertiary: var(--qp-bg-selected);
   --color-fill-tertiary: var(--qp-bg-selected);
+  --colorBgTextHover: rgba(var(--qp-color-primary-rgb), 0.1);
+  --color-bg-text-hover: rgba(var(--qp-color-primary-rgb), 0.1);
+  --body-background: var(--qp-bg-card);
+  --header-background: var(--qp-bg-card-muted);
+  --layout-sider-background: var(--qp-bg-card-muted);
+  --border-color: var(--qp-border);
+  --text-primary: var(--qp-text-primary);
+  --text-secondary: var(--qp-text-secondary);
+  --text-tertiary: var(--qp-text-muted);
+  --item-hover-bg: rgba(var(--qp-color-primary-rgb), 0.1);
+  --table-header-bg: var(--qp-bg-card-muted);
+  --table-row-hover: rgba(var(--qp-color-primary-rgb), 0.05);
+  --primary-color: var(--qp-color-primary);
+  --primary-color-bg: var(--qp-bg-selected);
+  --primary-color-bg-hover: rgba(var(--qp-color-primary-rgb), 0.18);
+  --warning-color: var(--qp-color-warning);
+  --ant-color-primary: var(--qp-color-primary);
+  --ant-color-bg-base: var(--qp-bg-card);
+  --ant-color-bg-container: var(--qp-bg-card);
+  --ant-color-bg-container-disabled: var(--qp-bg-disabled);
+  --ant-color-bg-layout: var(--qp-bg-chat);
+  --ant-color-border: var(--qp-border-strong);
+  --ant-color-border-secondary: var(--qp-border);
+  --ant-color-text: var(--qp-text-primary);
+  --ant-color-text-secondary: var(--qp-text-secondary);
+  --ant-color-text-tertiary: var(--qp-text-muted);
 }
 
 html,
@@ -51,7 +98,10 @@ html.dark-mode {
   --qp-bg-chat: #211c2e;
   --qp-bg-selected: rgba(150, 122, 227, 0.22);
   --qp-bg-card: #211c2e;
+  --qp-bg-card-muted: #262036;
+  --qp-bg-disabled: rgba(255, 255, 255, 0.08);
   --qp-border: rgba(229, 226, 234, 0.14);
+  --qp-border-strong: rgba(229, 226, 234, 0.22);
   --qp-text-primary: rgba(255, 255, 255, 0.9);
   --qp-text-secondary: rgba(255, 255, 255, 0.68);
   --qp-text-muted: rgba(255, 255, 255, 0.42);
@@ -61,73 +111,73 @@ html.dark-mode {
 }
 
 html.dark-mode body {
-  background: #141414;
-  color: rgba(255, 255, 255, 0.85);
+  background: var(--qp-bg-shell);
+  color: var(--qp-text-primary);
 }
 
 /* Ant Design layout background in dark mode */
 html.dark-mode .ant-layout,
 html.dark-mode .qwenpaw-layout {
-  background: #141414 !important;
+  background: var(--qp-bg-shell) !important;
 }
 
 html.dark-mode .ant-layout-content,
 html.dark-mode .qwenpaw-layout-content {
-  background: #141414 !important;
+  background: var(--qp-bg-shell) !important;
 }
 
 /* Page content area background */
 html.dark-mode .page-content {
-  background: #141414;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--qp-bg-chat);
+  border: 1px solid var(--qp-border);
 }
 
 /* Card components — @agentscope-ai/design uses qwenpaw prefix */
 html.dark-mode .qwenpaw-card,
 html.dark-mode .ant-card {
-  background: #1f1f1f !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+  background: var(--qp-bg-card) !important;
+  border-color: var(--qp-border) !important;
+  color: var(--qp-text-primary) !important;
 }
 
 html.dark-mode .qwenpaw-card-head,
 html.dark-mode .ant-card-head {
-  background: #1f1f1f !important;
-  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+  background: var(--qp-bg-card) !important;
+  border-bottom-color: var(--qp-border) !important;
+  color: var(--qp-text-primary) !important;
 }
 
 html.dark-mode .qwenpaw-card-head-title,
 html.dark-mode .ant-card-head-title {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: var(--qp-text-primary) !important;
 }
 
 /* @agentscope-ai/design Card custom title (sparkPrefix-title inside card-wrapper) */
 html.dark-mode .qwenpaw-card-wrapper .qwenpaw-title,
 html.dark-mode .qwenpaw-spark-title {
-  color: rgba(255, 255, 255, 0.85) !important;
+  color: var(--qp-text-primary) !important;
 }
 
 html.dark-mode .qwenpaw-card-wrapper .qwenpaw-info,
 html.dark-mode .qwenpaw-spark-info {
-  color: rgba(255, 255, 255, 0.35) !important;
+  color: var(--qp-text-muted) !important;
 }
 
 html.dark-mode .qwenpaw-card-body,
 html.dark-mode .ant-card-body {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
 }
 
 /* Table components */
 html.dark-mode .qwenpaw-table,
 html.dark-mode .ant-table {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.dark-mode .qwenpaw-table-wrapper,
 html.dark-mode .ant-table-wrapper {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
 }
 
 html.dark-mode .qwenpaw-table-thead > tr > th,
@@ -186,14 +236,14 @@ html.dark-mode .ant-table-thead > tr > th.ant-table-cell-fix-right {
 
 html.dark-mode .qwenpaw-table-tbody > tr > td,
 html.dark-mode .ant-table-tbody > tr > td {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   color: rgba(255, 255, 255, 0.85) !important;
   border-bottom-color: rgba(255, 255, 255, 0.06) !important;
 }
 
 html.dark-mode .qwenpaw-table-tbody > tr:hover > td,
 html.dark-mode .ant-table-tbody > tr:hover > td {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
 }
 
 html.dark-mode .qwenpaw-table-tbody > tr.qwenpaw-table-row-selected > td,
@@ -204,7 +254,7 @@ html.dark-mode .ant-table-tbody > tr.ant-table-row-selected > td {
 /* Table fixed columns shadow in dark mode */
 html.dark-mode .qwenpaw-table-cell-fix-right,
 html.dark-mode .ant-table-cell-fix-right {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
 }
 
 html.dark-mode .qwenpaw-table-cell-fix-right-first::after,
@@ -215,7 +265,7 @@ html.dark-mode .ant-table-cell-fix-right-first::after {
 /* Table pagination */
 html.dark-mode .qwenpaw-pagination .qwenpaw-pagination-item,
 html.dark-mode .ant-pagination .ant-pagination-item {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -239,7 +289,7 @@ html.dark-mode .qwenpaw-pagination .qwenpaw-pagination-prev button,
 html.dark-mode .qwenpaw-pagination .qwenpaw-pagination-next button,
 html.dark-mode .ant-pagination .ant-pagination-prev button,
 html.dark-mode .ant-pagination .ant-pagination-next button {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
   color: rgba(255, 255, 255, 0.65) !important;
 }
@@ -260,7 +310,7 @@ html.dark-mode .ant-table-column-sorter-down.active {
 /* Checkbox in table */
 html.dark-mode .qwenpaw-checkbox-inner,
 html.dark-mode .ant-checkbox-inner {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
@@ -280,7 +330,7 @@ html.dark-mode h3 {
 /* Input / Textarea */
 html.dark-mode .qwenpaw-input,
 html.dark-mode .ant-input {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
@@ -313,14 +363,14 @@ html.dark-mode .ant-input::placeholder {
 
 html.dark-mode .qwenpaw-input-affix-wrapper,
 html.dark-mode .ant-input-affix-wrapper {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Select */
 html.dark-mode .qwenpaw-select-selector,
 html.dark-mode .ant-select-selector {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
@@ -338,7 +388,7 @@ html.dark-mode .ant-select-arrow {
 /* Select dropdown */
 html.dark-mode .qwenpaw-select-dropdown,
 html.dark-mode .ant-select-dropdown {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -377,20 +427,20 @@ html.dark-mode .ant-form-item-required::before {
 /* InputNumber */
 html.dark-mode .qwenpaw-input-number,
 html.dark-mode .ant-input-number {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.dark-mode .qwenpaw-input-number-input,
 html.dark-mode .ant-input-number-input {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.dark-mode .qwenpaw-input-number-handler-wrap,
 html.dark-mode .ant-input-number-handler-wrap {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -403,7 +453,7 @@ html.dark-mode .ant-input-number-handler {
 /* TimePicker */
 html.dark-mode .qwenpaw-picker,
 html.dark-mode .ant-picker {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
@@ -420,12 +470,12 @@ html.dark-mode .ant-picker-suffix {
 
 html.dark-mode .qwenpaw-picker-dropdown,
 html.dark-mode .ant-picker-dropdown {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
 }
 
 html.dark-mode .qwenpaw-picker-panel,
 html.dark-mode .ant-picker-panel {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
@@ -452,7 +502,7 @@ html.dark-mode .ant-picker-dropdown {
 
 html.dark-mode .qwenpaw-picker-panel-container,
 html.dark-mode .ant-picker-panel-container {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
 }
@@ -554,7 +604,7 @@ html.dark-mode .ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after {
 html.dark-mode .qwenpaw-picker-footer,
 html.dark-mode .ant-picker-footer {
   border-top-color: rgba(255, 255, 255, 0.08) !important;
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
 }
 
 html.dark-mode .qwenpaw-picker-today-btn,
@@ -571,7 +621,7 @@ html.dark-mode .ant-picker-panel + .ant-picker-panel {
 /* Modal */
 html.dark-mode .qwenpaw-modal-content,
 html.dark-mode .ant-modal-content {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   color: rgba(255, 255, 255, 0.85) !important;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -579,7 +629,7 @@ html.dark-mode .ant-modal-content {
 
 html.dark-mode .qwenpaw-modal-header,
 html.dark-mode .ant-modal-header {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -601,13 +651,13 @@ html.dark-mode .ant-modal-close:hover {
 
 html.dark-mode .qwenpaw-modal-body,
 html.dark-mode .ant-modal-body {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.dark-mode .qwenpaw-modal-footer,
 html.dark-mode .ant-modal-footer {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-top-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -656,12 +706,12 @@ html.dark-mode .ant-modal-body .ant-form-item-extra {
 /* Drawer */
 html.dark-mode .qwenpaw-drawer-content,
 html.dark-mode .ant-drawer-content {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
 }
 
 html.dark-mode .qwenpaw-drawer-header,
 html.dark-mode .ant-drawer-header {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-bottom-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -682,13 +732,13 @@ html.dark-mode .ant-drawer-close:hover {
 
 html.dark-mode .qwenpaw-drawer-body,
 html.dark-mode .ant-drawer-body {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.dark-mode .qwenpaw-drawer-footer,
 html.dark-mode .ant-drawer-footer {
-  background: #1f1f1f !important;
+  background: var(--qp-bg-card) !important;
   border-top-color: rgba(255, 255, 255, 0.08) !important;
 }
 
@@ -733,25 +783,25 @@ html.dark-mode .ant-form-item-label > label .ant-form-item-tooltip {
 html.dark-mode .qwenpaw-slider-handle::after,
 html.dark-mode .ant-slider-handle::after {
   box-shadow: 0 0 0 2px var(--qp-color-primary) !important;
-  background-color: #1f1f1f !important;
+  background-color: var(--qp-bg-card) !important;
 }
 
 html.dark-mode .qwenpaw-slider-dot,
 html.dark-mode .ant-slider-dot {
   border-color: rgba(255, 255, 255, 0.15) !important;
-  background-color: #2a2a2a !important;
+  background-color: var(--qp-bg-card-muted) !important;
 }
 
 /* Tooltip popup (slider value) */
 html.dark-mode .qwenpaw-tooltip-inner,
 html.dark-mode .ant-tooltip-inner {
-  background-color: #2a2a2a !important;
+  background-color: var(--qp-bg-card-muted) !important;
   color: rgba(255, 255, 255, 0.85) !important;
 }
 
 html.dark-mode .qwenpaw-tooltip-arrow::before,
 html.dark-mode .ant-tooltip-arrow::before {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
 }
 
 /* Tooltip global override — force opaque background in light mode */
@@ -773,13 +823,13 @@ html.dark-mode
 html.dark-mode [class*="chatDisabledOverlay"] :global([class*="chat-input"]),
 html.dark-mode [class*="chatDisabledOverlay"] :global(textarea),
 html.dark-mode [class*="chatDisabledOverlay"] :global(input[type="text"]) {
-  background-color: #2a2a2a !important;
+  background-color: var(--qp-bg-card-muted) !important;
 }
 
 /* Sender area dark mode */
 html.dark-mode [class*="qwenpaw-sender-content"],
 html.dark-mode [class*="sender-content"] {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
 }
 
 /* Chat input placeholder text in dark mode */
@@ -901,7 +951,7 @@ html.dark-mode .qwenpaw-chat-anywhere-welcome-default {
 /* Chat input area in dark mode */
 html.dark-mode .qwenpaw-sender,
 html.dark-mode .qwenpaw-sender-content {
-  background: #2a2a2a !important;
+  background: var(--qp-bg-card-muted) !important;
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
@@ -963,12 +1013,44 @@ html.dark-mode .qwenpaw-sender-content {
 .page-content {
   flex: 1 1 auto;
   overflow: auto;
-  background-color: #fff;
+  background-color: var(--qp-bg-chat);
   border-radius: 8px;
-  /* 8px */
   box-sizing: border-box;
-  border: 1px solid #eae9e7;
-  /* #EAE9E7 */
+  border: 1px solid var(--qp-border);
+  color: var(--qp-text-primary);
+}
+
+.page-content .qwenpaw-btn-default,
+.page-content .ant-btn-default {
+  background: var(--qp-bg-card);
+  border-color: var(--qp-border-strong);
+  color: var(--qp-text-primary);
+}
+
+.page-content .qwenpaw-btn-default:hover,
+.page-content .ant-btn-default:hover,
+.page-content .qwenpaw-btn-text:hover,
+.page-content .ant-btn-text:hover {
+  background: rgba(var(--qp-color-primary-rgb), 0.1) !important;
+  border-color: rgba(var(--qp-color-primary-rgb), 0.36) !important;
+  color: var(--qp-color-primary) !important;
+}
+
+.page-content .qwenpaw-btn-primary,
+.page-content .ant-btn-primary {
+  background: var(--qp-color-primary);
+  border-color: var(--qp-color-primary);
+}
+
+.page-content .qwenpaw-btn-primary:hover,
+.page-content .ant-btn-primary:hover {
+  background: var(--qp-color-primary-hover) !important;
+  border-color: var(--qp-color-primary-hover) !important;
+}
+
+.page-content .anticon,
+.page-content svg {
+  color: inherit;
 }
 
 .table-container {
@@ -1030,8 +1112,8 @@ html.dark-mode .qwenpaw-sender-content {
 .qwenpaw-btn-primary:disabled,
 .qwenpaw-btn-primary[disabled],
 .qwenpaw-btn-primary.qwenpaw-btn-disabled {
-  background-color: #f5f5f5 !important;
-  background: #f5f5f5 !important;
+  background-color: var(--qp-bg-disabled) !important;
+  background: var(--qp-bg-disabled) !important;
   color: rgba(0, 0, 0, 0.25) !important;
   border: 1px solid #d9d9d9 !important;
   box-shadow: none !important;

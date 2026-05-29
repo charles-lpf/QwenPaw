@@ -25,17 +25,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -60,7 +60,7 @@
 
 .sectionDesc {
   margin: 0;
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 14px;
 }
 
@@ -78,7 +78,7 @@
 
 .stateText {
   font-size: 14px;
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 .stateTextError {
@@ -93,11 +93,11 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  background: #fff;
+  background: var(--qp-bg-card);
 
   &:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    border-color: #d9d9d9;
+    border-color: var(--qp-border-strong);
   }
 }
 
@@ -108,11 +108,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 24px;
-  background: #fafafa;
-  border-bottom: 1px solid #f0f0f0;
+  background: var(--qp-bg-card-muted);
+  border-bottom: 1px solid var(--qp-border);
 
   &:hover {
-    background: #f5f5f5;
+    background: var(--qp-bg-disabled);
   }
 }
 
@@ -124,7 +124,7 @@
 
 .toolbarCount {
   font-size: 13px;
-  color: #999;
+  color: var(--qp-text-muted);
   user-select: none;
 }
 
@@ -148,7 +148,7 @@
   align-items: center;
   gap: 16px;
   padding: 12px 24px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--qp-border);
   flex-wrap: wrap;
 
   &:last-child {
@@ -200,7 +200,7 @@
   height: 42px;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  background: #fff;
+  background: var(--qp-bg-card);
   overflow: hidden;
 
   &:focus-within {
@@ -224,12 +224,12 @@
   padding: 0 14px;
   font-size: 14px;
   font-weight: 500;
-  color: #666;
+  color: var(--qp-text-secondary);
   white-space: nowrap;
   user-select: none;
   line-height: 42px;
   border-right: 1px solid #f0f0f0;
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
   min-width: 60px;
   text-align: center;
 
@@ -281,7 +281,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  color: #999;
+  color: var(--qp-text-muted);
   border-radius: 4px;
 
   &:hover {
@@ -346,10 +346,10 @@
   display: flex;
   padding: 16px 24px;
   border-top: 1px solid #f0f0f0;
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
 
   &:hover {
-    background: #f5f5f5;
+    background: var(--qp-bg-disabled);
   }
 }
 
@@ -363,7 +363,7 @@
   background: transparent;
   cursor: pointer;
   font-size: 14px;
-  color: #999;
+  color: var(--qp-text-muted);
 
   &:hover {
     color: var(--qp-color-primary);
@@ -423,7 +423,7 @@
 
   /* Main card */
   .tableCard {
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
     border-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
@@ -468,7 +468,7 @@
   /* Input group (Key / Value 外框) */
   .inputGroup {
     border-color: rgba(255, 255, 255, 0.12);
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
 
     &:focus-within {
       border-color: var(--qp-color-primary);

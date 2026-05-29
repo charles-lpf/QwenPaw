@@ -19,7 +19,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
 }
 
 .breadcrumbHeader {
@@ -31,17 +31,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -49,11 +49,11 @@
 .title {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--qp-text-primary);
 }
 
 .description {
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 14px;
   margin: 0;
   display: none;
@@ -85,20 +85,20 @@
   height: 32px;
   border: none;
   background: transparent;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
   cursor: pointer;
   border-radius: 4px;
   font-size: 16px;
   transition: all 0.2s;
 
   &:hover {
-    color: rgba(20, 20, 19, 0.88);
-    background: rgba(0, 0, 0, 0.04);
+    color: var(--qp-text-primary);
+    background: rgba(var(--qp-color-primary-rgb), 0.1);
   }
 
   &.viewToggleBtnActive {
-    color: rgba(20, 20, 19, 0.88);
-    background: rgba(0, 0, 0, 0.06);
+    color: var(--qp-text-primary);
+    background: rgba(var(--qp-color-primary-rgb), 0.14);
   }
 }
 
@@ -114,7 +114,7 @@
   justify-content: center;
   gap: 8px;
   height: 54px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--qp-border);
 }
 
 .calendarTitle {
@@ -122,28 +122,28 @@
   text-align: center;
   font-size: 16px;
   font-weight: 600;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
 }
 
 .calendarEmptyHint {
   padding: 8px 16px;
-  color: rgba(20, 20, 19, 0.45);
-  border-bottom: 1px solid #f0f0f0;
+  color: var(--qp-text-muted);
+  border-bottom: 1px solid var(--qp-border);
   font-size: 12px;
 }
 
 .calendarWeekHeader {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--qp-border);
 }
 
 .calendarWeekCell {
   padding: 8px;
   text-align: center;
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.45);
-  border-right: 1px solid #f5f5f5;
+  color: var(--qp-text-muted);
+  border-right: 1px solid var(--qp-border);
 
   &:last-child {
     border-right: none;
@@ -158,13 +158,13 @@
 .calendarCell {
   min-height: 108px;
   padding: 8px;
-  border-right: 1px solid #f5f5f5;
-  border-bottom: 1px solid #f5f5f5;
-  background: #fff;
+  border-right: 1px solid var(--qp-border);
+  border-bottom: 1px solid var(--qp-border);
+  background: var(--qp-bg-card);
 }
 
 .calendarCellMuted {
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
 }
 
 .calendarCellToday {
@@ -174,7 +174,7 @@
 .calendarCellDate {
   font-size: 13px;
   font-weight: 500;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   margin-bottom: 6px;
 }
 
@@ -190,15 +190,15 @@
   gap: 6px;
   cursor: pointer;
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.72);
+  color: var(--qp-text-secondary);
 
   &:hover {
-    color: rgba(20, 20, 19, 0.88);
+    color: var(--qp-text-primary);
   }
 }
 
 .calendarEventDisabled {
-  color: rgba(20, 20, 19, 0.72);
+  color: var(--qp-text-secondary);
 
   .calendarEventDot {
     background: #d9d9d9;
@@ -281,7 +281,7 @@
   padding: 8px 10px;
   border-radius: 6px;
   cursor: pointer;
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
   transition: background 0.2s;
 
   &:hover {
@@ -294,19 +294,19 @@
 
   .dayJobItemTime,
   .dayJobItemName {
-    color: rgba(20, 20, 19, 0.88);
+    color: var(--qp-text-primary);
   }
 }
 
 .dayJobItemTime {
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.6);
+  color: var(--qp-text-secondary);
   min-width: 42px;
 }
 
 .dayJobItemName {
   font-size: 13px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
 }
 
 .templateModalHeader {
@@ -318,7 +318,7 @@
 }
 
 .templateModalDesc {
-  color: rgba(20, 20, 19, 0.6);
+  color: var(--qp-text-secondary);
   font-size: 13px;
 }
 
@@ -329,10 +329,10 @@
 }
 
 .templateCard {
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--qp-border);
   border-radius: 10px;
   padding: 14px;
-  background: #fff;
+  background: var(--qp-bg-card);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -341,17 +341,17 @@
 .templateTitle {
   font-size: 14px;
   font-weight: 600;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
 }
 
 .templateDesc {
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.65);
+  color: var(--qp-text-secondary);
 }
 
 .templateMeta {
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .templateTags {
@@ -363,8 +363,8 @@
 
 .templateTag {
   font-size: 11px;
-  color: rgba(20, 20, 19, 0.65);
-  background: #f2f4f7;
+  color: var(--qp-text-secondary);
+  background: var(--qp-bg-selected);
   border-radius: 999px;
   padding: 2px 8px;
 }
@@ -392,14 +392,14 @@
 .historyEmpty {
   padding: 20px 0;
   text-align: center;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .historyItem {
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--qp-border);
   border-radius: 8px;
   padding: 10px 12px;
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
 }
 
 .historyItemMain {
@@ -411,7 +411,7 @@
 
 .historyItemTime {
   font-size: 13px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
 }
 
 .historyItemStatus {
@@ -430,7 +430,7 @@
 .historyItemMeta {
   margin-top: 4px;
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .historyItemError {
@@ -631,7 +631,7 @@
   }
 
   .calendarCell {
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
     border-right-color: rgba(255, 255, 255, 0.08);
     border-bottom-color: rgba(255, 255, 255, 0.08);
   }
@@ -746,7 +746,7 @@
 
   .dayJobPopoverOverlay {
     :global(.ant-popover-inner) {
-      background: #1f1f1f;
+      background: var(--qp-bg-card);
     }
   }
 

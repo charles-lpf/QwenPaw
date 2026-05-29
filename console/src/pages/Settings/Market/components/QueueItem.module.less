@@ -1,11 +1,11 @@
 .queueItem {
   padding: 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid var(--qp-border);
   font-size: 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
 
   &:last-child {
     border-bottom: none;
@@ -20,11 +20,11 @@
 }
 
 .queueItemMeta {
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .queueItemMessage {
-  color: rgba(20, 20, 19, 0.65);
+  color: var(--qp-text-secondary);
   word-break: break-word;
 }
 
@@ -45,7 +45,7 @@
 
 .queued {
   background: rgba(239, 240, 243, 0.9);
-  color: rgba(20, 20, 19, 0.55);
+  color: var(--qp-text-muted);
 }
 
 .installing {
@@ -65,7 +65,7 @@
 
 .cancelled {
   background: rgba(239, 240, 243, 0.9);
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 /* ─── Dark mode ──────────────────────────────────────────────────────────── */

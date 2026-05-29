@@ -24,7 +24,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
   flex-shrink: 0;
 }
 
@@ -37,17 +37,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -61,11 +61,11 @@
 .title {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--qp-text-primary);
 }
 
 .description {
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 14px;
   margin: 0;
   display: none;
@@ -130,7 +130,7 @@
   :global(.sessions-filter-input) {
     :global(.qwenpaw-input),
     :global(.ant-input) {
-      background: #2a2a2a !important;
+      background: var(--qp-bg-card-muted) !important;
       border-color: rgba(255, 255, 255, 0.15) !important;
       color: rgba(255, 255, 255, 0.85) !important;
 
@@ -143,7 +143,7 @@
   :global(.sessions-filter-select) {
     :global(.qwenpaw-select-selector),
     :global(.ant-select-selector) {
-      background: #2a2a2a !important;
+      background: var(--qp-bg-card-muted) !important;
       border-color: rgba(255, 255, 255, 0.15) !important;
       color: rgba(255, 255, 255, 0.85) !important;
     }

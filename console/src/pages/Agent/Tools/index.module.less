@@ -11,7 +11,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
   margin-bottom: 0;
 }
 
@@ -28,17 +28,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -70,26 +70,26 @@
   border-radius: 7px;
   border: none;
   font-size: 13px;
-  color: #999;
+  color: var(--qp-text-muted);
   background: transparent;
   cursor: pointer;
   transition: all 0.18s ease;
 
   &:hover {
-    color: #666;
-    background: rgba(0, 0, 0, 0.04);
+    color: var(--qp-text-secondary);
+    background: rgba(var(--qp-color-primary-rgb), 0.1);
   }
 }
 
 .disabledTab {
   color: var(--qp-color-primary) !important;
-  background: #fff !important;
+  background: var(--qp-bg-card) !important;
   cursor: not-allowed;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
     color: var(--qp-color-primary) !important;
-    background: #fff !important;
+    background: var(--qp-bg-card) !important;
   }
 }
 
@@ -101,14 +101,14 @@
 
 .description {
   margin: 0;
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 14px;
 }
 
 .loading {
   text-align: center;
   padding: 60px;
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 .toolsGrid {
@@ -161,7 +161,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 500;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   line-height: 24px;
   display: flex;
   align-items: center;
@@ -204,12 +204,12 @@
   font-weight: normal;
   line-height: 19px;
   letter-spacing: normal;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .toolDescription {
   margin: 6px 0 16px 0;
-  color: #666;
+  color: var(--qp-text-secondary);
   font-size: 13px;
   line-height: 1.6;
   min-height: 40px;
@@ -250,14 +250,14 @@
   padding: 8px 16px;
   border-radius: 7px;
   font-size: 13px;
-  color: #666;
+  color: var(--qp-text-secondary);
   background: transparent;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--qp-border-strong);
   cursor: pointer;
   transition: all 0.18s ease;
 
   &:hover:not(:disabled) {
-    color: #333;
+    color: var(--qp-text-primary);
     border-color: #bfbfbf;
   }
 

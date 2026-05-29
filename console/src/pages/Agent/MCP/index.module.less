@@ -17,7 +17,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
   margin-bottom: 0;
 }
 
@@ -30,17 +30,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -91,7 +91,7 @@
   margin: 0;
   font-size: 14px;
   font-weight: 500;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   line-height: 24px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -121,7 +121,7 @@
 
 .mcpDescription {
   margin: 6px 0 16px 0;
-  color: #666;
+  color: var(--qp-text-secondary);
   font-size: 13px;
   line-height: 1.6;
   min-height: 40px;
@@ -148,9 +148,9 @@
   padding: 6px 10px;
   border-radius: 7px;
   font-size: 12px;
-  color: #666;
+  color: var(--qp-text-secondary);
   background: transparent;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--qp-border-strong);
   cursor: pointer;
   transition: all 0.18s ease;
   white-space: nowrap;
@@ -158,7 +158,7 @@
   text-overflow: ellipsis;
 
   &:hover {
-    color: #333;
+    color: var(--qp-text-primary);
     border-color: #bfbfbf;
   }
 }
@@ -171,7 +171,7 @@
   font-size: 12px;
   color: #ff4d4f;
   background: transparent;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--qp-border-strong);
   cursor: pointer;
   transition: all 0.18s ease;
   white-space: nowrap;
@@ -206,7 +206,7 @@
   font-weight: normal;
   line-height: 19px;
   letter-spacing: normal;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .editJsonTextArea {
@@ -244,7 +244,7 @@
 .loading {
   text-align: center;
   padding: 60px;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .modalFooter {
@@ -258,14 +258,14 @@
 .importHintTitle {
   margin: 0;
   font-size: 13px;
-  color: rgba(20, 20, 19, 0.65);
+  color: var(--qp-text-secondary);
 }
 
 .importHintList {
   margin: 8px 0;
   padding: 0 0 0 20px;
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .jsonTextArea {
@@ -282,7 +282,7 @@
   background-color: rgba(255, 165, 0, 0.08);
   border-radius: 6px;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.55);
+  color: var(--qp-text-muted);
 }
 
 .toolsButton {
@@ -293,7 +293,7 @@
   font-size: 12px;
   color: #1677ff;
   background: transparent;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--qp-border-strong);
   cursor: pointer;
   transition: all 0.18s ease;
 
@@ -302,9 +302,9 @@
   }
 
   &:disabled {
-    color: rgba(0, 0, 0, 0.25);
+    color: var(--qp-text-muted);
     cursor: not-allowed;
-    border-color: #d9d9d9;
+    border-color: var(--qp-border-strong);
   }
 }
 
@@ -345,7 +345,7 @@
 .toolDescription {
   margin: 6px 0 0;
   font-size: 13px;
-  color: rgba(0, 0, 0, 0.55);
+  color: var(--qp-text-muted);
   line-height: 1.5;
 }
 
@@ -355,11 +355,11 @@
 
   summary {
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.45);
+    color: var(--qp-text-muted);
     user-select: none;
 
     &:hover {
-      color: rgba(0, 0, 0, 0.65);
+      color: var(--qp-text-secondary);
     }
   }
 }
@@ -373,7 +373,7 @@
   line-height: 1.5;
   max-height: 200px;
   overflow: auto;
-  color: rgba(0, 0, 0, 0.75);
+  color: var(--qp-text-secondary);
 }
 
 /* ─── Dark mode ─────────────────────────────────────────────────────────────── */

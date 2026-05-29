@@ -17,7 +17,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
 }
 
 .breadcrumbHeader {
@@ -29,17 +29,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -47,11 +47,11 @@
 .title {
   font-size: 20px;
   font-weight: 600;
-  color: #333;
+  color: var(--qp-text-primary);
 }
 
 .description {
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 14px;
   margin: 0;
   display: none;
@@ -61,7 +61,7 @@
   display: flex;
   gap: 4px;
   padding: 4px;
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(var(--qp-color-primary-rgb), 0.1);
   border-radius: 10px;
   align-self: center;
 }
@@ -72,18 +72,18 @@
   border: none;
   background: transparent;
   font-size: 13px;
-  color: #666;
+  color: var(--qp-text-secondary);
   cursor: pointer;
   transition: all 0.18s ease;
 
   &:hover {
-    color: #333;
-    background: rgba(0, 0, 0, 0.04);
+    color: var(--qp-text-primary);
+    background: rgba(var(--qp-color-primary-rgb), 0.1);
   }
 }
 
 .filterTabActive {
-  background: #fff;
+  background: var(--qp-bg-card);
   color: rgba(38, 36, 76, 0.88);
   font-weight: 500;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
@@ -95,7 +95,7 @@
 }
 
 .loadingText {
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 .channelsGrid {
@@ -180,7 +180,7 @@
   }
 
   &.disabled {
-    color: rgba(20, 20, 19, 0.45);
+    color: var(--qp-text-muted);
   }
 }
 
@@ -207,7 +207,7 @@
 }
 
 .cardTitle {
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
@@ -248,7 +248,7 @@
 
 .cardDescription {
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--qp-text-muted);
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -270,7 +270,7 @@
 
 .cardHint {
   font-size: 11px;
-  color: rgba(0, 0, 0, 0.25);
+  color: var(--qp-text-muted);
 }
 
 /* ---- Channel Drawer Styles ---- */
@@ -345,7 +345,7 @@
   }
 
   .filterTabActive {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
     color: var(--qp-color-primary);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   }

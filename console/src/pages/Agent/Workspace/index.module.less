@@ -17,7 +17,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
   flex-shrink: 0;
 }
 
@@ -37,17 +37,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -55,7 +55,7 @@
 .workspacePath {
   margin: 0;
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.85);
+  color: var(--qp-text-primary);
   font-family: monospace;
   margin-left: 12px;
   border-radius: 2px;
@@ -116,7 +116,7 @@
   margin: 0;
   margin-bottom: 12px;
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   flex-shrink: 0;
 }
 
@@ -187,7 +187,7 @@
 
 .editorHeader {
   padding: 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--qp-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -202,7 +202,7 @@
 
 .filePath {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   font-family: monospace;
 }
 
@@ -331,7 +331,7 @@
 
 .toggleLabel {
   font-size: 12px;
-  color: #666;
+  color: var(--qp-text-secondary);
   white-space: nowrap;
 }
 
@@ -340,7 +340,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #999;
+  color: var(--qp-text-muted);
   height: calc(100% - 20px);
 }
 
@@ -359,12 +359,12 @@
   border-radius: 8px;
   margin-bottom: 8px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--qp-bg-card);
   transition: all 0.2s;
 
   &:hover:not(.selected) {
-    border-color: #d9d9d9;
-    background-color: #fafafa;
+    border-color: var(--qp-border-strong);
+    background-color: var(--qp-bg-card-muted);
   }
 
   &.selected {
@@ -438,12 +438,12 @@
 
 .fileItemMeta {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 .expandIcon {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   margin-left: 8px;
 }
 
@@ -459,12 +459,12 @@
   border-radius: 6px;
   margin-bottom: 6px;
   cursor: pointer;
-  background-color: #fff;
+  background-color: var(--qp-bg-card);
   transition: all 0.2s;
 
   &:hover:not(.selected) {
-    border-color: #d9d9d9;
-    background-color: #fafafa;
+    border-color: var(--qp-border-strong);
+    background-color: var(--qp-bg-card-muted);
   }
 
   &.selected {
@@ -480,7 +480,7 @@
 
 .dailyMemoryMeta {
   font-size: 11px;
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 .attribution {
@@ -519,12 +519,12 @@
 
   /* File list items */
   .fileItem {
-    background-color: #2a2a2a;
+    background-color: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.1);
 
     &:hover:not(.selected) {
       border-color: rgba(255, 255, 255, 0.2);
-      background-color: #333;
+      background-color: var(--qp-text-primary);
     }
 
     &.selected {
@@ -561,12 +561,12 @@
 
   /* Daily memory items */
   .dailyMemoryItem {
-    background-color: #2a2a2a;
+    background-color: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.1);
 
     &:hover:not(.selected) {
       border-color: rgba(255, 255, 255, 0.2);
-      background-color: #333;
+      background-color: var(--qp-text-primary);
     }
 
     &.selected {
@@ -599,11 +599,11 @@
   .markdownViewer {
     border-color: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.85);
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
 
     :global {
       pre {
-        background: #2a2a2a;
+        background: var(--qp-bg-card-muted);
         border-color: rgba(255, 255, 255, 0.1);
 
         code {
@@ -618,7 +618,7 @@
         }
 
         th {
-          background: #2a2a2a;
+          background: var(--qp-bg-card-muted);
           color: rgba(255, 255, 255, 0.85);
         }
 
@@ -648,7 +648,7 @@
   /* Textarea inside editor */
   .textarea,
   .editorContent textarea {
-    background: #2a2a2a !important;
+    background: var(--qp-bg-card-muted) !important;
     color: rgba(255, 255, 255, 0.85) !important;
     border-color: rgba(255, 255, 255, 0.1) !important;
   }

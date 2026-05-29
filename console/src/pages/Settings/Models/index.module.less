@@ -26,7 +26,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
   margin-bottom: 0;
   flex-shrink: 0;
 }
@@ -47,17 +47,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -68,7 +68,7 @@
 }
 
 .loadingText {
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 /* ---- Sections ---- */
@@ -89,7 +89,7 @@
 
 .sectionDesc {
   margin: 0 0 24px;
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 14px;
 }
 
@@ -112,7 +112,7 @@
 .providerGroupTitle {
   font-size: 14px;
   font-weight: 600;
-  color: #666;
+  color: var(--qp-text-secondary);
   margin: 0 0 12px;
   letter-spacing: 0.02em;
 }
@@ -135,10 +135,10 @@
   cursor: pointer;
   position: relative;
   overflow: visible;
-  background: #fff;
+  background: var(--qp-bg-card);
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--qp-border);
   padding: 16px;
   padding-bottom: 64px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -179,7 +179,7 @@
   }
 
   &.disabled {
-    color: #999;
+    color: var(--qp-text-muted);
   }
 }
 
@@ -222,8 +222,8 @@
   border-radius: 4px;
   font-size: 11px;
   font-weight: 500;
-  background-color: rgba(0, 0, 0, 0.06);
-  color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(var(--qp-color-primary-rgb), 0.14);
+  color: var(--qp-text-secondary);
 }
 
 .customTag {
@@ -267,7 +267,7 @@
     }
 
     &.disabled {
-      color: #999;
+      color: var(--qp-text-muted);
     }
   }
 }
@@ -314,14 +314,14 @@
 }
 
 .infoLabel {
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--qp-text-muted);
   min-width: 60px;
   flex-shrink: 0;
   font-weight: 400;
 }
 
 .infoValue {
-  color: rgba(0, 0, 0, 0.65);
+  color: var(--qp-text-secondary);
   font-family: "SF Mono", "Menlo", monospace;
   font-size: 12px;
   overflow: hidden;
@@ -332,7 +332,7 @@
 }
 
 .infoEmpty {
-  color: rgba(0, 0, 0, 0.25);
+  color: var(--qp-text-muted);
   font-style: italic;
 }
 
@@ -346,7 +346,7 @@
   bottom: 16px;
   left: 16px;
   right: 16px;
-  background: #fff;
+  background: var(--qp-bg-card);
   z-index: 10;
 }
 
@@ -392,7 +392,7 @@
   background: transparent;
   padding: 0 0 12px;
   cursor: pointer;
-  color: #333;
+  color: var(--qp-text-primary);
 }
 
 .advancedConfigToggleLabel {
@@ -408,7 +408,7 @@
   width: 100%;
   min-width: 0;
   flex: 1 1 auto;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--qp-border-strong);
   border-radius: 8px;
   overflow: hidden;
   background: #fafbfc;
@@ -507,7 +507,7 @@
 .slotSection {
   padding: 24px;
   margin: 20px;
-  background: #ffffff;
+  background: var(--qp-bg-card);
   border-radius: 6px;
   border: 1px solid #e8e8e8;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -515,7 +515,7 @@
 
   &:hover {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    border-color: #d9d9d9;
+    border-color: var(--qp-border-strong);
   }
 }
 
@@ -525,7 +525,7 @@
   align-items: center;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--qp-border);
 }
 
 .slotTitle {
@@ -584,7 +584,7 @@
 
 .slotLabel {
   font-size: 14px;
-  color: #666;
+  color: var(--qp-text-secondary);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -976,7 +976,7 @@
 .modelList {
   max-height: 480px;
   overflow-y: auto;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--qp-border);
   border-radius: 8px;
   margin-top: 8px;
 }
@@ -984,7 +984,7 @@
 .modelListEmpty {
   padding: 24px;
   text-align: center;
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 13px;
 }
 
@@ -993,7 +993,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 1px solid var(--qp-border);
   transition: background 0.15s;
   flex-wrap: wrap;
   gap: 8px;
@@ -1003,7 +1003,7 @@
   }
 
   &:hover {
-    background: #fafafa;
+    background: var(--qp-bg-card-muted);
   }
 }
 
@@ -1058,7 +1058,7 @@
 
 .customModelHint {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   line-height: 1.4;
   white-space: normal;
 }
@@ -1081,7 +1081,7 @@
 
 .modelListItemId {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   font-family: "SF Mono", "Menlo", monospace;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1117,7 +1117,7 @@
 .modelAddForm {
   margin-top: 12px;
   padding: 16px;
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
   border-radius: 8px;
   border: 1px dashed #d9d9d9;
 }
@@ -1378,7 +1378,7 @@
 
   /* Provider card */
   .providerCard {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   }
@@ -1422,7 +1422,7 @@
 
   .cardActions {
     border-top-color: rgba(255, 255, 255, 0.08);
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
   }
 
   .configBtn {
@@ -1439,7 +1439,7 @@
 
   /* Slot section (LLM 顶部选择区) */
   .slotSection {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
@@ -1559,7 +1559,7 @@
 
   /* Provider cards */
   .providerCard {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
 
     &.normal {
       border: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -1605,7 +1605,7 @@
 
   .customHeaderDelete {
     flex: 0 0 auto;
-    color: #999;
+    color: var(--qp-text-muted);
     cursor: pointer;
     transition: color 0.2s;
 

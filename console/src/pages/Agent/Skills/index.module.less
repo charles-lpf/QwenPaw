@@ -11,7 +11,7 @@
   align-items: center;
   position: relative;
   padding: 20px;
-  border-bottom: 1px solid #eae9e7;
+  border-bottom: 1px solid var(--qp-border);
   flex-shrink: 0;
 }
 
@@ -24,17 +24,17 @@
 }
 
 .breadcrumbParent {
-  color: #999;
+  color: var(--qp-text-muted);
   font-weight: 400;
 }
 
 .breadcrumbSeparator {
-  color: #ccc;
+  color: var(--qp-text-muted);
   margin: 0 4px;
 }
 
 .breadcrumbCurrent {
-  color: #333;
+  color: var(--qp-text-primary);
   font-weight: 600;
   font-size: 20px;
 }
@@ -63,7 +63,7 @@
 
 .creationActionButton {
   min-width: 108px;
-  background: #fff;
+  background: var(--qp-bg-card);
   border-color: #d0d7e2;
   color: #1f2937;
 }
@@ -78,7 +78,7 @@
 }
 
 .loadingText {
-  color: #999;
+  color: var(--qp-text-muted);
 }
 
 .noSearchResults {
@@ -88,7 +88,7 @@
   justify-content: center;
   gap: 12px;
   padding: 80px 24px;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .noSearchResultsIcon {
@@ -132,7 +132,7 @@
 
 .batchCount {
   font-size: 13px;
-  color: #666;
+  color: var(--qp-text-secondary);
   margin-right: 4px;
 }
 
@@ -199,10 +199,10 @@
   }
 
   &.status_disabled {
-    color: rgba(20, 20, 19, 0.45);
+    color: var(--qp-text-muted);
 
     .statusDot {
-      background-color: rgba(20, 20, 19, 0.25);
+      background-color: var(--qp-text-muted);
     }
   }
 }
@@ -241,7 +241,7 @@
       align-items: center;
       gap: 4px;
       font-size: 11px;
-      color: rgba(20, 20, 19, 0.45);
+      color: var(--qp-text-muted);
       margin-top: -2px;
 
       .calendarIcon {
@@ -274,7 +274,7 @@
   }
 
   .channelValue {
-    color: rgba(20, 20, 19, 0.88);
+    color: var(--qp-text-primary);
     font-weight: 500;
     padding: 2px 8px;
     border-radius: 4px;
@@ -318,7 +318,7 @@
   margin: 0;
   font-size: 15px;
   font-weight: 600;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   line-height: 22px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -342,7 +342,7 @@
 
   &.disabled {
     background-color: rgba(239, 240, 243, 0.8);
-    color: rgba(20, 20, 19, 0.65);
+    color: var(--qp-text-secondary);
   }
 }
 
@@ -366,7 +366,7 @@
   line-height: 20px;
   margin: 0;
   font-size: 13px;
-  color: rgba(20, 20, 19, 0.65);
+  color: var(--qp-text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -384,7 +384,7 @@
   display: block;
   margin: 0 0 5px 0;
   font-size: 13px;
-  color: rgba(20, 20, 19, 0.55);
+  color: var(--qp-text-muted);
   font-weight: normal;
 }
 
@@ -398,7 +398,7 @@
 }
 
 .metaInfoLabel {
-  color: rgba(20, 20, 19, 0.55);
+  color: var(--qp-text-muted);
   min-width: 72px;
   flex-shrink: 0;
   padding-top: 2px;
@@ -408,7 +408,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   font-weight: 500;
   padding: 1px 8px;
   border-radius: 4px;
@@ -442,7 +442,7 @@
 
 .channelValue {
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 4px;
@@ -451,7 +451,7 @@
 
 .metaValue {
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   font-weight: 500;
   padding: 2px 8px;
   border-radius: 4px;
@@ -467,7 +467,7 @@
   color: #8e8c99;
   flex-shrink: 0;
   white-space: nowrap;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--qp-border);
 }
 
 .customTag {
@@ -526,7 +526,7 @@
   border-radius: 4px;
   font-weight: 500;
   background-color: rgba(239, 240, 243, 0.6);
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   white-space: nowrap;
 }
 
@@ -541,7 +541,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  background: #fff;
+  background: var(--qp-bg-card);
 }
 
 .actionButton {
@@ -770,7 +770,7 @@
 
 .pickerCardMeta {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   margin-top: 4px;
 }
 
@@ -828,13 +828,13 @@
   border: 1px solid var(--color-border-secondary, #d9d9d9);
   border-radius: 6px;
   font-size: 14px;
-  color: rgba(20, 20, 19, 0.88);
+  color: var(--qp-text-primary);
   background: var(--color-bg-base, #ffffff);
   outline: none;
   transition: border-color 0.2s;
 
   &::placeholder {
-    color: rgba(20, 20, 19, 0.25);
+    color: var(--qp-text-muted);
   }
 
   &:focus {
@@ -872,13 +872,13 @@
 .tagSelectEmpty {
   padding: 24px 16px;
   text-align: center;
-  color: rgba(20, 20, 19, 0.35);
+  color: var(--qp-text-muted);
   font-size: 13px;
 }
 
 .filterGroup {
   padding: 8px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--qp-border);
 
   &:last-child {
     border-bottom: none;
@@ -889,7 +889,7 @@
   padding: 4px 12px;
   font-size: 12px;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .filterOptions {
@@ -905,8 +905,8 @@
   padding: 2px 8px;
   font-size: 12px;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.04);
-  color: rgba(0, 0, 0, 0.65);
+  background: rgba(var(--qp-color-primary-rgb), 0.1);
+  color: var(--qp-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
 
@@ -942,20 +942,20 @@
   height: 32px;
   border: none;
   background: transparent;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
   cursor: pointer;
   border-radius: 4px;
   font-size: 16px;
   transition: all 0.2s;
 
   &:hover {
-    color: rgba(20, 20, 19, 0.88);
-    background: rgba(0, 0, 0, 0.04);
+    color: var(--qp-text-primary);
+    background: rgba(var(--qp-color-primary-rgb), 0.1);
   }
 
   &.viewToggleBtnActive {
-    color: rgba(20, 20, 19, 0.88);
-    background: rgba(0, 0, 0, 0.06);
+    color: var(--qp-text-primary);
+    background: rgba(var(--qp-color-primary-rgb), 0.14);
   }
 }
 
@@ -994,7 +994,7 @@
   }
 
   &:hover {
-    background: rgba(0, 0, 0, 0.02);
+    background: rgba(var(--qp-color-primary-rgb), 0.05);
   }
 }
 
@@ -1032,7 +1032,7 @@
   border-radius: 4px;
   white-space: nowrap;
   background-color: rgba(239, 240, 243, 0.9);
-  color: rgba(20, 20, 19, 0.65);
+  color: var(--qp-text-secondary);
 }
 
 .channelBadge {
@@ -1046,13 +1046,13 @@
 
 .listItemTime {
   font-size: 12px;
-  color: rgba(20, 20, 19, 0.45);
+  color: var(--qp-text-muted);
 }
 
 .listItemDesc {
   margin: 4px 0 0;
   font-size: 13px;
-  color: rgba(20, 20, 19, 0.65);
+  color: var(--qp-text-secondary);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1140,7 +1140,7 @@
 
   /* Skill card */
   .skillCard {
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
     border-color: rgba(255, 255, 255, 0.15);
 
     &:hover {
@@ -1168,7 +1168,7 @@
   }
 
   .cardFooter {
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
   }
 
   .skillTitle {
@@ -1264,7 +1264,7 @@
 
   /* Search input - dark mode */
   .searchInput {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.88);
 
@@ -1281,7 +1281,7 @@
   .tagSelect {
     :global {
       .ant-select-selector {
-        background: #2a2a2a;
+        background: var(--qp-bg-card-muted);
         border-color: rgba(255, 255, 255, 0.15);
       }
 
@@ -1404,11 +1404,11 @@
 
   /* List mode - dark mode */
   .skillListItem {
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
     border-color: rgba(255, 255, 255, 0.15);
 
     &:hover {
-      background: #2a2a2a;
+      background: var(--qp-bg-card-muted);
     }
   }
 

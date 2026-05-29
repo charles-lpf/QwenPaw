@@ -33,7 +33,7 @@
 .hintText {
   margin: 0 0 12px;
   font-size: 13px;
-  color: #666;
+  color: var(--qp-text-secondary);
 }
 
 // ============================================
@@ -47,9 +47,9 @@
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--qp-border-strong);
   border-radius: 10px;
-  background: #fff;
+  background: var(--qp-bg-card);
   transition: all 0.2s ease;
   padding: 0 12px;
   height: 48px;
@@ -80,7 +80,7 @@
 }
 
 .urlInputIcon {
-  color: #999;
+  color: var(--qp-text-muted);
   font-size: 16px;
   margin-right: 10px;
   flex-shrink: 0;
@@ -105,7 +105,7 @@
   border-radius: 6px;
   border: none;
   background: transparent;
-  color: #999;
+  color: var(--qp-text-muted);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -154,7 +154,7 @@
   display: flex;
   align-items: center;
   margin: 20px 0;
-  color: #666;
+  color: var(--qp-text-secondary);
   font-size: 13px;
   text-align: center;
 
@@ -189,7 +189,7 @@
   padding: 16px 12px;
   border: 1px solid #e8e8e8;
   border-radius: 10px;
-  background: #fff;
+  background: var(--qp-bg-card);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
@@ -227,7 +227,7 @@
 
 .sourceCardMeta {
   font-size: 12px;
-  color: #999;
+  color: var(--qp-text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -270,9 +270,9 @@
 .examplesPanel {
   margin-top: 16px;
   padding: 16px;
-  background: #fafafa;
+  background: var(--qp-bg-card-muted);
   border-radius: 10px;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--qp-border);
   animation: slideDown 0.2s ease;
 }
 
@@ -292,7 +292,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #666;
+  color: var(--qp-text-secondary);
   margin-bottom: 12px;
   font-weight: 500;
 }
@@ -307,14 +307,14 @@
   display: flex;
   align-items: center;
   padding: 10px 12px;
-  background: #fff;
+  background: var(--qp-bg-card);
   border: 1px solid #e8e8e8;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
   font-size: 13px;
-  color: #333;
+  color: var(--qp-text-primary);
 
   &:hover {
     border-color: #615ced;
@@ -343,8 +343,8 @@
 .exampleItemLabel {
   margin-left: auto;
   font-size: 11px;
-  color: #999;
-  background: #f5f5f5;
+  color: var(--qp-text-muted);
+  background: var(--qp-bg-disabled);
   padding: 2px 8px;
   border-radius: 4px;
   font-family:
@@ -386,7 +386,7 @@
 
   .importHubModal {
     :global(.ant-modal-content) {
-      background: #1f1f1f;
+      background: var(--qp-bg-card);
     }
 
     :global(.ant-modal-header) {
@@ -403,7 +403,7 @@
   }
 
   .inputWrapper {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.15);
 
     &:hover,
@@ -467,7 +467,7 @@
   }
 
   .sourceCard {
-    background: #1f1f1f;
+    background: var(--qp-bg-card);
     border-color: rgba(255, 255, 255, 0.1);
 
     &:hover {
@@ -481,7 +481,7 @@
 
     &.disabled:hover {
       border-color: rgba(255, 255, 255, 0.1);
-      background: #1f1f1f;
+      background: var(--qp-bg-card);
     }
   }
 
@@ -512,7 +512,7 @@
   }
 
   .exampleItem {
-    background: #2a2a2a;
+    background: var(--qp-bg-card-muted);
     border-color: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.85);
 
