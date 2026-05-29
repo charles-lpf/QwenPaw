@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from qwenpaw.utils import command_runner
-from qwenpaw.utils.command_runner import (
+from ai_personal_assistant.utils import command_runner
+from ai_personal_assistant.utils.command_runner import (
     CommandExecutionError,
     ManagedProcess,
     ProcessLaunchError,

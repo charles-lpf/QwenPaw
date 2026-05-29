@@ -36,7 +36,7 @@ def _install_plugin_skills() -> None:
     from .constants import PLUGIN_DIR, _PLUGIN_SKILLS
 
     try:
-        from qwenpaw.agents.skill_system import (
+        from ai_personal_assistant.agents.skill_system import (
             get_skill_pool_dir,
             ensure_skill_pool_initialized,
         )
@@ -124,9 +124,9 @@ def _ensure_default_env_vars() -> None:
     - If absent from both → create a blank placeholder.
     """
     try:
-        from qwenpaw.envs import load_envs, save_envs
+        from ai_personal_assistant.envs import load_envs, save_envs
     except ImportError:
-        logger.warning("Cannot import qwenpaw.envs; env provisioning skipped")
+        logger.warning("Cannot import ai_personal_assistant.envs; env provisioning skipped")
         return
 
     envs = load_envs()
@@ -167,7 +167,7 @@ def _init_a2a_manager() -> None:
 def _register_a2a_command() -> None:
     """Register /a2a as a control command."""
     try:
-        from qwenpaw.app.runner.control_commands import register_command
+        from ai_personal_assistant.app.runner.control_commands import register_command
         from .tools.a2a_command import A2AListCommandHandler
 
         register_command(A2AListCommandHandler())
@@ -420,7 +420,7 @@ def _patch_plugin_loader_unload() -> None:
     when the plugin is uninstalled.
     """
     try:
-        from qwenpaw.plugins.loader import PluginLoader
+        from ai_personal_assistant.plugins.loader import PluginLoader
     except ImportError:
         logger.warning(
             "Cannot import PluginLoader; uninstall patch skipped",

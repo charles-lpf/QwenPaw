@@ -17,7 +17,7 @@ from __future__ import annotations
 import pytest
 from pydantic import ValidationError
 
-from qwenpaw.providers.provider import ModelInfo, Provider, ProviderInfo
+from ai_personal_assistant.providers.provider import ModelInfo, Provider, ProviderInfo
 
 
 # ---------------------------------------------------------------------------

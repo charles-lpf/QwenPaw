@@ -162,7 +162,7 @@ export const useCodingTabsStore = create<CodingTabsState>()(
         }),
     }),
     {
-      name: "qwenpaw-coding-tabs",
+      name: "ai-personal-assistant-coding-tabs",
       // Persist only the path list (no content/dirty) and small `original`s.
       partialize: ((state: CodingTabsState) => ({
         tabsByAgent: Object.fromEntries(

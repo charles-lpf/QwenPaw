@@ -10,14 +10,14 @@ from agentscope_runtime.engine.schemas.exception import (
     ModelNotFoundException,
 )
 
-import qwenpaw.providers.provider_manager as provider_manager_module
-from qwenpaw.exceptions import ProviderError
-from qwenpaw.providers.anthropic_provider import AnthropicProvider
-from qwenpaw.config.config import ModelSlotConfig
-from qwenpaw.providers.openai_provider import OpenAIProvider
-from qwenpaw.providers.provider import ModelInfo
-from qwenpaw.providers.provider_manager import ProviderManager
-from qwenpaw.local_models.llamacpp import LlamaCppServerSetupResult
+import ai_personal_assistant.providers.provider_manager as provider_manager_module
+from ai_personal_assistant.exceptions import ProviderError
+from ai_personal_assistant.providers.anthropic_provider import AnthropicProvider
+from ai_personal_assistant.config.config import ModelSlotConfig
+from ai_personal_assistant.providers.openai_provider import OpenAIProvider
+from ai_personal_assistant.providers.provider import ModelInfo
+from ai_personal_assistant.providers.provider_manager import ProviderManager
+from ai_personal_assistant.local_models.llamacpp import LlamaCppServerSetupResult
 
 
 LEGACY_PROVIDER = {
@@ -83,7 +83,7 @@ LEGACY_PROVIDER = {
 
 @pytest.fixture
 def isolated_secret_dir(monkeypatch, tmp_path):
-    secret_dir = tmp_path / ".qwenpaw.secret"
+    secret_dir = tmp_path / ".ai_personal_assistant.secret"
     monkeypatch.setattr(provider_manager_module, "SECRET_DIR", secret_dir)
     return secret_dir
 

@@ -5,7 +5,7 @@ import json
 import logging
 from pathlib import Path
 
-from qwenpaw.app.runner.control_commands.base import (
+from ai_personal_assistant.app.runner.control_commands.base import (
     BaseControlCommandHandler,
     ControlContext,
 )

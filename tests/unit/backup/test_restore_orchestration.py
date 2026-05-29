@@ -6,8 +6,8 @@ import asyncio
 
 import pytest
 
-from qwenpaw.backup import orchestration
-from qwenpaw.backup.models import (
+from ai_personal_assistant.backup import orchestration
+from ai_personal_assistant.backup.models import (
     BackupDetail,
     BackupValidationError,
     RestoreBackupRequest,

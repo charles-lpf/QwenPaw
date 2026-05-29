@@ -19,7 +19,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from qwenpaw.providers import provider_manager as _provider_manager_module
+from ai_personal_assistant.providers import provider_manager as _provider_manager_module
 
 # =============================================================================
 # Third-Party Library Mocks
@@ -446,7 +446,7 @@ def isolated_secret_dir(monkeypatch, tmp_path):
     This fixture ensures every test uses a clean temporary directory and
     a fresh ProviderManager singleton.
     """
-    secret_dir = tmp_path / ".qwenpaw.secret"
+    secret_dir = tmp_path / ".ai_personal_assistant.secret"
     monkeypatch.setattr(_provider_manager_module, "SECRET_DIR", secret_dir)
     monkeypatch.setattr(
         _provider_manager_module.ProviderManager,

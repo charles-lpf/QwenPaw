@@ -23,8 +23,8 @@ STATE_SPECS = {
 VALID_STATES = set(STATE_SPECS)
 
 EVENT_TO_STATE = {
-    "qwenpaw.startup": "waving",
-    "qwenpaw.shutdown": "idle",
+    "ai_personal_assistant.startup": "waving",
+    "ai_personal_assistant.shutdown": "idle",
     "query.received": "jumping",
     "query.running": "running",
     "query.first_token": "running-right",

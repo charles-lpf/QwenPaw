@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from qwenpaw.agents.tools import agent_management
-from qwenpaw.cli import http as cli_http
+from ai_personal_assistant.agents.tools import agent_management
+from ai_personal_assistant.cli import http as cli_http
 
 
 # CLI API clients hit the local QwenPaw service, so loopback URLs skip proxies.

@@ -18,8 +18,8 @@ try:
 except ImportError:  # pragma: no cover - compatibility fallback
     GeminiChatFormatter = None
 
-from qwenpaw.agents import model_factory
-from qwenpaw.constant import MEDIA_UNSUPPORTED_PLACEHOLDER
+from ai_personal_assistant.agents import model_factory
+from ai_personal_assistant.constant import MEDIA_UNSUPPORTED_PLACEHOLDER
 
 
 def _media_messages() -> list[Msg]:

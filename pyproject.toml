@@ -1,7 +1,7 @@
 [project]
-name = "qwenpaw"
+name = "ai-personal-assistant"
 dynamic = ["version"]
-description = "QwenPaw is a **personal assistant** that runs in your own environment. It talks to you over multiple channels (DingTalk, Feishu, QQ, Discord, iMessage, etc.) and runs scheduled tasks according to your configuration. **What it can do is driven by Skills — the possibilities are open-ended.** Built-in skills include cron, PDF/Office handling, news digest, file reading, and more; you can add custom skills. All data and tasks run on your machine; no third-party hosting."
+description = "AI Personal Assistant is a **personal assistant** that runs in your own environment. It talks to you over multiple channels (DingTalk, Feishu, QQ, Discord, iMessage, etc.) and runs scheduled tasks according to your configuration. **What it can do is driven by Skills — the possibilities are open-ended.** Built-in skills include cron, PDF/Office handling, news digest, file reading, and more; you can add custom skills. All data and tasks run on your machine; no third-party hosting."
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 dependencies = [
@@ -60,15 +60,15 @@ dependencies = [
 ]
 
 [tool.setuptools.dynamic]
-version = {attr = "qwenpaw.__version__.__version__"}
+version = {attr = "ai_personal_assistant.__version__.__version__"}
 
 [tool.setuptools]
 packages = { find = { where = ["src"] } }
 include-package-data = true
 
 [tool.setuptools.package-data]
-# Dockerfile copies console build output to src/qwenpaw/console/ (no dist subdir).
-"qwenpaw" = [
+# Dockerfile copies console build output to src/ai_personal_assistant/console/ (no dist subdir).
+"ai_personal_assistant" = [
     "console/**",
     "agents/md_files/**",
     "agents/skills/**",
@@ -84,8 +84,8 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
-qwenpaw = "qwenpaw.cli.main:cli"
-copaw = "qwenpaw.cli.main:cli"
+ai-personal-assistant = "ai_personal_assistant.cli.main:cli"
+qwenpaw = "ai_personal_assistant.cli.main:cli"
 
 # Optional doctor plugins: callable (DoctorRunContext) -> list[str]
 # [project.entry-points."qwenpaw.doctor"]
@@ -110,7 +110,7 @@ whisper = [
     "openai-whisper>=20231117",
 ]
 full = [
-    "qwenpaw[local,whisper]",
+    "ai-personal-assistant[local,whisper]",
 ]
 sip = [
     "pyVoIP>=1.6.0",
@@ -119,7 +119,7 @@ sip = [
     "audioop-lts; python_version >= '3.13'",
 ]
 sip-livekit = [
-    "qwenpaw[sip]",
+    "ai-personal-assistant[sip]",
     "livekit>=1.0.0",
     "livekit-api>=0.6.0",
 ]
@@ -141,7 +141,7 @@ testpaths = [
 ]
 
 [tool.coverage.run]
-source = ["src/qwenpaw"]
+source = ["src/ai_personal_assistant"]
 omit = [
     "*/tests/*",
     "*/test_*",

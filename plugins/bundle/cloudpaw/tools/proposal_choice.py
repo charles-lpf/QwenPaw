@@ -20,8 +20,8 @@ from agentscope.message import TextBlock
 from agentscope.tool import ToolResponse
 
 # pylint: disable=no-name-in-module
-from qwenpaw.app.interaction import InteractionManager
-from qwenpaw.app.agent_context import get_current_session_id
+from ai_personal_assistant.app.interaction import InteractionManager
+from ai_personal_assistant.app.agent_context import get_current_session_id
 
 logger = logging.getLogger(__name__)
 

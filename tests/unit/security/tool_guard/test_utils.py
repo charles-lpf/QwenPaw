@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-"""Tests for qwenpaw.security.tool_guard.utils."""
+"""Tests for ai_personal_assistant.security.tool_guard.utils."""
 # pylint: disable=redefined-outer-name
 from __future__ import annotations
 
 from unittest.mock import patch
 
-from qwenpaw.security.tool_guard.models import (
+from ai_personal_assistant.security.tool_guard.models import (
     GuardFinding,
     GuardSeverity,
     GuardThreatCategory,
     ToolGuardResult,
 )
-from qwenpaw.security.tool_guard.utils import (
+from ai_personal_assistant.security.tool_guard.utils import (
     _DEFAULT_GUARDED_TOOLS,
     _parse_guarded_tokens,
     log_findings,
@@ -186,7 +186,7 @@ class TestResolveGuardedTools:
         """If config loading fails, the default set is returned."""
         mock_env_loader.return_value = ""
         with patch(
-            "qwenpaw.security.tool_guard.utils._load_config_tool_guard",
+            "ai_personal_assistant.security.tool_guard.utils._load_config_tool_guard",
             return_value=None,
         ):
             result = resolve_guarded_tools()
@@ -210,7 +210,7 @@ class TestResolveDeniedTools:
         """user_defined=None triggers env/config/default chain."""
         # This test just verifies the function doesn't crash with None
         with patch(
-            "qwenpaw.security.tool_guard.utils.EnvVarLoader.get_str",
+            "ai_personal_assistant.security.tool_guard.utils.EnvVarLoader.get_str",
             return_value="",
         ):
             result = resolve_denied_tools(user_defined=None)
@@ -291,7 +291,7 @@ class TestResolveAutoDeniedRules:
         """An empty user-supplied iterable short-circuits to empty set
         and does NOT fall through to env/config."""
         with patch(
-            "qwenpaw.security.tool_guard.utils.EnvVarLoader.get_str",
+            "ai_personal_assistant.security.tool_guard.utils.EnvVarLoader.get_str",
             return_value="SHOULD_NOT_BE_READ",
         ):
             result = resolve_auto_denied_rules(user_defined=[])
@@ -365,7 +365,7 @@ class TestResolveAutoDeniedRules:
         """If config loading raises, fall through to default empty set."""
         mock_env_loader.return_value = ""
         with patch(
-            "qwenpaw.security.tool_guard.utils._load_config_tool_guard",
+            "ai_personal_assistant.security.tool_guard.utils._load_config_tool_guard",
             return_value=None,
         ):
             result = resolve_auto_denied_rules()

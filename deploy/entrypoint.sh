@@ -4,8 +4,8 @@
 set -e
 
 is_auth_enabled() {
-  if [ "${QWENPAW_AUTH_ENABLED+x}" ]; then
-    flag="${QWENPAW_AUTH_ENABLED}"
+  if [ "${AIPA_AUTH_ENABLED+x}" ]; then
+    flag="${AIPA_AUTH_ENABLED}"
   else
     flag="${COPAW_AUTH_ENABLED:-}"
   fi
@@ -20,14 +20,14 @@ warn_if_auth_off_container_bind() {
 
   cat >&2 <<EOF
 ============================================================
-SECURITY NOTICE: QwenPaw is running in Docker without authentication.
+SECURITY NOTICE: AI Personal Assistant is running in Docker without authentication.
 
-QwenPaw cannot verify whether access to the service is limited to a trusted
-network. Anyone who can reach the service may access QwenPaw APIs without login.
+AI Personal Assistant cannot verify whether access to the service is limited to a trusted
+network. Anyone who can reach the service may access AI Personal Assistant APIs without login.
 
 Recommended:
   - Restrict access to a trusted network or protected environment.
-  - Enable authentication with QWENPAW_AUTH_ENABLED=true if untrusted users or
+  - Enable authentication with AIPA_AUTH_ENABLED=true if untrusted users or
     processes may reach the service.
 ============================================================
 EOF
@@ -37,7 +37,7 @@ EOF
 if [ ! -f "${QWENPAW_WORKING_DIR}/config.json" ]; then
   echo "⚠️  No config.json found in ${QWENPAW_WORKING_DIR}"
   echo "📦 Running initialization..."
-  qwenpaw init --defaults --accept-security
+  ai-personal-assistant init --defaults --accept-security
   echo "✅ Initialization complete!"
 else
   echo "✓ Config found in ${QWENPAW_WORKING_DIR}, skipping initialization."

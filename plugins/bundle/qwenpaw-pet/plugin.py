@@ -15,7 +15,7 @@ _plugin_dir = str(Path(__file__).resolve().parent)
 if _plugin_dir not in sys.path:
     sys.path.insert(0, _plugin_dir)
 
-from qwenpaw.plugins.api import PluginApi  # noqa: E402
+from ai_personal_assistant.plugins.api import PluginApi  # noqa: E402
 
 from emitter import (  # noqa: E402
     emit_pet_event,
@@ -32,9 +32,9 @@ from patch_runner import (  # noqa: E402
 )
 from router import build_router  # noqa: E402
 
-# Logger uses ``qwenpaw.*`` so messages appear in the project logger
-# (``~/.qwenpaw/qwenpaw.log``).
-logger = logging.getLogger("qwenpaw.pet_desktop")
+# Logger uses ``ai_personal_assistant.*`` so messages appear in the project logger
+# (``~/.qwenpaw/ai_personal_assistant.log``).
+logger = logging.getLogger("ai_personal_assistant.pet_desktop")
 
 
 def _atexit_stop_pet_desktop() -> None:
@@ -86,7 +86,7 @@ class QwenPawPetPlugin:
         Patch failures (e.g. an upstream rename of ``AgentRunner`` /
         ``ApprovalService``) surface as ``logger.exception`` so the
         plugin install system can flag them; we still attempt to keep
-        the desktop autostart and ``qwenpaw.startup`` emit going so the
+        the desktop autostart and ``ai_personal_assistant.startup`` emit going so the
         UI is never silently dead.
         """
         try:
@@ -107,7 +107,7 @@ class QwenPawPetPlugin:
         try:
             ensure_desktop_available()
             emit_pet_event(
-                "qwenpaw.startup",
+                "ai_personal_assistant.startup",
                 text="QwenPaw started",
                 duration_ms=1500,
             )
@@ -126,7 +126,7 @@ class QwenPawPetPlugin:
         ``QWENPAW_PET_STOP_ON_SHUTDOWN=0``.
         """
         try:
-            emit_pet_event("qwenpaw.shutdown", text="", duration_ms=500)
+            emit_pet_event("ai_personal_assistant.shutdown", text="", duration_ms=500)
         except Exception:
             logger.warning(
                 "QwenPaw Pet: shutdown event emit failed",

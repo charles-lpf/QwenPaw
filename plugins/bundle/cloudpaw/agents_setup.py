@@ -23,7 +23,7 @@ def register_extra_tools(agent_id: str, extra_tools: dict[str, dict]) -> None:
     if not extra_tools:
         return
     try:
-        from qwenpaw.config.config import (
+        from ai_personal_assistant.config.config import (
             BuiltinToolConfig,
             ToolsConfig,
             load_agent_config,
@@ -102,7 +102,7 @@ def _build_acp_config(spec: dict[str, Any]) -> Any:
     to inject LLM provider config that iac-code reads from IAC_CODE_* vars.
     """
     try:
-        from qwenpaw.config.config import ACPAgentConfig, ACPConfig
+        from ai_personal_assistant.config.config import ACPAgentConfig, ACPConfig
     except ImportError:
         logger.warning("Cannot import ACPConfig; ACP configuration skipped")
         return None
@@ -176,7 +176,7 @@ def _write_qwenpaw_mode_to_settings() -> None:
 def ensure_builtin_agents() -> None:
     """Register built-in Aliyun agents."""
     try:
-        from qwenpaw.config.config import (
+        from ai_personal_assistant.config.config import (
             AgentProfileConfig,
             AgentProfileRef,
             AgentsRunningConfig,
@@ -185,8 +185,8 @@ def ensure_builtin_agents() -> None:
             MCPConfig,
             save_agent_config,
         )
-        from qwenpaw.config.utils import load_config, save_config
-        from qwenpaw.constant import WORKING_DIR
+        from ai_personal_assistant.config.utils import load_config, save_config
+        from ai_personal_assistant.constant import WORKING_DIR
     except ImportError:
         logger.error(
             "Cannot import config modules; agent registration skipped",
@@ -275,7 +275,7 @@ def _initialize_agent_workspace(
     language: str = "zh",
 ) -> None:
     """Initialize agent workspace with persona md files and skills."""
-    from qwenpaw.agents.skill_system import get_workspace_skills_dir
+    from ai_personal_assistant.agents.skill_system import get_workspace_skills_dir
 
     (workspace_dir / "sessions").mkdir(exist_ok=True)
     (workspace_dir / "memory").mkdir(exist_ok=True)
@@ -320,7 +320,7 @@ def _seed_persona_md_files(
                 logger.warning("Failed to copy %s: %s", md_file.name, e)
 
     try:
-        from qwenpaw.agents.prompt import _get_agent_md_dir
+        from ai_personal_assistant.agents.prompt import _get_agent_md_dir
 
         generic_md = _get_agent_md_dir(language)
         if generic_md and generic_md.exists():
@@ -353,7 +353,7 @@ def _uninstall_agent_profiles() -> None:
     ]
 
     try:
-        from qwenpaw.config.utils import load_config, save_config
+        from ai_personal_assistant.config.utils import load_config, save_config
     except ImportError:
         logger.warning("Cannot import config modules; agent uninstall skipped")
         return
@@ -400,7 +400,7 @@ def _uninstall_plugin_skills() -> None:
     from .constants import _PLUGIN_SKILLS
 
     try:
-        from qwenpaw.agents.skill_system import (
+        from ai_personal_assistant.agents.skill_system import (
             get_skill_pool_dir,
             ensure_skill_pool_initialized,
         )
@@ -455,9 +455,9 @@ def _uninstall_cloudpaw_env_vars() -> None:
     from .plugin import _DEFAULT_ENV_KEYS
 
     try:
-        from qwenpaw.envs import load_envs, save_envs
+        from ai_personal_assistant.envs import load_envs, save_envs
     except ImportError:
-        logger.warning("Cannot import qwenpaw.envs; env uninstall skipped")
+        logger.warning("Cannot import ai_personal_assistant.envs; env uninstall skipped")
         return
 
     envs = load_envs()
@@ -483,12 +483,12 @@ def _install_workspace_skills(
 ) -> None:
     """Install skills from pool into agent workspace and enable them."""
     try:
-        from qwenpaw.agents.skill_system import (
+        from ai_personal_assistant.agents.skill_system import (
             get_skill_pool_dir,
             get_workspace_skills_dir,
             reconcile_workspace_manifest,
         )
-        from qwenpaw.agents.skill_system.store import (
+        from ai_personal_assistant.agents.skill_system.store import (
             get_workspace_skill_manifest_path,
         )
     except ImportError:

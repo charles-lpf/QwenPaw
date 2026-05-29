@@ -59,7 +59,7 @@ def _import_module_directly(module_name: str, file_path: str) -> ModuleType:
 _SRC = Path(__file__).resolve().parents[3] / "src"
 
 # Use a test-unique module name so the isolated import does not shadow
-# the real ``qwenpaw.app.runner.task_tracker`` in ``sys.modules`` for
+# the real ``ai_personal_assistant.app.runner.task_tracker`` in ``sys.modules`` for
 # other tests that run in the same pytest session.
 _task_tracker_mod = _import_module_directly(
     "_test_issue_3275_task_tracker",

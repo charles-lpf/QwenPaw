@@ -2,7 +2,7 @@ import { Checkbox, Modal } from "@agentscope-ai/design";
 import type { TFunction } from "i18next";
 
 const FREE_MODEL_WARNING_DISABLED_KEY =
-  "qwenpaw_free_model_switch_warning_disabled";
+  "ai-personal-assistant-free-model-switch-warning_disabled";
 
 const PROVIDER_WEBSITE_SAMPLES: Record<string, string> = {
   openrouter: "https://openrouter.ai/collections/free-models",

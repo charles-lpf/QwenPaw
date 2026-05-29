@@ -8,16 +8,16 @@ logger = logging.getLogger(__name__)
 
 
 def inject_interaction_module() -> None:
-    """Inject the interaction module into the qwenpaw.app namespace."""
+    """Inject the interaction module into the ai_personal_assistant.app namespace."""
     import types
     import asyncio
 
-    module_name = "qwenpaw.app.interaction"
+    module_name = "ai_personal_assistant.app.interaction"
     if module_name in sys.modules:
         return
 
     mod = types.ModuleType(module_name)
-    mod.__package__ = "qwenpaw.app"
+    mod.__package__ = "ai_personal_assistant.app"
 
     class _PendingInteraction:
         __slots__ = ("event", "result")

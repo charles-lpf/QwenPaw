@@ -89,7 +89,7 @@ def _check_environment_ready() -> (  # pylint: disable=too-many-branches
     # 3. QwenPaw model configured?
     qwenpaw_model_ok = False
     try:
-        from qwenpaw.providers.provider_manager import ProviderManager
+        from ai_personal_assistant.providers.provider_manager import ProviderManager
 
         pm = ProviderManager()
         active_slot = pm.get_active_model()
@@ -270,7 +270,7 @@ def setup_acp_auto_approve() -> None:
     Non-trusted runners keep the original suspend-and-wait flow intact.
     """
     try:
-        from qwenpaw.agents.acp.client import ACPHostedClient
+        from ai_personal_assistant.agents.acp.client import ACPHostedClient
     except ImportError as exc:
         logger.error(
             "Cannot import ACPHostedClient; "
@@ -378,7 +378,7 @@ def setup_tool_and_prompt_hooks() -> (  # pylint: disable=too-many-statements
     # ACP wrapper is required — the plugin only enables the built-in tool
     # with `async_execution=True` via constants.py.
     try:
-        from qwenpaw.agents.react_agent import QwenPawAgent
+        from ai_personal_assistant.agents.react_agent import QwenPawAgent
     except ImportError as exc:
         logger.error(
             "Cannot import QwenPawAgent; tool/prompt hooks skipped: %s",
@@ -533,8 +533,8 @@ def _setup_a2a_query_rewrite() -> None:
     can list registered agents as before.
     """
     try:
-        from qwenpaw.app.runner.runner import AgentRunner
-        from qwenpaw.app.runner.command_dispatch import _get_last_user_text
+        from ai_personal_assistant.app.runner.runner import AgentRunner
+        from ai_personal_assistant.app.runner.command_dispatch import _get_last_user_text
     except ImportError as exc:
         logger.warning(
             "Cannot import AgentRunner; /a2a query rewrite skipped: %s",
@@ -636,7 +636,7 @@ def _patch_stream_task_timeout() -> None:
     provisioning workflows that can take 10+ minutes.
     """
     try:
-        from qwenpaw.app._app import agent_app
+        from ai_personal_assistant.app._app import agent_app
 
         old = agent_app.stream_task_timeout
         agent_app.stream_task_timeout = _CLOUDPAW_STREAM_TASK_TIMEOUT
@@ -662,8 +662,8 @@ def _patch_mission_master_prompt() -> None:
     builder is called unchanged.
     """
     try:
-        from qwenpaw.agents.mission import prompts as mission_prompts
-        from qwenpaw.agents.mission.prompts import (
+        from ai_personal_assistant.agents.mission import prompts as mission_prompts
+        from ai_personal_assistant.agents.mission.prompts import (
             WORKER_PROMPT_TEMPLATE,
             _build_git_sections,
             build_master_prompt as _original_build_master_prompt,
@@ -758,7 +758,7 @@ def _patch_mission_master_prompt() -> None:
     mission_prompts.build_master_prompt = _patched_build_master_prompt
 
     try:
-        from qwenpaw.agents.mission import handler as mission_handler
+        from ai_personal_assistant.agents.mission import handler as mission_handler
 
         mission_handler.build_master_prompt = _patched_build_master_prompt
     except (ImportError, AttributeError):
@@ -768,7 +768,7 @@ def _patch_mission_master_prompt() -> None:
     # validation fails, the fix prompt tells the agent to use manage_prd
     # instead of write_file.
     try:
-        from qwenpaw.agents.mission import mission_runner
+        from ai_personal_assistant.agents.mission import mission_runner
 
         mission_runner._PRD_FIX_PROMPT = _CLOUDPAW_PRD_FIX_PROMPT
         logger.info("[CloudPaw] Patched _PRD_FIX_PROMPT to use manage_prd")

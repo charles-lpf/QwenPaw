@@ -31,7 +31,7 @@ def qwenpaw_working_dir() -> Path:
     if explicit:
         return Path(explicit).expanduser().resolve()
     try:
-        from qwenpaw.constant import WORKING_DIR  # type: ignore
+        from ai_personal_assistant.constant import WORKING_DIR  # type: ignore
 
         return Path(WORKING_DIR).expanduser().resolve()
     except Exception:

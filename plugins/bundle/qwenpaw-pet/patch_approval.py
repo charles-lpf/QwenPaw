@@ -8,7 +8,7 @@ from typing import Any
 
 from emitter import schedule_emit_pet_event
 
-logger = logging.getLogger("qwenpaw.pet_desktop")
+logger = logging.getLogger("ai_personal_assistant.pet_desktop")
 
 _PATCHED = False
 _ORIG_CREATE_PENDING: Any = None
@@ -29,8 +29,8 @@ def patch_approval_service() -> None:
     if _PATCHED:
         return
 
-    from qwenpaw.app.approvals.service import ApprovalService
-    from qwenpaw.security.tool_guard.approval import ApprovalDecision
+    from ai_personal_assistant.app.approvals.service import ApprovalService
+    from ai_personal_assistant.security.tool_guard.approval import ApprovalDecision
 
     _ORIG_CREATE_PENDING = ApprovalService.create_pending
     _ORIG_RESOLVE_REQUEST = ApprovalService.resolve_request
@@ -144,7 +144,7 @@ def restore_approval_service() -> None:
     if not _PATCHED:
         return
 
-    from qwenpaw.app.approvals.service import ApprovalService
+    from ai_personal_assistant.app.approvals.service import ApprovalService
 
     ApprovalService.create_pending = _ORIG_CREATE_PENDING
     ApprovalService.resolve_request = _ORIG_RESOLVE_REQUEST

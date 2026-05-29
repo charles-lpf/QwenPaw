@@ -11,8 +11,8 @@ from typing import List
 import httpx
 from agentscope.message import ImageBlock, TextBlock
 from agentscope.tool import ToolResponse
-from qwenpaw.constant import DEFAULT_MEDIA_DIR
-from qwenpaw.plugins import get_tool_config
+from ai_personal_assistant.constant import DEFAULT_MEDIA_DIR
+from ai_personal_assistant.plugins import get_tool_config
 
 logger = logging.getLogger(__name__)
 

@@ -6,15 +6,15 @@ import zipfile
 
 import pytest
 
-from qwenpaw.backup._ops import storage
-from qwenpaw.backup._utils import constants
-from qwenpaw.backup._utils.constants import META_FILE, PREFIX_CONFIG
-from qwenpaw.backup._utils.signing import key as signing_key
-from qwenpaw.backup._utils.signing.digest import verify_signature
-from qwenpaw.backup._utils.signing.resign import (
+from ai_personal_assistant.backup._ops import storage
+from ai_personal_assistant.backup._utils import constants
+from ai_personal_assistant.backup._utils.constants import META_FILE, PREFIX_CONFIG
+from ai_personal_assistant.backup._utils.signing import key as signing_key
+from ai_personal_assistant.backup._utils.signing.digest import verify_signature
+from ai_personal_assistant.backup._utils.signing.resign import (
     replace_meta_with_local_signature,
 )
-from qwenpaw.backup.models import (
+from ai_personal_assistant.backup.models import (
     BackupConflictError,
     BackupMeta,
     BackupValidationError,

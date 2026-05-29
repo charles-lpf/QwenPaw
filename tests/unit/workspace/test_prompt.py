@@ -3,7 +3,7 @@
 import tempfile
 from pathlib import Path
 import pytest
-from qwenpaw.agents.prompt import build_system_prompt_from_working_dir
+from ai_personal_assistant.agents.prompt import build_system_prompt_from_working_dir
 
 FORBIDDEN_IDENTITY_TERMS = (
     "QwenPaw",

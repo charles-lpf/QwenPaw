@@ -8,8 +8,8 @@ function getSelectedAgentId(): string {
   try {
     // Read from sessionStorage first (per-tab agent), fall back to localStorage
     const agentStorage =
-      sessionStorage.getItem("qwenpaw-agent-storage") ||
-      localStorage.getItem("qwenpaw-agent-storage");
+      sessionStorage.getItem("ai-personal-assistant-agent-storage") ||
+      localStorage.getItem("ai-personal-assistant-agent-storage");
     if (agentStorage) {
       const parsed = JSON.parse(agentStorage);
       const selectedAgent = parsed?.state?.selectedAgent;

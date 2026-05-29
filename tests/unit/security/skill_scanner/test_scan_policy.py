@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Tests for qwenpaw.security.skill_scanner.scan_policy.
+"""Tests for ai_personal_assistant.security.skill_scanner.scan_policy.
 
 Covers:
 - _safe_compile regex helper
@@ -16,7 +16,7 @@ import re
 
 import pytest
 
-from qwenpaw.security.skill_scanner.scan_policy import (
+from ai_personal_assistant.security.skill_scanner.scan_policy import (
     AnalysisThresholdsPolicy,
     CredentialPolicy,
     FileClassificationPolicy,

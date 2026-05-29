@@ -76,7 +76,7 @@ _A2A_CONFIG_FILENAME = "a2a_config.json"
 
 async def _get_workspace_dir(request: Request) -> Path:
     """Resolve workspace directory for the current agent via X-Agent-Id."""
-    from qwenpaw.app.agent_context import get_agent_for_request
+    from ai_personal_assistant.app.agent_context import get_agent_for_request
 
     agent = await get_agent_for_request(request)
     return agent.workspace_dir
@@ -330,7 +330,7 @@ async def direct_call(request: Request, body: A2ACallRequest) -> dict:
     to GET /a2a/call/stream for real-time progress via SSE.
     """
     from modules.a2a.call_stream import get_stream
-    from qwenpaw.app.agent_context import set_current_agent_id
+    from ai_personal_assistant.app.agent_context import set_current_agent_id
 
     if get_stream() is not None:
         raise HTTPException(
@@ -340,7 +340,7 @@ async def direct_call(request: Request, body: A2ACallRequest) -> dict:
 
     agent_id = request.headers.get("X-Agent-Id")
     if not agent_id:
-        from qwenpaw.config.utils import load_config
+        from ai_personal_assistant.config.utils import load_config
 
         agent_id = load_config().agents.active_agent or "default"
     set_current_agent_id(agent_id)

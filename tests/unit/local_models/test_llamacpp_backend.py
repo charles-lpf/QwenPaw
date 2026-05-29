@@ -15,18 +15,18 @@ from typing import Any, cast
 import httpx
 import pytest
 
-import qwenpaw.local_models.llamacpp as downloader_module
-from qwenpaw.constant import DEFAULT_LOCAL_PROVIDER_DIR
-from qwenpaw.local_models.download_manager import (
+import ai_personal_assistant.local_models.llamacpp as downloader_module
+from ai_personal_assistant.constant import DEFAULT_LOCAL_PROVIDER_DIR
+from ai_personal_assistant.local_models.download_manager import (
     DownloadTaskResult,
     DownloadTaskStatus,
 )
-from qwenpaw.utils.command_runner import (
+from ai_personal_assistant.utils.command_runner import (
     CommandExecutionError,
     CommandResult,
     ShutdownResult,
 )
-from qwenpaw.local_models.llamacpp import LlamaCppBackend
+from ai_personal_assistant.local_models.llamacpp import LlamaCppBackend
 
 
 class _FakeServerProcess:

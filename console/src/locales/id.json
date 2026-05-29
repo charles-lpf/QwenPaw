@@ -91,7 +91,7 @@
     }
   },
   "login": {
-    "title": "Masuk ke QwenPaw",
+    "title": "Masuk ke AI个人助理",
     "registerTitle": "Buat Akun",
     "firstUserHint": "Buat akun admin untuk memulai",
     "usernamePlaceholder": "Nama pengguna",
@@ -716,7 +716,7 @@
   "codingMode": {
     "title": "Mode Coding",
     "experimental": "Fitur Eksperimental",
-    "experimentalDesc": "Mode Coding mengubah QwenPaw menjadi Web IDE ringan dengan editor kode, pohon file, integrasi Git, dan bantuan coding bertenaga AI.",
+    "experimentalDesc": "Mode Coding mengubah AI个人助理 menjadi Web IDE ringan dengan editor kode, pohon file, integrasi Git, dan bantuan coding bertenaga AI.",
     "experimentalNote": "Fitur ini masih eksperimental dan dalam pengembangan aktif. Beberapa fungsi mungkin terbatas atau berubah pada pembaruan mendatang.",
     "confirmBtn": "Aktifkan Mode Coding",
     "enterTooltip": "Masuk ke Mode Coding",

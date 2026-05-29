@@ -9,7 +9,7 @@ from typing import Any
 
 from emitter import emit_pet_event, schedule_emit_pet_event
 
-logger = logging.getLogger("qwenpaw.pet_desktop")
+logger = logging.getLogger("ai_personal_assistant.pet_desktop")
 
 _ORIGINAL_QUERY_HANDLER = None
 _PATCHED = False
@@ -85,7 +85,7 @@ def patch_agent_runner() -> None:
     if _PATCHED:
         return
 
-    from qwenpaw.app.runner.runner import AgentRunner
+    from ai_personal_assistant.app.runner.runner import AgentRunner
 
     _ORIGINAL_QUERY_HANDLER = AgentRunner.query_handler
 
@@ -172,7 +172,7 @@ def restore_agent_runner() -> None:
     if not _PATCHED or _ORIGINAL_QUERY_HANDLER is None:
         return
 
-    from qwenpaw.app.runner.runner import AgentRunner
+    from ai_personal_assistant.app.runner.runner import AgentRunner
 
     AgentRunner.query_handler = _ORIGINAL_QUERY_HANDLER
     _PATCHED = False

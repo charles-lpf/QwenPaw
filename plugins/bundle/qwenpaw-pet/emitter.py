@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 
 import httpx
 
-logger = logging.getLogger("qwenpaw.pet_desktop")
+logger = logging.getLogger("ai_personal_assistant.pet_desktop")
 
 # ``True`` once the plugin has either spawned the pet desktop *or*
 # observed a healthy one during startup (see ``ensure_desktop_available``

@@ -19,8 +19,8 @@ _A2A_CONFIG_FILENAME = "a2a_config.json"
 def _get_workspace_dir() -> Path | None:
     """Resolve workspace directory for the current agent via context."""
     try:
-        from qwenpaw.app.agent_context import get_current_agent_id
-        from qwenpaw.config.utils import load_config
+        from ai_personal_assistant.app.agent_context import get_current_agent_id
+        from ai_personal_assistant.config.utils import load_config
 
         agent_id = get_current_agent_id()
         config = load_config()

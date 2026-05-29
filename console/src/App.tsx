@@ -175,8 +175,8 @@ function AppInner() {
       <GlobalStyle />
       <ConfigProvider
         {...selectedTheme}
-        prefix="qwenpaw"
-        prefixCls="qwenpaw"
+        prefix="ai-personal-assistant"
+        prefixCls="ai-personal-assistant"
         locale={antdLocale}
         theme={{
           ...(selectedTheme as any)?.theme,

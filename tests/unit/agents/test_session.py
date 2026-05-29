@@ -8,7 +8,7 @@ import tempfile
 
 import pytest
 
-from qwenpaw.app.runner.session import SafeJSONSession
+from ai_personal_assistant.app.runner.session import SafeJSONSession
 
 
 @pytest.fixture

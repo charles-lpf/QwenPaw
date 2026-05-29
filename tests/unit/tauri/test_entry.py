@@ -10,8 +10,8 @@ import types
 import click
 import pytest
 
-from qwenpaw.tauri import entry
-from qwenpaw.tauri.env import DESKTOP_CORS_ORIGINS_ENV, DESKTOP_READY_PREFIX
+from ai_personal_assistant.tauri import entry
+from ai_personal_assistant.tauri.env import DESKTOP_CORS_ORIGINS_ENV, DESKTOP_READY_PREFIX
 
 
 def test_install_desktop_runtime_preserves_existing_cors_values(monkeypatch):
@@ -29,7 +29,7 @@ def test_install_desktop_runtime_preserves_existing_cors_values(monkeypatch):
 
 
 def test_ensure_qwenpaw_app_not_loaded_rejects_late_cors(monkeypatch):
-    monkeypatch.setitem(sys.modules, "qwenpaw.app._app", object())
+    monkeypatch.setitem(sys.modules, "ai_personal_assistant.app._app", object())
 
     with pytest.raises(RuntimeError, match="desktop CORS origins"):
         entry._ensure_qwenpaw_app_not_loaded()
@@ -37,7 +37,7 @@ def test_ensure_qwenpaw_app_not_loaded_rejects_late_cors(monkeypatch):
 
 def test_sync_loaded_qwenpaw_constant_cors_origins(monkeypatch):
     constant_module = types.SimpleNamespace(CORS_ORIGINS="")
-    monkeypatch.setitem(sys.modules, "qwenpaw.constant", constant_module)
+    monkeypatch.setitem(sys.modules, "ai_personal_assistant.constant", constant_module)
     monkeypatch.setenv(DESKTOP_CORS_ORIGINS_ENV, "tauri://localhost")
 
     entry._sync_loaded_qwenpaw_constant_cors_origins()

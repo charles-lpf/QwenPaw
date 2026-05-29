@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import ProjectSelectModal from "../ProjectSelectModal";
 import styles from "./index.module.less";
 
-const CONFIRMED_KEY = "qwenpaw-coding-mode-confirmed";
+const CONFIRMED_KEY = "ai-personal-assistant-coding-mode-confirmed";
 
 export default function CodingModeToggle() {
   const { t } = useTranslation();

@@ -298,7 +298,7 @@ class PetWindow(QWidget):
             return
         # Empty ``text`` clears the bubble only for intentional lifecycle
         # events; otherwise a stray "" could erase e.g. "Approval required".
-        if text or ev_name in ("idle", "qwenpaw.shutdown"):
+        if text or ev_name in ("idle", "ai_personal_assistant.shutdown"):
             self.bubble_text = text[:200]
 
     def _schedule_post_event_timing(

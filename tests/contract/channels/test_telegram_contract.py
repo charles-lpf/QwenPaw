@@ -15,7 +15,7 @@ from unittest.mock import AsyncMock
 from tests.contract.channels import ChannelContractTest
 
 if TYPE_CHECKING:
-    from qwenpaw.app.channels.base import BaseChannel
+    from ai_personal_assistant.app.channels.base import BaseChannel
 
 
 class TestTelegramChannelContract(ChannelContractTest):
@@ -28,7 +28,7 @@ class TestTelegramChannelContract(ChannelContractTest):
 
     def create_instance(self) -> "BaseChannel":
         """Provide a TelegramChannel instance for contract testing."""
-        from qwenpaw.app.channels.telegram.channel import TelegramChannel
+        from ai_personal_assistant.app.channels.telegram.channel import TelegramChannel
 
         process = AsyncMock()
 

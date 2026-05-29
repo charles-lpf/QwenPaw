@@ -12,7 +12,7 @@ def mount_routers() -> None:
         from fastapi import APIRouter, Query
 
         # pylint: disable=no-name-in-module
-        from qwenpaw.app.interaction import InteractionManager
+        from ai_personal_assistant.app.interaction import InteractionManager
 
         interaction_router = APIRouter(
             prefix="/interaction",
@@ -119,7 +119,7 @@ def _inject_routers(routers: list) -> None:
 
     if app is None:
         try:
-            from qwenpaw.app._app import app as _app
+            from ai_personal_assistant.app._app import app as _app
 
             if hasattr(_app, "state"):
                 app = _app

@@ -6,8 +6,8 @@
 import pytest
 from agentscope.message import Msg
 
-from qwenpaw.agents.context.as_msg_handler import AsMsgHandler
-from qwenpaw.agents.utils.estimate_token_counter import EstimatedTokenCounter
+from ai_personal_assistant.agents.context.as_msg_handler import AsMsgHandler
+from ai_personal_assistant.agents.utils.estimate_token_counter import EstimatedTokenCounter
 
 
 class MockTokenCounter(EstimatedTokenCounter):
