@@ -295,12 +295,6 @@ export default function Sidebar({
       path: "/sessions",
       label: t("nav.sessions"),
     },
-    {
-      key: "cron-jobs",
-      icon: <SparkDateLine size={18} />,
-      path: "/cron-jobs",
-      label: t("nav.cronJobs"),
-    },
     ...(showAdvancedMenus
       ? [
           {
@@ -311,6 +305,12 @@ export default function Sidebar({
           },
         ]
       : []),
+    {
+      key: "cron-jobs",
+      icon: <SparkDateLine size={18} />,
+      path: "/cron-jobs",
+      label: t("nav.cronJobs"),
+    },
     // {
     //   key: "heartbeat",
     //   icon: <SparkVoiceChat01Line size={18} />,
@@ -520,11 +520,15 @@ export default function Sidebar({
         //   label: collapsed ? null : t("nav.channels"),
         //   icon: <SparkWifiLine size={16} />,
         // },
-        {
-          key: "sessions",
-          label: collapsed ? null : t("nav.sessions"),
-          icon: <SparkUserGroupLine size={16} />,
-        },
+        ...(showAdvancedMenus
+          ? [
+              {
+                key: "sessions",
+                label: collapsed ? null : t("nav.sessions"),
+                icon: <SparkUserGroupLine size={16} />,
+              },
+            ]
+          : []),
         {
           key: "cron-jobs",
           label: collapsed ? null : t("nav.cronJobs"),
@@ -788,7 +792,10 @@ export default function Sidebar({
                         firstSession.id;
                       navigate(`/chat/${targetId}`);
                     } else {
-                      navigate(chatPath);
+                      // 没有 session 时，自动创建新 session（等同于点击"+"按钮）
+                      navigate("/chat", {
+                        state: { createNewSession: Date.now() },
+                      });
                     }
                   }}
                 >
