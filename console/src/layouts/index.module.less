@@ -32,7 +32,11 @@
 
 // ─── Sidebar ─────────────────────────────────────────────────────────────────
 .sider {
-  background: var(--qp-bg-shell) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(139, 104, 236, 0.03) 0%,
+    rgba(139, 104, 236, 0.01) 100%
+  ) !important;
   overflow: auto;
   height: calc(100vh - 64px);
   padding: 0 16px;
@@ -165,6 +169,27 @@
     -ms-overflow-style: none;
   }
 
+  :global {
+    .ai-personal-assistant-menu {
+      border-inline-end: 0 !important;
+      background: rgba(139, 104, 236, 0.015) !important;
+      border-radius: 8px;
+      padding: 4px 0;
+    }
+
+    .ai-personal-assistant-menu-inline {
+      background: rgba(139, 104, 236, 0.015) !important;
+    }
+
+    .ai-personal-assistant-menu-root {
+      background: rgba(139, 104, 236, 0.015) !important;
+    }
+
+    .ai-personal-assistant-menu-light {
+      background: rgba(139, 104, 236, 0.015) !important;
+    }
+  }
+
   &.siderCollapsed {
     padding: 0 8px;
 
@@ -278,7 +303,11 @@
 }
 
 .siderDark {
-  background: #1a1a1a !important;
+  background: linear-gradient(
+    180deg,
+    rgba(139, 104, 236, 0.06) 0%,
+    rgba(139, 104, 236, 0.02) 100%
+  ) !important;
   border-right-color: rgba(255, 255, 255, 0.08) !important;
 
   // Agent-scoped section (dark mode)
@@ -319,10 +348,27 @@
     color: var(--qp-color-primary);
   }
 
+  // Menu in dark mode
+  .sideMenu {
+    background: rgba(139, 104, 236, 0.04) !important;
+  }
+
   :global {
-    .qwenpaw-menu {
-      background: #1a1a1a !important;
+    .ai-personal-assistant-menu {
       border-inline-end: 0 !important;
+      background: rgba(139, 104, 236, 0.04) !important;
+    }
+
+    .ai-personal-assistant-menu-inline {
+      background: rgba(139, 104, 236, 0.04) !important;
+    }
+
+    .ai-personal-assistant-menu-root {
+      background: rgba(139, 104, 236, 0.04) !important;
+    }
+
+    .ai-personal-assistant-menu-dark {
+      background: rgba(139, 104, 236, 0.04) !important;
     }
 
     /* Group title (sub-menu label) */
@@ -753,7 +799,11 @@
   }
 
   .sider {
-    background: #1a1a1a !important;
+    background: linear-gradient(
+      180deg,
+      rgba(139, 104, 236, 0.06) 0%,
+      rgba(139, 104, 236, 0.02) 100%
+    ) !important;
     border-right-color: rgba(255, 255, 255, 0.08) !important;
   }
 

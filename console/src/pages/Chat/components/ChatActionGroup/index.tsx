@@ -75,13 +75,10 @@ const ChatActionGroup: React.FC<ChatActionGroupProps> = ({
     const createNewSessionFlag = location.state?.createNewSession;
     if (!createNewSessionFlag) return;
 
-    void createSession().then((sessionId) => {
-      if (sessionId) {
-        changeCurrentSessionId(sessionId);
-      }
-      // Clear the flag by navigating with cleared state
-      window.history.replaceState(window.history.state, "", location.pathname);
-    });
+    // 复用"+"按钮的逻辑，直接调用 createSession()
+    void createSession();
+    // Clear the flag by navigating with cleared state
+    window.history.replaceState(window.history.state, "", location.pathname);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.state]);
 
