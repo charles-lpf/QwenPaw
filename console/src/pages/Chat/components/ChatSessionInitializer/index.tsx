@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { useChatAnywhereSessions, useChatAnywhereSessionsState } from "@agentscope-ai/chat";
+import { useChatAnywhereSessionsState } from "@agentscope-ai/chat";
 import sessionApi from "../../sessionApi";
 import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListController";
 
@@ -11,9 +11,7 @@ import type { ExtendedChatSession } from "../ChatSessionList/useChatSessionListC
  * to avoid triggering the effect when the context changes from the other direction
  * (context → URL via onSessionSelected), which would cause circular re-loads.
  *
- * IMPORTANT: sessions array reference changes (e.g. from polling in pinned drawer)
- * must NOT re-trigger setCurrentSessionId when the chatId hasn't changed, otherwise
- * it causes an infinite loop of getSession calls bouncing between two chat IDs.
+ * NOTE: The library's useMount now auto-creates a session when session list is empty.
  */
 const ChatSessionInitializer: React.FC = () => {
   const location = useLocation();
@@ -24,7 +22,6 @@ const ChatSessionInitializer: React.FC = () => {
 
   const { sessions, currentSessionId, setCurrentSessionId } =
     useChatAnywhereSessionsState();
-  const { createSession } = useChatAnywhereSessions();
 
   const currentSessionIdRef = useRef(currentSessionId);
   currentSessionIdRef.current = currentSessionId;
@@ -34,37 +31,14 @@ const ChatSessionInitializer: React.FC = () => {
    *  don't re-trigger setCurrentSessionId and cause infinite getSession loops. */
   const lastAppliedChatIdRef = useRef<string | undefined>(undefined);
 
-  /** Track if we've auto-created a session for empty state */
-  const autoCreatedForEmptyRef = useRef(false);
-
   useEffect(() => {
     if (!chatId) {
       lastAppliedChatIdRef.current = undefined;
       sessionApi.lastNavigatedChatId = null;
-      const currentSessionId = currentSessionIdRef.current;
-      const isFreshNewChat =
-        currentSessionId === sessionApi.pendingNewSessionId;
-
-      // Don't clear if we're about to create a new session or if current is fresh
-      if (currentSessionId && !isFreshNewChat && !sessionApi.pendingNewSessionId) {
-        setCurrentSessionId(undefined);
-      }
       return;
     }
 
-    // Only check sessions length after initial load
-    if (!sessions.length) {
-      // If we're at /chat URL (no chatId) and no sessions, auto-create one
-      // This handles: page refresh with no sessions, first visit, etc.
-      if (!chatId && !autoCreatedForEmptyRef.current) {
-        autoCreatedForEmptyRef.current = true;
-        void createSession();
-      }
-      return;
-    }
-
-    // Reset auto-create flag when sessions exist
-    autoCreatedForEmptyRef.current = false;
+    if (!sessions.length) return;
 
     // Issue #4557: Do NOT trigger setCurrentSessionId while a user-initiated
     // session switch is in progress. This breaks the infinite loop where
@@ -104,17 +78,14 @@ const ChatSessionInitializer: React.FC = () => {
       // Already in sync, just record that we've handled this chatId
       lastAppliedChatIdRef.current = chatId;
     } else {
-      // Session not found: URL has stale session id (e.g., after deleting all
-      // sessions and refreshing). Create a new session using the context's
-      // createSession to ensure proper synchronization with Context state.
-      if (!autoCreatedForEmptyRef.current) {
-        autoCreatedForEmptyRef.current = true;
-        void createSession();
-      }
+      // Session not found: URL has stale session id. Don't do anything here
+      // - the library's useMount will auto-create a session if needed
+      // - or user can click + to create a new session
+      lastAppliedChatIdRef.current = undefined;
     }
     // Intentionally exclude currentSessionId from deps: only react to URL / session list changes.
     // currentSessionId is read via ref to avoid circular triggers.
-  }, [chatId, sessions, setCurrentSessionId, createSession]);
+  }, [chatId, sessions, setCurrentSessionId]);
 
   return null;
 };
