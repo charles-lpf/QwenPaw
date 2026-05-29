@@ -31,7 +31,7 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $content = Get-Content src/ai-personal-assistant/__version__.py -Raw
+          $content = Get-Content src/ai_personal_assistant/__version__.py -Raw
           if ($content -match '__version__\s*=\s*"([^"]+)"') {
             $v = $Matches[1]
           } else {
@@ -99,7 +99,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai-personal-assistant/__version__.py)" >> $GITHUB_OUTPUT
+        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai_personal_assistant/__version__.py)" >> $GITHUB_OUTPUT
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -145,7 +145,7 @@ jobs:
         id: version
         shell: pwsh
         run: |
-          $content = Get-Content src/ai-personal-assistant/__version__.py -Raw
+          $content = Get-Content src/ai_personal_assistant/__version__.py -Raw
           if ($content -match '__version__\s*=\s*"([^"]+)"') {
             $v = $Matches[1]
           } else {
@@ -210,7 +210,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai-personal-assistant/__version__.py)" >> $GITHUB_OUTPUT
+        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai_personal_assistant/__version__.py)" >> $GITHUB_OUTPUT
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -290,7 +290,7 @@ jobs:
 
       - name: Get version
         id: version
-        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai-personal-assistant/__version__.py)" >> $GITHUB_OUTPUT
+        run: echo "version=$(sed -n 's/^__version__[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' src/ai_personal_assistant/__version__.py)" >> $GITHUB_OUTPUT
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4

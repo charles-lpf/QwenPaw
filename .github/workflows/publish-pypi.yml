@@ -43,15 +43,15 @@ jobs:
 
       - name: Copy console build into package
         run: |
-          rm -rf src/ai-personal-assistant/console/*
-          mkdir -p src/ai-personal-assistant/console
-          cp -R console/dist/* src/ai-personal-assistant/console/
+          rm -rf src/ai_personal_assistant/console/*
+          mkdir -p src/ai_personal_assistant/console
+          cp -R console/dist/* src/ai_personal_assistant/console/
 
       - name: Bundle docs into package
         run: |
-          rm -rf src/ai-personal-assistant/docs
-          mkdir -p src/ai-personal-assistant/docs
-          cp website/public/docs/*.md src/ai-personal-assistant/docs/
+          rm -rf src/ai_personal_assistant/docs
+          mkdir -p src/ai_personal_assistant/docs
+          cp website/public/docs/*.md src/ai_personal_assistant/docs/
 
       - name: Install build dependencies
         run: |

@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, master, dev, develop]
     paths:
-      - 'src/ai-personal-assistant/**'
+      - 'src/ai_personal_assistant/**'
       - 'tests/unit/**'
       - 'tests/contract/**'
       - 'tests/conftest.py'
@@ -13,7 +13,7 @@ on:
   pull_request:
     branches: [main, master, dev, develop]
     paths:
-      - 'src/ai-personal-assistant/**'
+      - 'src/ai_personal_assistant/**'
       - 'tests/unit/**'
       - 'tests/contract/**'
       - 'tests/conftest.py'
@@ -112,7 +112,7 @@ jobs:
         run: |
           pytest tests/unit \
             --ignore=tests/unit/channels \
-            --cov=src/ai-personal-assistant \
+            --cov=src/ai_personal_assistant \
             --cov-report=xml:coverage.xml \
             --cov-report=term-missing \
             --tb=short \
