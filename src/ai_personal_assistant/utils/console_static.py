@@ -15,8 +15,9 @@ CONSOLE_STATIC_ENV = "QWENPAW_CONSOLE_STATIC_DIR"
 def resolve_console_static_dir() -> str:
     """Return the directory expected to contain ``index.html`` for the console.
 
-    Resolution order matches :mod:`ai_personal_assistant.app._app`: env override, package
-    ``qwenpaw/console``, repo ``console/dist``, then cwd fallbacks.
+    Resolution order matches :mod:`ai_personal_assistant.app._app`: env override,
+    package ``ai_personal_assistant/console``, repo ``console/dist``, then cwd
+    fallbacks.
     """
     static_dir = EnvVarLoader.get_str("QWENPAW_CONSOLE_STATIC_DIR")
     if static_dir:
@@ -45,13 +46,13 @@ def find_qwenpaw_source_repo_root() -> Path | None:
     """Return the git checkout root if this Python
     is running from QwenPaw source.
 
-    Looks upward from :mod:`qwenpaw` for ``console/package.json``,
-    ``console/package-lock.json``, and ``src/qwenpaw/``
+    Looks upward from :mod:`ai_personal_assistant` for ``console/package.json``,
+    ``console/package-lock.json``, and ``src/ai_personal_assistant/``
     (bundled static target).
     Returns ``None`` for a normal pip/wheel install.
     """
     try:
-        import qwenpaw  # noqa: PLC0415 — avoid import cycle at module load
+        import ai_personal_assistant  # noqa: PLC0415 — avoid import cycle at module load
     except Exception:  # pylint: disable=broad-exception-caught
         return None
     cur = Path(ai_personal_assistant.__file__).resolve().parent
@@ -60,7 +61,7 @@ def find_qwenpaw_source_repo_root() -> Path | None:
         if (
             (con / "package.json").is_file()
             and (con / "package-lock.json").is_file()
-            and (cur / "src" / "qwenpaw").is_dir()
+            and (cur / "src" / "ai_personal_assistant").is_dir()
         ):
             return cur
         if cur.parent == cur:

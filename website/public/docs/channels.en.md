@@ -1411,8 +1411,8 @@ For text-only channels using the manager queue, you do not need to implement `co
 ```python
 # my_channel.py
 from agentscope_runtime.engine.schemas.agent_schemas import TextContent, ContentType
-from qwenpaw.app.channels.base import BaseChannel
-from qwenpaw.app.channels.schema import ChannelType
+from ai_personal_assistant.app.channels.base import BaseChannel
+from ai_personal_assistant.app.channels.schema import ChannelType
 
 class MyChannel(BaseChannel):
     channel: ChannelType = "my_channel"
@@ -1548,7 +1548,7 @@ At startup, QwenPaw scans modules in `custom_channels/` for a `register_app_rout
 
 ```python
 # custom_channels/my_echo/__init__.py
-from qwenpaw.app.channels.base import BaseChannel
+from ai_personal_assistant.app.channels.base import BaseChannel
 
 class MyEchoChannel(BaseChannel):
     """A minimal channel that echoes messages back."""
@@ -1571,7 +1571,7 @@ def register_app_routes(app):
         """Webhook entry point."""
         body = await request.json()
 
-        from qwenpaw.app.channels.base import TextContent
+        from ai_personal_assistant.app.channels.base import TextContent
         channel = MyEchoChannel()
         channel.enqueue_user_message(
             user_id=body.get("user_id", "anonymous"),

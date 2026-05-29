@@ -25,7 +25,7 @@ Core principles:
 **Use built-in path resolution (works for all install methods)**
 
 ```bash
-DOCS_DIR=$(python3 -c "from qwenpaw.constant import DOCS_DIR; print(DOCS_DIR or '')" 2>/dev/null)
+DOCS_DIR=$(python3 -c "from ai_personal_assistant.constant import DOCS_DIR; print(DOCS_DIR or '')" 2>/dev/null)
 ```
 
 If the above returns a non-empty path and the directory exists, use it directly and skip to Step 2.

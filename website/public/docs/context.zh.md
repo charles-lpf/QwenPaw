@@ -116,9 +116,9 @@ graph LR
 
 ### 相关代码
 
-- [LightContextManager](https://github.com/agentscope-ai/QwenPaw/blob/main/src/qwenpaw/agents/context/light_context_manager.py)
-- [AsMsgHandler](https://github.com/agentscope-ai/QwenPaw/blob/main/src/qwenpaw/agents/context/as_msg_handler.py) — 上下文检查与消息格式化
-- [compactor_prompts](https://github.com/agentscope-ai/QwenPaw/blob/main/src/qwenpaw/agents/context/compactor_prompts.py) — 压缩提示词
+- [LightContextManager](https://github.com/agentscope-ai/QwenPaw/blob/main/src/ai_personal_assistant/agents/context/light_context_manager.py)
+- [AsMsgHandler](https://github.com/agentscope-ai/QwenPaw/blob/main/src/ai_personal_assistant/agents/context/as_msg_handler.py) — 上下文检查与消息格式化
+- [compactor_prompts](https://github.com/agentscope-ai/QwenPaw/blob/main/src/ai_personal_assistant/agents/context/compactor_prompts.py) — 压缩提示词
 
 ### 执行流程
 

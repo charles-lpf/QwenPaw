@@ -138,7 +138,7 @@ my-plugin/
 # -*- coding: utf-8 -*-
 """My Plugin Entry Point."""
 
-from qwenpaw.plugins.api import PluginApi
+from ai_personal_assistant.plugins.api import PluginApi
 import logging
 
 logger = logging.getLogger(__name__)
@@ -333,8 +333,8 @@ cd my-llm-provider
 # -*- coding: utf-8 -*-
 """My LLM Provider Implementation."""
 
-from qwenpaw.providers.openai_provider import OpenAIProvider
-from qwenpaw.providers.provider import ModelInfo
+from ai_personal_assistant.providers.openai_provider import OpenAIProvider
+from ai_personal_assistant.providers.provider import ModelInfo
 from typing import List
 
 
@@ -376,7 +376,7 @@ import importlib.util
 import logging
 import os
 
-from qwenpaw.plugins.api import PluginApi
+from ai_personal_assistant.plugins.api import PluginApi
 
 logger = logging.getLogger(__name__)
 
@@ -465,7 +465,7 @@ cd monitoring-hook
 # -*- coding: utf-8 -*-
 """Monitoring Hook Plugin Entry Point."""
 
-from qwenpaw.plugins.api import PluginApi
+from ai_personal_assistant.plugins.api import PluginApi
 import logging
 
 logger = logging.getLogger(__name__)
@@ -587,7 +587,7 @@ Please present this information in a clear format."""
 
 import logging
 
-from qwenpaw.plugins.api import PluginApi
+from ai_personal_assistant.plugins.api import PluginApi
 
 logger = logging.getLogger(__name__)
 
@@ -614,7 +614,7 @@ class StatusCommandPlugin:
 
     def _patch_query_handler(self):
         """Patch AgentRunner.query_handler to rewrite /status queries."""
-        from qwenpaw.app.runner.runner import AgentRunner
+        from ai_personal_assistant.app.runner.runner import AgentRunner
         from .query_rewriter import StatusQueryRewriter
 
         original_query_handler = AgentRunner.query_handler
@@ -982,7 +982,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from qwenpaw.plugins.api import PluginApi
+from ai_personal_assistant.plugins.api import PluginApi
 
 logger = logging.getLogger(__name__)
 
@@ -1301,7 +1301,7 @@ For plugins that need to modify QwenPaw behavior (like custom commands), you can
 ```python
 def _patch_query_handler(self):
     """Patch AgentRunner to intercept queries."""
-    from qwenpaw.app.runner.runner import AgentRunner
+    from ai_personal_assistant.app.runner.runner import AgentRunner
 
     original_handler = AgentRunner.query_handler
 

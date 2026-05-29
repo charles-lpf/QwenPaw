@@ -88,7 +88,7 @@ A: Normal, doesn't affect import analysis. Can use `exec_tracer` separately.
 
 ## Related Tools
 
-- `src/qwenpaw/utils/startup_display.py` - Startup banner display
+- `src/ai_personal_assistant/utils/startup_display.py` - Startup banner display
 
 ---
 

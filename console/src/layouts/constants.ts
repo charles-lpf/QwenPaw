@@ -157,8 +157,8 @@ qwenpaw update
 cd QwenPaw
 git pull origin main
 cd console && npm ci && npm run build
-cd .. && mkdir -p src/qwenpaw/console
-cp -R console/dist/. src/qwenpaw/console/
+cd .. && mkdir -p src/ai_personal_assistant/console
+cp -R console/dist/. src/ai_personal_assistant/console/
 pip install -e .
 \`\`\`
 
@@ -189,8 +189,8 @@ qwenpaw update
 cd QwenPaw
 git pull origin main
 cd console && npm ci && npm run build
-cd .. && mkdir -p src/qwenpaw/console
-cp -R console/dist/. src/qwenpaw/console/
+cd .. && mkdir -p src/ai_personal_assistant/console
+cp -R console/dist/. src/ai_personal_assistant/console/
 pip install -e .
 \`\`\`
 
@@ -221,8 +221,8 @@ qwenpaw update
 cd QwenPaw
 git pull origin main
 cd console && npm ci && npm run build
-cd .. && mkdir -p src/qwenpaw/console
-cp -R console/dist/. src/qwenpaw/console/
+cd .. && mkdir -p src/ai_personal_assistant/console
+cp -R console/dist/. src/ai_personal_assistant/console/
 pip install -e .
 \`\`\`
 

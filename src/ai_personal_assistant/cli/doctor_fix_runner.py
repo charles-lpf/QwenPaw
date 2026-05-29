@@ -7,7 +7,7 @@ no server).
 
 ``rebuild-console-npm`` runs ``npm ci && npm run build`` under ``console/``
 in a source checkout and copies ``console/dist`` into
-``src/qwenpaw/console/`` (needs network for npm).
+``src/ai_personal_assistant/console/`` (needs network for npm).
 
 ``validate-all-jobs-json`` reuses
 :func:`~ai_personal_assistant.cli.doctor_checks.check_cron_jobs_files` (read-only); exits
@@ -598,7 +598,7 @@ def _plan_fixes(
             skip_msgs.append(
                 "rebuild-console-npm: only in a QwenPaw source checkout "
                 "(./console/package.json + ./console/package-lock.json + "
-                "./src/qwenpaw/)",
+                "./src/ai_personal_assistant/)",
             )
         elif not shutil.which("npm"):
             skip_msgs.append("rebuild-console-npm: npm not found on PATH")

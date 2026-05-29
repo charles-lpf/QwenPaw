@@ -88,7 +88,7 @@ A: 正常现象，不影响 import 分析。可单独使用 `exec_tracer`。
 
 ## 相关工具
 
-- `src/qwenpaw/utils/startup_display.py` - 启动横幅显示
+- `src/ai_personal_assistant/utils/startup_display.py` - 启动横幅显示
 
 ---
 

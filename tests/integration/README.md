@@ -159,7 +159,7 @@ QWENPAW_INTEGRATION_COVERAGE=1 pytest tests/integration/ --no-cov
 This:
 
 1. Writes a coverage rcfile under `.integration_coverage/` with absolute
-   `source=…/src/qwenpaw`
+   `source=…/src/ai_personal_assistant`
 2. Runs each subprocess with `COVERAGE_PROCESS_START` and `COVERAGE_FILE`
 3. After the session, combines parallel data files and writes
    `htmlcov-integration/index.html`

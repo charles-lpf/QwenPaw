@@ -108,7 +108,7 @@ export default defineConfig(({ mode }) => {
     build: {
       // Output to QwenPaw's console directory,
       // so we don't need to copy files manually after build.
-      // outDir: path.resolve(__dirname, "../src/qwenpaw/console"),
+      // outDir: path.resolve(__dirname, "../src/ai_personal_assistant/console"),
       // emptyOutDir: true,
       cssCodeSplit: true,
       sourcemap: mode !== "production",

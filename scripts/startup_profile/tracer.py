@@ -209,8 +209,8 @@ def main():
     sys.settrace(tracer.trace_calls)
 
     try:
-        # Import qwenpaw app to trigger startup
-        from qwenpaw.app._app import (  # pylint: disable=unused-import
+        # Import the app to trigger startup
+        from ai_personal_assistant.app._app import (  # pylint: disable=unused-import
             app,
         )  # noqa: F401
     finally:

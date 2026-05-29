@@ -116,9 +116,9 @@ graph LR
 
 ### Related Code
 
-- [LightContextManager](https://github.com/agentscope-ai/QwenPaw/blob/main/src/qwenpaw/agents/context/light_context_manager.py)
-- [AsMsgHandler](https://github.com/agentscope-ai/QwenPaw/blob/main/src/qwenpaw/agents/context/as_msg_handler.py) — Context checking and message formatting
-- [compactor_prompts](https://github.com/agentscope-ai/QwenPaw/blob/main/src/qwenpaw/agents/context/compactor_prompts.py) — Compaction prompts
+- [LightContextManager](https://github.com/agentscope-ai/QwenPaw/blob/main/src/ai_personal_assistant/agents/context/light_context_manager.py)
+- [AsMsgHandler](https://github.com/agentscope-ai/QwenPaw/blob/main/src/ai_personal_assistant/agents/context/as_msg_handler.py) — Context checking and message formatting
+- [compactor_prompts](https://github.com/agentscope-ai/QwenPaw/blob/main/src/ai_personal_assistant/agents/context/compactor_prompts.py) — Compaction prompts
 
 ### Execution Flow
 

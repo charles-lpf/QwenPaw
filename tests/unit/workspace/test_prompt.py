@@ -127,9 +127,9 @@ def test_default_prompt_uses_neutral_assistant_identity(
 def test_builtin_system_prompt_sources_do_not_seed_brand_identity():
     """Bundled prompt sources should not seed public brand/model identity."""
     repo_root = Path(__file__).resolve().parents[3]
-    prompt_sources = [repo_root / "src/qwenpaw/agents/prompt.py"]
+    prompt_sources = [repo_root / "src/ai_personal_assistant/agents/prompt.py"]
     prompt_sources.extend(
-        (repo_root / "src/qwenpaw/agents/md_files").rglob("*.md"),
+        (repo_root / "src/ai_personal_assistant/agents/md_files").rglob("*.md"),
     )
 
     for path in prompt_sources:

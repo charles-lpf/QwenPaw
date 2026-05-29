@@ -85,9 +85,9 @@ ENV PATH="/app/venv/bin:$PATH"
 
 COPY pyproject.toml setup.py README.md ./
 COPY src ./src
-COPY website/public/docs/ ./src/qwenpaw/docs/
+COPY website/public/docs/ ./src/ai_personal_assistant/docs/
 # Inject console dist from build stage (repo does not commit dist).
-COPY --from=console-builder /app/console/dist/ ./src/qwenpaw/console/
+COPY --from=console-builder /app/console/dist/ ./src/ai_personal_assistant/console/
 # Speed up Python package installation with uv.
 COPY --from=agentscope-registry.ap-southeast-1.cr.aliyuncs.com/agentscope/uv:latest /uv /bin/uv
 RUN uv pip install --no-cache-dir . && rm -rf ./build

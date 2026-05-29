@@ -62,7 +62,7 @@ If the frontend was not built, the root URL returns a JSON message like `{"messa
 
 **To build the frontend:** in the project's `console/` directory run
 `npm ci && npm run build`, then copy the output to the package directory:
-`mkdir -p src/qwenpaw/console && cp -R console/dist/. src/qwenpaw/console/`.
+`mkdir -p src/ai_personal_assistant/console && cp -R console/dist/. src/ai_personal_assistant/console/`.
 Docker images and pip packages already include the Console.
 
 ### qwenpaw daemon

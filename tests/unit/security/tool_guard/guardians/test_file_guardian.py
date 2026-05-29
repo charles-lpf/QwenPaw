@@ -2,7 +2,7 @@
 # pylint: disable=redefined-outer-name,protected-access,unused-argument
 """Tests for file_guardian path-sensitive file guard.
 
-Target: src/qwenpaw/security/tool_guard/guardians/file_guardian.py
+Target: src/ai_personal_assistant/security/tool_guard/guardians/file_guardian.py
 Goal: push coverage from 38% to 78%+.
 """
 from __future__ import annotations

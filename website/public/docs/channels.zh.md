@@ -1427,8 +1427,8 @@ pip install "qwenpaw[sip,sip-livekit]"
 ```python
 # my_channel.py
 from agentscope_runtime.engine.schemas.agent_schemas import TextContent, ContentType
-from qwenpaw.app.channels.base import BaseChannel
-from qwenpaw.app.channels.schema import ChannelType
+from ai_personal_assistant.app.channels.base import BaseChannel
+from ai_personal_assistant.app.channels.schema import ChannelType
 
 class MyChannel(BaseChannel):
     channel: ChannelType = "my_channel"
@@ -1564,7 +1564,7 @@ QwenPaw 启动时会扫描 `custom_channels/` 下的模块，发现 `register_ap
 
 ```python
 # custom_channels/my_echo/__init__.py
-from qwenpaw.app.channels.base import BaseChannel
+from ai_personal_assistant.app.channels.base import BaseChannel
 
 class MyEchoChannel(BaseChannel):
     """最简单的回声频道。"""
@@ -1587,7 +1587,7 @@ def register_app_routes(app):
         """Webhook 入口。"""
         body = await request.json()
 
-        from qwenpaw.app.channels.base import TextContent
+        from ai_personal_assistant.app.channels.base import TextContent
         channel = MyEchoChannel()
         channel.enqueue_user_message(
             user_id=body.get("user_id", "anonymous"),

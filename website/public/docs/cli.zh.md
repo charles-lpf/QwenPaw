@@ -57,7 +57,7 @@ qwenpaw app --log-level debug           # 详细日志
 
 **构建方式：** 在项目 `console/` 目录下执行 `npm ci && npm run build`，
 然后将构建产物复制到包目录：
-`mkdir -p src/qwenpaw/console && cp -R console/dist/. src/qwenpaw/console/`。
+`mkdir -p src/ai_personal_assistant/console && cp -R console/dist/. src/ai_personal_assistant/console/`。
 Docker 镜像或 pip 安装包已内置控制台，无需单独构建。
 
 ### qwenpaw daemon

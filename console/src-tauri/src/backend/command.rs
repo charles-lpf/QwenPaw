@@ -18,18 +18,18 @@ pub(super) fn create(app: &tauri::AppHandle) -> Result<Command, String> {
     let source_path = repo_root.join("src");
     let command = if command_exists("uv") {
         log::info!(
-            "[backend] dev command: uv run python -m qwenpaw.tauri.entry cwd={}",
+            "[backend] dev command: uv run python -m ai_personal_assistant.tauri.entry cwd={}",
             repo_root.display(),
         );
         app.shell()
             .command("uv")
-            .args(["run", "python", "-m", "qwenpaw.tauri.entry"])
+            .args(["run", "python", "-m", "ai_personal_assistant.tauri.entry"])
             .current_dir(repo_root)
             .env("PYTHONPATH", source_path.display().to_string())
     } else {
         let (python, prefix_args) = python_command(&repo_root);
         let mut args = prefix_args;
-        args.extend(["-m", "qwenpaw.tauri.entry"]);
+        args.extend(["-m", "ai_personal_assistant.tauri.entry"]);
         log::info!(
             "[backend] dev command: {} {} cwd={}",
             python,

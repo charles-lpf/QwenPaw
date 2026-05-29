@@ -16,33 +16,33 @@ When answering questions about **installation, configuration, or behavioral prin
 
 1. Extract the topic from the user's question (match against the left column or synonyms in the table below).
 2. Resolve **`$QWENPAW_ROOT`**: use `which qwenpaw` to get the executable path. If it is `…/.qwenpaw/bin/qwenpaw`, the source root is three levels up (consistent with the **guidance** skill); otherwise, determine it from the user-provided installation path.
-3. Resolve **`$DOCS_DIR`** first (cross-install compatible): run `python3 -c "from qwenpaw.constant import DOCS_DIR; print(DOCS_DIR or '')" 2>/dev/null`. If it returns a valid path, use it directly. Otherwise, fallback to `$QWENPAW_ROOT/website/public/docs/`.
+3. Resolve **`$DOCS_DIR`** first (cross-install compatible): run `python3 -c "from ai_personal_assistant.constant import DOCS_DIR; print(DOCS_DIR or '')" 2>/dev/null`. If it returns a valid path, use it directly. Otherwise, fallback to `$QWENPAW_ROOT/website/public/docs/`.
 4. **Read documentation first**: `$DOCS_DIR/<topic>.<language>.md` (use the same language as the user: `zh` / `en`.). If that is insufficient, read the **source entry points** listed in the table.
 
 ## Topic / Keywords → Preferred Documentation and Source Code
 
 | Topic or Keywords (examples) | Preferred Documentation (`$DOCS_DIR/`) | Common Source Entry Points (relative to `$QWENPAW_ROOT`) |
 |---------------------|-----------------------------------|-----------------------------------|
-| Installation, dependencies, getting started | `quickstart`, `intro` | `src/qwenpaw/cli/`, `pyproject.toml` |
-| Configuration, config.json, environment variables | `config` | `src/qwenpaw/config/config.py`, `src/qwenpaw/constant.py` |
-| Skills, SKILL, skill_pool, built-in skills | `skills` | `src/qwenpaw/agents/skill_system/`, `src/qwenpaw/agents/skills/` |
-| MCP, plugins | `mcp` | `src/qwenpaw/app/routers/` (grep `mcp` as needed) |
-| Multi-agent, workspace, agent, built-in QA | `multi-agent` | `src/qwenpaw/app/routers/agents.py`, `src/qwenpaw/app/migration.py`, `src/qwenpaw/constant.py` (`BUILTIN_QA_AGENT_ID`, etc.) |
-| Memory, MEMORY, memory_search | `memory` | `src/qwenpaw/agents/memory/memory_manager.py`, `src/qwenpaw/agents/tools/memory_search.py` |
+| Installation, dependencies, getting started | `quickstart`, `intro` | `src/ai_personal_assistant/cli/`, `pyproject.toml` |
+| Configuration, config.json, environment variables | `config` | `src/ai_personal_assistant/config/config.py`, `src/ai_personal_assistant/constant.py` |
+| Skills, SKILL, skill_pool, built-in skills | `skills` | `src/ai_personal_assistant/agents/skill_system/`, `src/ai_personal_assistant/agents/skills/` |
+| MCP, plugins | `mcp` | `src/ai_personal_assistant/app/routers/` (grep `mcp` as needed) |
+| Multi-agent, workspace, agent, built-in QA | `multi-agent` | `src/ai_personal_assistant/app/routers/agents.py`, `src/ai_personal_assistant/app/migration.py`, `src/ai_personal_assistant/constant.py` (`BUILTIN_QA_AGENT_ID`, etc.) |
+| Memory, MEMORY, memory_search | `memory` | `src/ai_personal_assistant/agents/memory/memory_manager.py`, `src/ai_personal_assistant/agents/tools/memory_search.py` |
 | Console, frontend | `console` | `console/` |
-| CLI, subcommands, init | `cli` | `src/qwenpaw/cli/` (e.g., `init_cmd.py`) |
-| Channels, sessions | `channels` | Search for `channels` keyword under `src/qwenpaw` |
-| Context, window | `context` | `config` docs + related logic in `src/qwenpaw/agents/` |
-| Models, API Key | `models` | `src/qwenpaw/config/config.py` |
-| Heartbeat, HEARTBEAT | `heartbeat` | Search for `heartbeat` / `HEARTBEAT` under `src/qwenpaw` |
+| CLI, subcommands, init | `cli` | `src/ai_personal_assistant/cli/` (e.g., `init_cmd.py`) |
+| Channels, sessions | `channels` | Search for `channels` keyword under `src/ai_personal_assistant` |
+| Context, window | `context` | `config` docs + related logic in `src/ai_personal_assistant/agents/` |
+| Models, API Key | `models` | `src/ai_personal_assistant/config/config.py` |
+| Heartbeat, HEARTBEAT | `heartbeat` | Search for `heartbeat` / `HEARTBEAT` under `src/ai_personal_assistant` |
 | Desktop client | `desktop` | `desktop/` (if present in the repository) |
 | Security | `security` | Read `security.<lang>.md` first |
 | Errors, FAQ | `faq` | Read `faq.<lang>.md` first, then examine source code as needed |
-| Commands and slash commands | `commands` | CLI/command registration modules under `src/qwenpaw` (search as needed) |
+| Commands and slash commands | `commands` | CLI/command registration modules under `src/ai_personal_assistant` (search as needed) |
 
 ## Conventions
 
-- Full documentation path: `$DOCS_DIR/<topic>.<language>.md` (fall back to `.en.md` if the corresponding language file does not exist). Prefer `DOCS_DIR` from `qwenpaw.constant`; fallback to `$QWENPAW_ROOT/website/public/docs/`.
+- Full documentation path: `$DOCS_DIR/<topic>.<language>.md` (fall back to `.en.md` if the corresponding language file does not exist). Prefer `DOCS_DIR` from `ai_personal_assistant.constant`; fallback to `$QWENPAW_ROOT/website/public/docs/`.
 - The **source entry points** in the table are starting points; use `read_file` or targeted `grep` to narrow down to specific symbols — do not read through an entire large directory listing at once.
 
 ## Notes

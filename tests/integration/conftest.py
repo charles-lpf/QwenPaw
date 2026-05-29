@@ -10,7 +10,7 @@ Subprocess coverage (optional):
 
 When set, ``pytest_sessionstart`` writes a coverage rcfile under
 ``.integration_coverage/`` with an **absolute** ``source=`` path
-(``…/src/qwenpaw``); the app subprocess runs with
+(``…/src/ai_personal_assistant``); the app subprocess runs with
 ``COVERAGE_PROCESS_START`` / ``COVERAGE_FILE`` so the child traces
 that tree. The fixture stops the app with **SIGINT** first so coverage
 can flush (SIGTERM often yields empty data). After the session, files

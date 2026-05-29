@@ -26,7 +26,7 @@ metadata:
 **优先使用内置路径解析（适用于所有安装方式）**
 
 ```bash
-DOCS_DIR=$(python3 -c "from qwenpaw.constant import DOCS_DIR; print(DOCS_DIR or '')" 2>/dev/null)
+DOCS_DIR=$(python3 -c "from ai_personal_assistant.constant import DOCS_DIR; print(DOCS_DIR or '')" 2>/dev/null)
 ```
 
 如果上面获取到了非空路径且目录存在，直接使用，跳到第二步。
