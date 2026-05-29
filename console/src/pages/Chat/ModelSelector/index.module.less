@@ -15,8 +15,8 @@
 
   &:hover,
   &.triggerActive {
-    border-color: #ff7f16;
-    color: #ff7f16;
+    border-color: var(--qp-color-primary);
+    color: var(--qp-color-primary);
     box-shadow: 0 2px 8px rgba(97, 92, 237, 0.12);
   }
 }
@@ -38,7 +38,7 @@
 
   &.triggerArrowOpen {
     transform: rotate(180deg);
-    color: #ff7f16;
+    color: var(--qp-color-primary);
   }
 }
 
@@ -159,12 +159,12 @@
   }
 
   &.modelItemActive {
-    background: rgba(255, 127, 22, 0.08);
-    color: #ff7f16;
+    background: rgba(var(--qp-color-primary-rgb), 0.10);
+    color: var(--qp-color-primary);
     font-weight: 500;
 
     .modelName {
-      color: #ff7f16;
+      color: var(--qp-color-primary);
     }
   }
 }
@@ -212,7 +212,7 @@
 .checkIcon {
   flex-shrink: 0;
   font-size: 14px;
-  color: #ff7f16;
+  color: var(--qp-color-primary);
 }
 
 .emptyTip {
@@ -234,7 +234,7 @@
 
     &:hover,
     &.triggerActive {
-      color: #ff7f16;
+      color: var(--qp-color-primary);
       box-shadow: 0 2px 8px rgba(97, 92, 237, 0.2);
     }
   }
@@ -243,7 +243,7 @@
     color: rgba(255, 255, 255, 0.3);
 
     &.triggerArrowOpen {
-      color: #ff7f16;
+      color: var(--qp-color-primary);
     }
   }
 
@@ -290,11 +290,11 @@
     }
 
     &.modelItemActive {
-      background: rgba(255, 127, 22, 0.12);
-      color: #ff7f16;
+      background: rgba(var(--qp-color-primary-rgb), 0.14);
+      color: var(--qp-color-primary);
 
       .modelName {
-        color: #ff7f16;
+        color: var(--qp-color-primary);
       }
     }
   }
@@ -316,6 +316,6 @@
   }
 
   .checkIcon {
-    color: #ff7f16;
+    color: var(--qp-color-primary);
   }
 }

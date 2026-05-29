@@ -82,13 +82,13 @@
 }
 
 .disabledTab {
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
   background: #fff !important;
   cursor: not-allowed;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    color: #ff7f16 !important;
+    color: var(--qp-color-primary) !important;
     background: #fff !important;
   }
 }
@@ -230,7 +230,7 @@
   }
 
   .notConfigured {
-    color: #ff7f16;
+    color: var(--qp-color-primary);
     font-weight: 500;
   }
 }
@@ -367,14 +367,14 @@
     }
 
     :global(.qwenpaw-switch-checked) {
-      background-color: #ff7f16;
+      background-color: var(--qp-color-primary);
 
       &:hover:not(.qwenpaw-switch-disabled) {
-        background-color: #ff9d4d;
+        background-color: var(--qp-color-primary-hover);
       }
 
       &.qwenpaw-switch-disabled {
-        background-color: rgba(255, 127, 22, 0.35);
+        background-color: rgba(var(--qp-color-primary-rgb), 0.38);
         opacity: 0.65;
 
         :global(.qwenpaw-switch-inner) {

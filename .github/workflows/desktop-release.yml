@@ -19,6 +19,8 @@ permissions:
 jobs:
   build-windows:
     runs-on: windows-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -275,7 +277,6 @@ jobs:
 
   upload-oss:
     needs: [build-windows, build-macos, build-tauri-windows, build-tauri-macos]
-    # Run on: 1) release trigger, or 2) manual trigger with upload_to_oss checked
     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.upload_to_oss == 'true')
     runs-on: ubuntu-latest
     steps:
@@ -322,7 +323,6 @@ jobs:
 
           echo "Processing Windows artifact: $WIN_EXE"
 
-          # Generate metadata
           python scripts/pack/generate_oss_metadata.py \
             --file "$WIN_EXE" \
             --product desktop \
@@ -330,25 +330,21 @@ jobs:
             --version "$VERSION" \
             --output win-metadata.json
 
-          # Upload file (versioned)
           ossutil cp "$WIN_EXE" \
             "oss://qwenpaw-download/files/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe" \
             --acl public-read \
             --force
 
-          # Upload file (latest)
           ossutil cp "$WIN_EXE" \
             "oss://qwenpaw-download/files/apps/desktop/win/QwenPaw-Setup-latest.exe" \
             --acl public-read \
             --force
 
-          # Upload metadata (versioned)
           ossutil cp win-metadata.json \
             "oss://qwenpaw-download/metadata/apps/desktop/win/QwenPaw-Setup-${VERSION}.exe.json" \
             --acl public-read \
             --force
 
-          # Upload metadata (latest)
           ossutil cp win-metadata.json \
             "oss://qwenpaw-download/metadata/apps/desktop/win/QwenPaw-Setup-latest.exe.json" \
             --acl public-read \
@@ -369,7 +365,6 @@ jobs:
 
           echo "Processing macOS artifact: $MAC_ZIP"
 
-          # Generate metadata
           python scripts/pack/generate_oss_metadata.py \
             --file "$MAC_ZIP" \
             --product desktop \
@@ -377,25 +372,21 @@ jobs:
             --version "$VERSION" \
             --output mac-metadata.json
 
-          # Upload file (versioned)
           ossutil cp "$MAC_ZIP" \
             "oss://qwenpaw-download/files/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip" \
             --acl public-read \
             --force
 
-          # Upload file (latest)
           ossutil cp "$MAC_ZIP" \
             "oss://qwenpaw-download/files/apps/desktop/mac/QwenPaw-latest-macOS.zip" \
             --acl public-read \
             --force
 
-          # Upload metadata (versioned)
           ossutil cp mac-metadata.json \
             "oss://qwenpaw-download/metadata/apps/desktop/mac/QwenPaw-${VERSION}-macOS.zip.json" \
             --acl public-read \
             --force
 
-          # Upload metadata (latest)
           ossutil cp mac-metadata.json \
             "oss://qwenpaw-download/metadata/apps/desktop/mac/QwenPaw-latest-macOS.zip.json" \
             --acl public-read \
@@ -469,7 +460,6 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.version }}"
 
-          # Download existing desktop/index.json if exists
           ossutil cp "oss://qwenpaw-download/metadata/apps/desktop/index.json" \
             desktop-index.json 2>/dev/null || cat > desktop-index.json << 'EOF'
           {
@@ -480,7 +470,6 @@ jobs:
           }
           EOF
 
-          # Merge Windows metadata if exists
           if [ -f "win-metadata.json" ]; then
             python scripts/pack/generate_oss_metadata.py \
               --file "$(find QwenPaw-Desktop-Windows-* -name 'QwenPaw-Setup-*.exe' | head -1)" \
@@ -492,7 +481,6 @@ jobs:
               --output-index desktop-index.json
           fi
 
-          # Merge macOS metadata if exists
           if [ -f "mac-metadata.json" ]; then
             python scripts/pack/generate_oss_metadata.py \
               --file "$(find QwenPaw-Desktop-macOS-* -name 'QwenPaw-*.zip' | head -1)" \
@@ -533,7 +521,6 @@ jobs:
             "QwenPaw-Tauri-*-macOS.zip" \
             "mac-tauri"
 
-          # Upload updated desktop/index.json
           ossutil cp desktop-index.json \
             "oss://qwenpaw-download/metadata/apps/desktop/index.json" \
             --acl public-read \
@@ -543,7 +530,6 @@ jobs:
 
       - name: Update main index
         run: |
-          # Download main index if exists
           ossutil cp "oss://qwenpaw-download/metadata/index.json" \
             main-index.json 2>/dev/null || cat > main-index.json << 'EOF'
           {
@@ -553,7 +539,6 @@ jobs:
           }
           EOF
 
-          # Ensure desktop product is in main index
           python3 << 'PYTHON'
           import json
           from datetime import datetime, timezone
@@ -576,10 +561,43 @@ jobs:
               json.dump(index, f, indent=2, ensure_ascii=False)
           PYTHON
 
-          # Upload main index
           ossutil cp main-index.json \
             "oss://qwenpaw-download/metadata/index.json" \
             --acl public-read \
             --force
 
           echo "✓ Main index updated"
+
+  auto-release:
+    needs: [build-windows, build-macos, build-tauri-windows, build-tauri-macos]
+    # 支持手动 push 或手动点击运行都能触发发布
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 显式赋予写权限，彻底解决 403 报错
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Extract Code Version
+        id: get_version
+        run: |
+          # 借用打包导出的版本号命名，确保版本标签具有业务意义
+          WIN_DIR=$(ls -d artifacts/QwenPaw-Desktop-Windows-* | head -1)
+          VER=${WIN_DIR##*-}
+          echo "version=$VER" >> $GITHUB_OUTPUT
+
+      - name: Create Automated Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ steps.get_version.outputs.version }}-build-${{ github.run_number }}"
+          name: "QwenPaw 自动化构建版 v${{ steps.get_version.outputs.version }} (#${{ github.run_number }})"
+          draft: false
+          prerelease: true # 设为预发布版本，避免混淆正式生产包
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -28,6 +28,7 @@ import { PluginProvider, usePlugins } from "./plugins/PluginContext";
 import { ApprovalProvider } from "./contexts/ApprovalContext";
 import { Suspense } from "react";
 import { lazyImportWithRetry } from "./utils/lazyWithRetry";
+import { appPalette } from "./styles/themePalette";
 
 const LoginPage = lazyImportWithRetry("./pages/Login/index");
 import { authApi } from "./api/modules/auth";
@@ -126,6 +127,7 @@ function AppInner() {
   const { isDark } = useTheme();
   const { loading: pluginsLoading } = usePlugins();
   const selectedTheme = isDark ? bailianDarkTheme : bailianTheme;
+  const palette = isDark ? appPalette.dark : appPalette.light;
   const lang = i18n.resolvedLanguage || i18n.language || "en";
   const [antdLocale, setAntdLocale] = useState<Locale>(
     antdLocaleMap[lang] ?? enUS,
@@ -182,7 +184,19 @@ function AppInner() {
             ? antdTheme.darkAlgorithm
             : antdTheme.defaultAlgorithm,
           token: {
-            colorPrimary: "#FF7F16",
+            colorPrimary: palette.primary,
+            colorPrimaryHover: palette.primaryHover,
+            colorPrimaryActive: palette.primaryActive,
+            colorInfo: palette.info,
+            colorSuccess: palette.success,
+            colorWarning: palette.warning,
+            colorBgBase: palette.pageBg,
+            colorBgLayout: palette.shellBg,
+            colorBgContainer: palette.cardBg,
+            colorText: palette.textPrimary,
+            colorTextSecondary: palette.textSecondary,
+            colorBorder: palette.border,
+            colorFillTertiary: palette.selectedBg,
           },
         }}
       >

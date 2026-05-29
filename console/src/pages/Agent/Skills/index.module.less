@@ -116,11 +116,11 @@
 }
 
 .selectedCard {
-  box-shadow: 0 0 0 1px rgba(255, 127, 22, 0.2) !important;
+  box-shadow: 0 0 0 1px rgba(var(--qp-color-primary-rgb), 0.24) !important;
 }
 
 .selectedListItem {
-  background: rgba(255, 127, 22, 0.02);
+  background: rgba(var(--qp-color-primary-rgb), 0.04);
 }
 
 /* ─── Batch Mode Header ──────────────────────────────────────────────────── */
@@ -359,7 +359,7 @@
 
 .descriptionText {
   border-radius: 4px;
-  background: rgba(43, 18, 0, 0.02);
+  background: rgba(var(--qp-color-primary-rgb), 0.04);
   box-sizing: border-box;
   border: 1px solid #f3f1f0;
   padding: 2px 4px;
@@ -727,7 +727,7 @@
   min-width: 0;
 
   &:hover {
-    border-color: #ff7f16;
+    border-color: var(--qp-color-primary);
   }
 
   &.pickerAllCard {
@@ -748,7 +748,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: #ff7f16;
+  background: var(--qp-color-primary);
   color: #fff;
   display: flex;
   align-items: center;
@@ -838,7 +838,7 @@
   }
 
   &:focus {
-    border-color: #ff7f16;
+    border-color: var(--qp-color-primary);
   }
 }
 
@@ -1273,7 +1273,7 @@
     }
 
     &:focus {
-      border-color: #ff7f16;
+      border-color: var(--qp-color-primary);
     }
   }
 
@@ -1345,8 +1345,8 @@
   }
 
   .selectedCard {
-    border-color: #ff7f16 !important;
-    box-shadow: 0 0 0 1px rgba(255, 127, 22, 0.3) !important;
+    border-color: var(--qp-color-primary) !important;
+    box-shadow: 0 0 0 1px rgba(var(--qp-color-primary-rgb), 0.32) !important;
   }
 
   .batchCount {

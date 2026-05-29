@@ -50,7 +50,7 @@ from .migration import (
     migrate_legacy_workspace_to_default_agent,
     migrate_legacy_skills_to_skill_pool,
     ensure_default_agent_exists,
-    ensure_qa_agent_exists,
+    remove_builtin_qa_agent_profile,
 )
 from .channels.registry import register_custom_channel_routes
 
@@ -264,8 +264,8 @@ async def lifespan(  # pylint: disable=too-many-statements,too-many-branches
     logger.debug("Checking for legacy config migration...")
     migrate_legacy_workspace_to_default_agent()
     ensure_default_agent_exists()
+    remove_builtin_qa_agent_profile()
     migrate_legacy_skills_to_skill_pool()
-    ensure_qa_agent_exists()
 
     # Create core managers (instant — no I/O)
     logger.debug("Initializing MultiAgentManager...")

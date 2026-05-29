@@ -13,6 +13,7 @@ import { useAppMessage } from "../../../hooks/useAppMessage";
 import { formatCompact } from "../../../utils/formatNumber";
 import { useTheme } from "../../../contexts/ThemeContext";
 import { useAgentStore } from "../../../stores/agentStore";
+import { appPalette } from "../../../styles/themePalette";
 import { SummaryCard } from "./SummaryCard";
 import styles from "./index.module.less";
 
@@ -195,7 +196,7 @@ function AgentStatsPage() {
           { key: "chats", label: t("agentStats.newSessions") },
           { key: "activeSessions", label: t("agentStats.activeSessions") },
         ],
-        ["#ff7f16", "#3b82f6"],
+        [appPalette.light.primary, appPalette.light.info],
         isDarkMode,
         crossesYear,
       ),

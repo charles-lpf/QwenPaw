@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton } from "@agentscope-ai/design";
 import {
   SparkHistoryLine,
@@ -11,6 +11,7 @@ import { Flex, Tooltip } from "antd";
 import ChatSessionDrawer from "../ChatSessionDrawer";
 import ChatSearchPanel from "../ChatSearchPanel";
 import PlanPanel from "../../../../components/PlanPanel";
+import { useLocation } from "react-router-dom";
 
 const PlanIcon = () => (
   <svg
@@ -65,7 +66,25 @@ const ChatActionGroup: React.FC<ChatActionGroupProps> = ({
 
   const [searchOpen, setSearchOpen] = useState(false);
   const [planOpen, setPlanOpen] = useState(false);
-  const { createSession } = useChatAnywhereSessions();
+  const location = useLocation();
+  const {
+    createSession,
+    changeCurrentSessionId,
+  } = useChatAnywhereSessions();
+
+  useEffect(() => {
+    const createNewSessionFlag = location.state?.createNewSession;
+    if (!createNewSessionFlag) return;
+
+    void createSession().then((sessionId) => {
+      if (sessionId) {
+        changeCurrentSessionId(sessionId);
+      }
+      // Clear the flag by navigating with cleared state
+      window.history.replaceState(window.history.state, "", location.pathname);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.state]);
 
   return (
     <Flex gap={8} align="center">
@@ -92,13 +111,13 @@ const ChatActionGroup: React.FC<ChatActionGroupProps> = ({
           onClick={() => setSearchOpen(true)}
         />
       </Tooltip>
-      <Tooltip title={t("chat.chatHistoryTooltip")} mouseEnterDelay={0.5}>
+      {/* <Tooltip title={t("chat.chatHistoryTooltip")} mouseEnterDelay={0.5}>
         <IconButton
           bordered={false}
           icon={<SparkHistoryLine />}
           onClick={() => setHistoryOpen(true)}
         />
-      </Tooltip>
+      </Tooltip> */}
       <ChatSessionDrawer
         open={historyOpen}
         onClose={() => setHistoryOpen(false)}

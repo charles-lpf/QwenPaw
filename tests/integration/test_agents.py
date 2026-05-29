@@ -5,8 +5,6 @@ from __future__ import annotations
 
 import pytest
 
-from qwenpaw.constant import BUILTIN_QA_AGENT_ID
-
 _AGENT_PROFILE_TOP_LEVEL_KEYS = (
     "channels",
     "mcp",
@@ -28,7 +26,7 @@ def test_api_agents_list_create_get_delete(app_server) -> None:
     - Verify a newly created agent includes required top-level config groups.
 
     Test flow:
-    1. GET /api/agents; confirm list contains ``default`` and builtin QA.
+    1. GET /api/agents; confirm list contains only the default built-in agent.
     2. POST /api/agents to create a test agent.
     3. GET /api/agents/{agentId} and validate name plus key config groups.
     4. DELETE /api/agents/{agentId}.
@@ -49,9 +47,7 @@ def test_api_agents_list_create_get_delete(app_server) -> None:
     assert isinstance(agents_payload["agents"], list)
     listed_ids = {a["id"] for a in agents_payload["agents"]}
     assert "default" in listed_ids, f"missing default agent in {listed_ids}"
-    assert (
-        BUILTIN_QA_AGENT_ID in listed_ids
-    ), f"missing builtin QA agent in {listed_ids}"
+    assert len(agents_payload["agents"]) == 1, agents_payload["agents"]
 
     create_resp = app_server.api_request(
         "POST",

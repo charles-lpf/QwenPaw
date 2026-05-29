@@ -1,0 +1,242 @@
+.sidebarList {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 4px 2px 2px;
+  margin-top: 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.sidebarLoading {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.sidebarEmpty {
+  padding: 8px 12px 10px;
+  color: rgba(26, 23, 22, 0.35);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.sidebarItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 8px 0 34px;
+  border-radius: 8px;
+  color: rgba(26, 23, 22, 0.78);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(148, 163, 184, 0.9);
+    transform: translateY(-50%);
+  }
+
+  &:hover {
+    background: rgba(var(--qp-color-primary-rgb), 0.07);
+    color: rgba(26, 23, 22, 0.92);
+
+    .sidebarActions {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}
+
+.sidebarItemActive {
+  background: rgba(var(--qp-color-primary-rgb), 0.12);
+  color: rgba(26, 23, 22, 0.95);
+  font-weight: 600;
+}
+
+.sidebarItemDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.sidebarName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.sidebarEditInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.sidebarPinnedMark {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--qp-color-primary);
+}
+
+.sidebarActions {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding-left: 8px;
+  background: linear-gradient(90deg, rgba(249, 248, 244, 0), var(--qp-bg-shell) 30%);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: opacity 0.2s;
+}
+
+.sidebarActionButton {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  padding: 0;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(26, 23, 22, 0.62);
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--qp-color-primary);
+    background: rgba(var(--qp-color-primary-rgb), 0.12);
+  }
+}
+
+.drawerListWrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.drawerList {
+  padding: 0 12px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.drawerLoading {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.virtualListBackground {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.topGradient,
+.bottomGradient {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 28px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.topGradient {
+  top: 0;
+  background: linear-gradient(
+    180deg,
+    var(--colorBgBase, #fff) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.bottomGradient {
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    var(--colorBgBase, #fff) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+:global(.dark-mode) {
+  .sidebarEmpty {
+    color: rgba(255, 255, 255, 0.36);
+  }
+
+  .sidebarItem {
+    color: rgba(255, 255, 255, 0.72);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.94);
+    }
+  }
+
+  .sidebarItemActive {
+    background: rgba(var(--qp-color-primary-rgb), 0.24);
+    color: var(--qp-color-primary-hover);
+  }
+
+  .sidebarActions {
+    background: linear-gradient(90deg, rgba(26, 26, 26, 0), #1a1a1a 30%);
+  }
+
+  .sidebarActionButton {
+    color: rgba(255, 255, 255, 0.66);
+
+    &:hover {
+      color: var(--qp-color-primary-hover);
+      background: rgba(var(--qp-color-primary-rgb), 0.20);
+    }
+  }
+
+  .topGradient {
+    background: linear-gradient(180deg, #1f1f1f 0%, rgba(31, 31, 31, 0) 100%);
+  }
+
+  .bottomGradient {
+    background: linear-gradient(0deg, #1f1f1f 0%, rgba(31, 31, 31, 0) 100%);
+  }
+}

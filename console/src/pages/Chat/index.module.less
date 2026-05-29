@@ -37,8 +37,15 @@
       display: flex;
       align-items: center;
     }
-  }
 
+    [class*="bubble-avatar"] .qwenpaw-avatar {
+      display: none;
+    }
+
+  }
+}
+
+.chatMessagesArea {
   /* Custom scrollbar */
   &::-webkit-scrollbar {
     width: 8px;
@@ -88,7 +95,7 @@
 
 .suggestionCommand {
   flex: 0 0 88px;
-  color: #ff7f16;
+  color: var(--qp-color-primary);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -105,7 +112,7 @@
 
 :global(.dark-mode) {
   .suggestionCommand {
-    color: #ff7f16;
+    color: var(--qp-color-primary);
   }
 
   .suggestionDescription {
@@ -118,7 +125,7 @@
   .chat-anywhere-prompt-icon,
   [class*="prompt-icon"],
   [class*="PromptIcon"] {
-    color: #ff7f16 !important;
+    color: var(--qp-color-primary) !important;
   }
 }
 

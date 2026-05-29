@@ -40,7 +40,7 @@
     "reload": "刷新页面"
   },
   "nav": {
-    "chat": "聊天",
+    "chat": "我的任务",
     "control": "控制",
     "channels": "频道",
     "sessions": "会话",
@@ -890,7 +890,7 @@
     "welcomeGreeting": "欢迎语",
     "welcomeText": "欢迎消息",
     "welcomeTextTooltip": "用户当天首次进入机器人单聊会话时机器人自动发送的消息",
-    "welcomeTextPlaceholder": "例如：你好！我是 QwenPaw，有什么可以帮你的？",
+    "welcomeTextPlaceholder": "例如：你好！有什么可以帮你的？",
     "loginWeCom": "获取企业微信二维码",
     "wecomSetupGuide": "使用二维码创建机器人时，授权机器人可使用的能力时请选择「暂不授权」。如果选择了「确认授权」，除了机器人创建者，其他用户可能无法与机器人交互。",
     "wecomScanAuth": "扫码授权",
@@ -1739,11 +1739,11 @@
   },
   "chat": {
     "modelSelectTooltip": "模型选择",
-    "newChatTooltip": "新建聊天",
-    "searchTooltip": "搜索所有聊天",
-    "chatHistoryTooltip": "聊天历史",
-    "allChats": "全部聊天",
-    "createNewChat": "创建新聊天",
+    "newChatTooltip": "新建任务",
+    "searchTooltip": "搜索所有任务",
+    "chatHistoryTooltip": "历史任务",
+    "allChats": "全部任务",
+    "createNewChat": "新建任务",
     "pinDrawer": "固定",
     "unpinDrawer": "取消固定",
     "statusIdle": "空闲",
@@ -1798,8 +1798,8 @@
       "recordingTooLong": "录音时长超过限制（{{limit}}秒）"
     },
     "search": {
-      "title": "搜索聊天",
-      "tooltip": "搜索当前聊天",
+      "title": "搜索任务",
+      "tooltip": "搜索当前任务",
       "placeholder": "搜索消息...",
       "noResults": "未找到结果",
       "resultsCount": "找到 {{count}} 个结果",
@@ -2029,7 +2029,7 @@
     }
   },
   "login": {
-    "title": "登录 QwenPaw",
+    "title": "登录助手",
     "registerTitle": "创建账户",
     "firstUserHint": "创建管理员账户以开始使用",
     "usernamePlaceholder": "用户名",

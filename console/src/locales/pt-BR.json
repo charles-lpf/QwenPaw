@@ -953,7 +953,7 @@
     "welcomeGreeting": "Welcome Greeting",
     "welcomeText": "Welcome Message",
     "welcomeTextTooltip": "Message automatically sent when a user enters a single chat session with the bot for the first time that day",
-    "welcomeTextPlaceholder": "e.g. Hello! I'm QwenPaw. How can I help you?",
+    "welcomeTextPlaceholder": "e.g. Hello! How can I help you?",
     "loginWeCom": "Get WeCom QR Code",
     "wecomSetupGuide": "When creating a bot via QR code, please select \"Skip Authorization\" when asked to authorize bot capabilities. If you select \"Confirm Authorization\", users other than the bot creator may not be able to interact with the bot.",
     "wecomScanAuth": "Scan to Authorize",
@@ -2052,7 +2052,7 @@
     }
   },
   "login": {
-    "title": "Login to QwenPaw",
+    "title": "Login to Assistant",
     "registerTitle": "Criar Account",
     "firstUserHint": "Create your admin account to get started",
     "usernamePlaceholder": "Username",

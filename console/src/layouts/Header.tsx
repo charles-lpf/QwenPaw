@@ -1,41 +1,48 @@
-import { Layout, Space, Badge, Spin, Tooltip, Dropdown } from "antd";
-import type { MenuProps } from "antd";
+import { Layout, Space, Spin /* Tooltip,Dropdown */ } from "antd";
+// import type { MenuProps } from "antd";
 import LanguageSwitcher from "../components/LanguageSwitcher/index";
 import ThemeToggleButton from "../components/ThemeToggleButton";
-import CodingModeToggle from "../components/CodingModeToggle";
+// import CodingModeToggle from "../components/CodingModeToggle";
 import { useTranslation } from "react-i18next";
 import { Button, Modal } from "@agentscope-ai/design";
 import styles from "./index.module.less";
 import api from "../api";
 import {
-  GITHUB_URL,
-  getDocsUrl,
-  getFeatureDemosUrl,
-  getFaqUrl,
+  // GITHUB_URL,
+  // getDocsUrl,
+  // getFeatureDemosUrl,
+  // getFaqUrl,
   getReleaseNotesUrl,
   PYPI_URL,
   ONE_HOUR_MS,
-  UPDATE_MD,
+  // UPDATE_MD,
   isStableVersion,
   compareVersions,
 } from "./constants";
-import { useTheme } from "../contexts/ThemeContext";
-import { useState, useEffect } from "react";
+// import { useTheme } from "../contexts/ThemeContext";
+import { useRef, useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
   CopyOutlined,
   CheckOutlined,
   TagOutlined,
-  GithubOutlined,
-  FileTextOutlined,
-  ReadOutlined,
-  PlayCircleOutlined,
-  QuestionCircleOutlined,
-  DownOutlined,
+  // GithubOutlined,
+  // FileTextOutlined,
+  // ReadOutlined,
+  // PlayCircleOutlined,
+  // QuestionCircleOutlined,
+  // DownOutlined,
 } from "@ant-design/icons";
 
 const { Header: AntHeader } = Layout;
+const MENU_RESTORE_CLICK_COUNT = 3;
+const MENU_RESTORE_CLICK_WINDOW_MS = 900;
+
+interface HeaderProps {
+  showAdvancedMenus: boolean;
+  onAdvancedMenusChange: (visible: boolean) => void;
+}
 
 // ── Code block with copy button ───────────────────────────────────────────
 function UpdateCodeBlock({ code }: { code: string }) {
@@ -62,13 +69,18 @@ function UpdateCodeBlock({ code }: { code: string }) {
   );
 }
 
-export default function Header() {
+export default function Header({
+  showAdvancedMenus,
+  onAdvancedMenusChange,
+}: HeaderProps) {
   const { t, i18n } = useTranslation();
-  const { isDark } = useTheme();
+  // const { isDark } = useTheme();
   const [version, setVersion] = useState<string>("");
   const [latestVersion, setLatestVersion] = useState<string>("");
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
-  const [updateMarkdown, setUpdateMarkdown] = useState<string>("");
+  const [updateMarkdown] = useState<string>("");
+  const menuRestoreClickCountRef = useRef(0);
+  const menuRestoreTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     api
@@ -106,8 +118,9 @@ export default function Header() {
         const versions = versionsWithTime.map((v) => v.version);
         const latest = versions[0] ?? data?.info?.version ?? "";
 
-        const releaseTime = versionsWithTime.find((v) => v.version === latest)
-          ?.uploadTime;
+        const releaseTime = versionsWithTime.find(
+          (v) => v.version === latest,
+        )?.uploadTime;
         const isOldEnough =
           !!releaseTime &&
           new Date(releaseTime) <= new Date(Date.now() - ONE_HOUR_MS);
@@ -121,35 +134,35 @@ export default function Header() {
       .catch(() => {});
   }, []);
 
-  const hasUpdate =
-    !!version && !!latestVersion && compareVersions(latestVersion, version) > 0;
+  // const hasUpdate =
+  //   !!version && !!latestVersion && compareVersions(latestVersion, version) > 0;
 
-  const handleOpenUpdateModal = () => {
-    setUpdateMarkdown("");
-    setUpdateModalOpen(true);
-    const lang = i18n.language?.startsWith("zh")
-      ? "zh"
-      : i18n.language?.startsWith("ru")
-      ? "ru"
-      : "en";
-    const faqLang = lang === "zh" ? "zh" : "en";
-    const url = `https://qwenpaw.agentscope.io/docs/faq.${faqLang}.md`;
-    fetch(url, { cache: "no-cache" })
-      .then((res) => (res.ok ? res.text() : Promise.reject()))
-      .then((text) => {
-        const zhPattern = /###\s*QwenPaw如何更新[\s\S]*?(?=\n###|$)/;
-        const enPattern = /###\s*How to update QwenPaw[\s\S]*?(?=\n###|$)/;
-        const match = text.match(faqLang === "zh" ? zhPattern : enPattern);
-        setUpdateMarkdown(
-          match && lang !== "ru"
-            ? match[0].trim()
-            : UPDATE_MD[lang] ?? UPDATE_MD.en,
-        );
-      })
-      .catch(() => {
-        setUpdateMarkdown(UPDATE_MD[lang] ?? UPDATE_MD.en);
-      });
-  };
+  // const handleOpenUpdateModal = () => {
+  //   setUpdateMarkdown("");
+  //   setUpdateModalOpen(true);
+  //   const lang = i18n.language?.startsWith("zh")
+  //     ? "zh"
+  //     : i18n.language?.startsWith("ru")
+  //     ? "ru"
+  //     : "en";
+  //   const faqLang = lang === "zh" ? "zh" : "en";
+  //   const url = `https://qwenpaw.agentscope.io/docs/faq.${faqLang}.md`;
+  //   fetch(url, { cache: "no-cache" })
+  //     .then((res) => (res.ok ? res.text() : Promise.reject()))
+  //     .then((text) => {
+  //       const zhPattern = /###\s*QwenPaw如何更新[\s\S]*?(?=\n###|$)/;
+  //       const enPattern = /###\s*How to update QwenPaw[\s\S]*?(?=\n###|$)/;
+  //       const match = text.match(faqLang === "zh" ? zhPattern : enPattern);
+  //       setUpdateMarkdown(
+  //         match && lang !== "ru"
+  //           ? match[0].trim()
+  //           : UPDATE_MD[lang] ?? UPDATE_MD.en,
+  //       );
+  //     })
+  //     .catch(() => {
+  //       setUpdateMarkdown(UPDATE_MD[lang] ?? UPDATE_MD.en);
+  //     });
+  // };
 
   const handleNavClick = (url: string) => {
     if (url) {
@@ -162,17 +175,56 @@ export default function Header() {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (menuRestoreTimerRef.current !== null) {
+        window.clearTimeout(menuRestoreTimerRef.current);
+      }
+    };
+  }, []);
+
+  const resetMenuRestoreClicks = () => {
+    menuRestoreClickCountRef.current = 0;
+    if (menuRestoreTimerRef.current !== null) {
+      window.clearTimeout(menuRestoreTimerRef.current);
+      menuRestoreTimerRef.current = null;
+    }
+  };
+
+  const handleAssistantTitleClick = () => {
+    if (showAdvancedMenus) {
+      resetMenuRestoreClicks();
+      onAdvancedMenusChange(false);
+      return;
+    }
+
+    menuRestoreClickCountRef.current += 1;
+    if (menuRestoreTimerRef.current !== null) {
+      window.clearTimeout(menuRestoreTimerRef.current);
+    }
+
+    if (menuRestoreClickCountRef.current >= MENU_RESTORE_CLICK_COUNT) {
+      resetMenuRestoreClicks();
+      onAdvancedMenusChange(true);
+      return;
+    }
+
+    menuRestoreTimerRef.current = window.setTimeout(() => {
+      resetMenuRestoreClicks();
+    }, MENU_RESTORE_CLICK_WINDOW_MS);
+  };
+
   return (
     <>
       <AntHeader className={styles.header}>
         <div className={styles.logoWrapper}>
-          <img
-            src={isDark ? "/logo-dark.svg" : "/logo-light.svg"}
-            alt="QwenPaw"
+          {/* <img
+            src="/online.svg"
+            alt="Assistant"
             className={styles.logoImg}
-          />
-          <div className={styles.logoDivider} />
-          {version && (
+          /> */}
+          {/* <div className={styles.logoDivider} /> */}
+          {/* {version && (
             <Badge
               dot={!!hasUpdate}
               color="rgba(255, 157, 77, 1)"
@@ -189,10 +241,22 @@ export default function Header() {
                 v{version}
               </span>
             </Badge>
-          )}
+            
+          )} */}
+          <button
+            type="button"
+            className={styles.personalAssistantTitle}
+            onClick={handleAssistantTitleClick}
+            aria-label="AI个人助理"
+          >
+            <span className={styles.aiIcon}>
+              <img src="/sparkles.svg" alt="" width={16} height={16} />
+            </span>
+            AI个人助理
+          </button>
         </div>
         <Space size="middle">
-          <Dropdown
+          {/* <Dropdown
             menu={{
               items: [
                 {
@@ -227,8 +291,8 @@ export default function Header() {
             <Button type="text">
               {t("header.resources")} <DownOutlined />
             </Button>
-          </Dropdown>
-          <Tooltip title={t("header.github")}>
+          </Dropdown> */}
+          {/* <Tooltip title={t("header.github")}>
             <Button
               type="text"
               icon={<GithubOutlined />}
@@ -236,10 +300,10 @@ export default function Header() {
             >
               {t("header.github")}
             </Button>
-          </Tooltip>
-          <div className={styles.headerDivider} />
-          <CodingModeToggle />
-          <div className={styles.headerDivider} />
+          </Tooltip> */}
+          {/* <div className={styles.headerDivider} /> */}
+          {/* <CodingModeToggle /> */}
+          {/* <div className={styles.headerDivider} /> */}
           <LanguageSwitcher />
           <ThemeToggleButton />
         </Space>

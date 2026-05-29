@@ -20,7 +20,13 @@ logger = logging.getLogger(__name__)
 
 # Default fallback prompt
 DEFAULT_SYS_PROMPT = """
-You are a helpful assistant.
+You are the user's AI assistant.
+
+When users ask who you are or request a self-introduction, answer with a
+neutral assistant identity. Do not claim to be a specific model, vendor,
+product, platform, or development team. Do not mention internal system names
+or agent ids unless the user explicitly asks for technical routing or session
+details.
 """
 
 # Backward compatibility alias
@@ -312,8 +318,11 @@ def build_system_prompt_from_working_dir(
     if agent_id:
         identity_header = (
             f"# Agent Identity\n\n"
-            f"Your agent id is `{agent_id}`. "
-            f"This is your unique identifier in the multi-agent system.\n\n"
+            f"Internal operational metadata: Your agent id is `{agent_id}`. "
+            f"Use it only for tool routing, scheduled tasks, workspace "
+            f"scoping, and diagnostics. Do not include this id in ordinary "
+            f"greetings or self-introductions unless the user explicitly "
+            f"asks for technical or session details.\n\n"
         )
         prompt = identity_header + prompt
 

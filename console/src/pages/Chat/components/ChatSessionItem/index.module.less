@@ -29,8 +29,8 @@
     border-radius: 6px;
     background-color: var(--colorBgBase, #fff);
     background-image: linear-gradient(
-      var(--color-fill-tertiary, rgba(43, 18, 0, 0.03)),
-      var(--color-fill-tertiary, rgba(43, 18, 0, 0.03))
+      var(--color-fill-tertiary, rgba(var(--qp-color-primary-rgb), 0.05)),
+      var(--color-fill-tertiary, rgba(var(--qp-color-primary-rgb), 0.05))
     );
 
     .actions {
@@ -54,7 +54,7 @@
 
   &.active {
     border-radius: 6px;
-    background: var(--color-fill-tertiary, rgba(43, 18, 0, 0.03));
+    background: var(--color-fill-tertiary, rgba(var(--qp-color-primary-rgb), 0.05));
   }
 
   &.disabled {
@@ -186,7 +186,7 @@
   font-weight: 500;
   line-height: 18px;
   color: var(--colorTextSecondary, rgba(26, 23, 22, 0.55));
-  background: var(--color-fill-tertiary, rgba(43, 18, 0, 0.06));
+  background: var(--color-fill-tertiary, rgba(var(--qp-color-primary-rgb), 0.08));
   min-width: 0;
 }
 
@@ -242,7 +242,7 @@
 
   // Pinned state - primary color
   &[data-pinned="true"] {
-    color: var(--colorPrimary, #ff9d4d);
+    color: var(--colorPrimary, var(--qp-color-primary-hover));
   }
 }
 
@@ -297,7 +297,7 @@
     color: rgba(255, 255, 255, 0.72);
 
     &[data-pinned="true"] {
-      color: var(--colorPrimary, #ff9d4d);
+      color: var(--colorPrimary, var(--qp-color-primary-hover));
     }
   }
 }

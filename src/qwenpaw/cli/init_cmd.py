@@ -144,8 +144,8 @@ def init_cmd(
     from pathlib import Path
     from ..app.migration import (
         ensure_default_agent_exists,
-        ensure_qa_agent_exists,
         migrate_legacy_skills_to_skill_pool,
+        remove_builtin_qa_agent_profile,
     )
 
     config_path = get_config_path()
@@ -198,10 +198,9 @@ def init_cmd(
     # --- Ensure default agent workspace exists ---
     click.echo("\n=== Default Workspace Initialization ===")
     ensure_default_agent_exists()
+    remove_builtin_qa_agent_profile()
     migrate_legacy_skills_to_skill_pool()
     click.echo("✓ Default workspace initialized")
-    ensure_qa_agent_exists()
-    click.echo("✓ Builtin QA agent workspace ensured")
 
     # --- Ensure local skill hub exists ---
     from ..agents.skill_system import ensure_skill_pool_initialized

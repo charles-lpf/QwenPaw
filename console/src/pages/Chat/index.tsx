@@ -1,6 +1,7 @@
 import {
   AgentScopeRuntimeWebUI,
   IAgentScopeRuntimeWebUIOptions,
+  WelcomePrompts,
   type IAgentScopeRuntimeWebUIRef,
 } from "@agentscope-ai/chat";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -33,6 +34,9 @@ import { ApprovalCard } from "../../components/ApprovalCard/ApprovalCard";
 import { commandsApi } from "../../api/modules/commands";
 import { useApprovalContext } from "../../contexts/ApprovalContext";
 import { planApi } from "../../api/modules/plan";
+
+const ASSISTANT_RESPONSE_AVATAR =
+  "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='32'%20height='32'%20viewBox='0%200%2032%2032'%20fill='none'%3E%3Crect%20x='4'%20y='4'%20width='24'%20height='24'%20rx='7'%20fill='%23F0ECFB'/%3E%3Cg%20transform='translate(7%207)%20scale(0.75)'%20stroke='%231E1930'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%3E%3Cpath%20d='M12%208V4H8'/%3E%3Crect%20width='16'%20height='12'%20x='4'%20y='8'%20rx='2'/%3E%3Cpath%20d='M2%2014h2'/%3E%3Cpath%20d='M20%2014h2'/%3E%3Cpath%20d='M15%2013v2'/%3E%3Cpath%20d='M9%2013v2'/%3E%3C/g%3E%3C/svg%3E";
 
 interface ApprovalMessageData {
   requestId: string;
@@ -1178,8 +1182,16 @@ export default function ChatPage() {
       },
       welcome: {
         ...i18nConfig.welcome,
-        nick: "QwenPaw",
-        avatar: "/qwenpaw.png",
+        nick: "AI助手",
+        avatar: ASSISTANT_RESPONSE_AVATAR,
+        render: (welcomeProps: any) => (
+          <WelcomePrompts
+            greeting={welcomeProps.greeting}
+            description={welcomeProps.description}
+            prompts={welcomeProps.prompts}
+            onClick={(query) => welcomeProps.onSubmit({ query })}
+          />
+        ),
       },
       sender: {
         ...(i18nConfig as any)?.sender,

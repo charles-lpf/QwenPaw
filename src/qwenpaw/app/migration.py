@@ -739,7 +739,7 @@ def _other_agent_owns_workspace(
 def _fallback_active_agent_id(config, exclude_id: str) -> str:
     """Pick a new active agent when ``exclude_id`` is no longer usable."""
     profiles = config.agents.profiles
-    for candidate in (BUILTIN_QA_AGENT_ID, "default"):
+    for candidate in ("default", BUILTIN_QA_AGENT_ID):
         ref = profiles.get(candidate)
         if ref is None or candidate == exclude_id:
             continue
@@ -756,6 +756,46 @@ def _fallback_active_agent_id(config, exclude_id: str) -> str:
         if aid != exclude_id:
             return aid
     return "default"
+
+
+def remove_builtin_qa_agent_profile() -> None:
+    """Remove bundled QA agent references from config.
+
+    The application now starts with a single default agent. Existing QA
+    workspaces are intentionally left on disk so user data is not deleted.
+    """
+    try:
+        _do_remove_builtin_qa_agent_profile()
+    except Exception as e:
+        logger.error(
+            f"Failed to remove builtin QA agent profile: {e}.",
+            exc_info=True,
+        )
+
+
+def _do_remove_builtin_qa_agent_profile() -> None:
+    config = load_config()
+    removed_ids: list[str] = []
+
+    for agent_id in (BUILTIN_QA_AGENT_ID, LEGACY_QA_AGENT_ID):
+        if agent_id in config.agents.profiles:
+            del config.agents.profiles[agent_id]
+            removed_ids.append(agent_id)
+
+    if not removed_ids:
+        return
+
+    if config.agents.active_agent in removed_ids:
+        config.agents.active_agent = _fallback_active_agent_id(
+            config,
+            config.agents.active_agent,
+        )
+
+    save_config(config)
+    logger.info(
+        "Removed builtin QA agent profile(s): %s",
+        ", ".join(removed_ids),
+    )
 
 
 def _apply_legacy_qa_disable_for_migration(config) -> None:

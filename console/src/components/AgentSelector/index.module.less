@@ -20,17 +20,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(43, 18, 0, 0.04);
-  border: 1px solid rgba(26, 23, 22, 0.08);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
-  color: #f07e26;
+  color: #1a1a2e;
   cursor: default;
   margin-bottom: 12px;
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(43, 18, 0, 0.08);
-    border-color: rgba(240, 126, 38, 0.3);
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -63,7 +63,7 @@
   gap: 2px;
   font-size: 12px;
   font-weight: 500;
-  color: #f07e26;
+  color: #1a1a2e;
   background: none;
   border: none;
   padding: 0;
@@ -72,7 +72,7 @@
   flex-shrink: 0;
 
   &:hover {
-    color: #d96c18;
+    color: #555;
   }
 }
 
@@ -138,7 +138,7 @@
 
   svg {
     flex-shrink: 0;
-    color: #f07e26;
+    color: #1a1a2e;
     opacity: 0.85;
   }
 
@@ -186,17 +186,17 @@
       transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
-        background: rgba(43, 18, 0, 0.06) !important;
+        background: rgba(150, 122, 227, 0.08) !important;
       }
 
       &.qwenpaw-select-item-option-selected {
-        background: rgba(43, 18, 0, 0.06) !important;
+        background: rgba(150, 122, 227, 0.12) !important;
 
         .agentOptionIcon {
-          background: linear-gradient(135deg, #f07e26 0%, #f5a05a 100%);
-          border-color: transparent;
-          color: #ffffff;
-          box-shadow: 0 2px 8px rgba(240, 126, 38, 0.4);
+          background: rgba(150, 122, 227, 0.2);
+          border-color: rgba(150, 122, 227, 0.3);
+          color: #967ae3;
+          box-shadow: 0 2px 6px rgba(150, 122, 227, 0.25);
         }
       }
     }
@@ -208,17 +208,17 @@
       transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
-        background: rgba(43, 18, 0, 0.06) !important;
+        background: rgba(150, 122, 227, 0.08) !important;
       }
 
       &.ant-select-item-option-selected {
-        background: rgba(43, 18, 0, 0.06) !important;
+        background: rgba(150, 122, 227, 0.12) !important;
 
         .agentOptionIcon {
-          background: linear-gradient(135deg, #f07e26 0%, #f5a05a 100%);
-          border-color: transparent;
-          color: #ffffff;
-          box-shadow: 0 2px 8px rgba(240, 126, 38, 0.4);
+          background: rgba(150, 122, 227, 0.2);
+          border-color: rgba(150, 122, 227, 0.3);
+          color: #967ae3;
+          box-shadow: 0 2px 6px rgba(150, 122, 227, 0.25);
         }
       }
     }
@@ -250,17 +250,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #fff8f2 0%, #fff0e5 100%);
-  border: 1px solid rgba(240, 126, 38, 0.15);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 8px;
-  color: #f07e26;
+  color: #1a1a2e;
   transition: all 0.2s ease;
 
   .agentOption:hover & {
-    background: linear-gradient(135deg, #ffe9d4 0%, #fff0e5 100%);
-    border-color: rgba(240, 126, 38, 0.3);
-    color: #f07e26;
-    box-shadow: 0 2px 6px rgba(240, 126, 38, 0.15);
+    background: rgba(150, 122, 227, 0.15);
+    border-color: rgba(150, 122, 227, 0.25);
+    color: #967ae3;
+    box-shadow: 0 2px 6px rgba(150, 122, 227, 0.2);
   }
 }
 
@@ -292,7 +292,7 @@
 
 .activeIndicator {
   flex-shrink: 0;
-  color: #f07e26;
+  color: #1a1a2e;
   animation: fadeIn 0.3s ease;
 }
 
@@ -319,10 +319,10 @@
 .agentOptionId {
   font-size: 10px;
   font-family: "SF Mono", "Consolas", "Monaco", monospace;
-  color: rgba(240, 126, 38, 0.45);
+  color: rgba(0, 0, 0, 0.35);
   letter-spacing: 0.3px;
   padding-top: 4px;
-  border-top: 1px solid rgba(240, 126, 38, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 // ─── Dark mode overrides ───────────────────────────────────────────────────────
@@ -335,16 +335,16 @@
   .agentSelectorCollapsed {
     background: rgba(255, 255, 255, 0.05);
     border-color: rgba(255, 255, 255, 0.1);
-    color: #f07e26;
+    color: rgba(255, 255, 255, 0.85);
 
     &:hover {
       background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(240, 126, 38, 0.4);
+      border-color: rgba(255, 255, 255, 0.15);
     }
   }
 
   .agentSelectorLabel {
-    color: rgba(255, 255, 255, 0.55);
+    color: rgba(255, 255, 255, 0.45);
 
     svg {
       opacity: 0.7;
@@ -355,58 +355,11 @@
     color: rgba(255, 255, 255, 0.45);
   }
 
-  .dropdownHeader {
-    border-bottom-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .dropdownHeaderTitle {
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  .agentSelector {
-    :global {
-      .ant-select-selector {
-        border: none !important;
-        background: transparent !important;
-
-        &:hover {
-          border: none !important;
-          background: transparent !important;
-        }
-
-        &:focus {
-          border: none !important;
-          background: transparent !important;
-          box-shadow: none !important;
-        }
-      }
-
-      .ant-select-arrow {
-        color: rgba(255, 255, 255, 0.45);
-      }
-
-      .ant-select-focused .ant-select-selector {
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
-      }
-    }
-  }
-
-  .selectedAgentLabel {
-    color: rgba(255, 255, 255, 0.9);
-
-    svg {
-      color: #f5a05a;
-      opacity: 0.9;
-    }
-  }
-
   .managementLink {
-    color: #f5a05a;
+    color: rgba(255, 255, 255, 0.85);
 
     &:hover {
-      color: #f07e26;
+      color: rgba(255, 255, 255, 0.6);
     }
   }
 
@@ -417,48 +370,66 @@
       0 2px 8px rgba(0, 0, 0, 0.2) !important;
 
     :global {
+      .qwenpaw-select-item {
+        &:hover {
+          background: rgba(150, 122, 227, 0.15) !important;
+        }
+
+        &.qwenpaw-select-item-option-selected {
+          background: rgba(150, 122, 227, 0.25) !important;
+
+          .agentOptionIcon {
+            background: rgba(150, 122, 227, 0.35);
+            border-color: rgba(150, 122, 227, 0.4);
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(150, 122, 227, 0.35);
+          }
+        }
+      }
+
       .ant-select-item {
         &:hover {
-          background: rgba(255, 255, 255, 0.08) !important;
+          background: rgba(150, 122, 227, 0.15) !important;
         }
 
         &.ant-select-item-option-selected {
-          background: rgba(255, 255, 255, 0.08) !important;
+          background: rgba(150, 122, 227, 0.25) !important;
 
           .agentOptionIcon {
-            background: linear-gradient(135deg, #f07e26 0%, #f5a05a 100%);
-            border-color: transparent;
-            color: #ffffff;
-            box-shadow: 0 2px 8px rgba(240, 126, 38, 0.5);
+            background: rgba(150, 122, 227, 0.35);
+            border-color: rgba(150, 122, 227, 0.4);
+            color: #fff;
+            box-shadow: 0 2px 6px rgba(150, 122, 227, 0.35);
           }
         }
       }
     }
   }
 
+  .selectedAgentLabel {
+    color: rgba(255, 255, 255, 0.9);
+
+    svg {
+      color: rgba(255, 255, 255, 0.85);
+      opacity: 0.9;
+    }
+  }
+
   .agentOptionIcon {
-    background: linear-gradient(
-      135deg,
-      rgba(240, 126, 38, 0.15) 0%,
-      rgba(240, 126, 38, 0.08) 100%
-    );
-    border-color: rgba(245, 160, 90, 0.2);
-    color: #f5a05a;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
 
     .agentOption:hover & {
-      background: linear-gradient(
-        135deg,
-        rgba(240, 126, 38, 0.3) 0%,
-        rgba(240, 126, 38, 0.15) 100%
-      );
-      border-color: rgba(245, 160, 90, 0.4);
-      color: #f5b87a;
-      box-shadow: 0 2px 8px rgba(240, 126, 38, 0.3);
+      background: rgba(150, 122, 227, 0.25);
+      border-color: rgba(150, 122, 227, 0.35);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(150, 122, 227, 0.25);
     }
   }
 
   .agentOptionName {
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .agentOptionDescription {
@@ -466,7 +437,11 @@
   }
 
   .agentOptionId {
-    color: rgba(245, 160, 90, 0.5);
-    border-top-color: rgba(245, 160, 90, 0.12);
+    color: rgba(255, 255, 255, 0.35);
+    border-top-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .activeIndicator {
+    color: rgba(255, 255, 255, 0.85);
   }
 }

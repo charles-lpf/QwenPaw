@@ -508,6 +508,13 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
   onSessionCreated: ((sessionId: string) => void) | null = null;
 
   /**
+   * The local timestamp id for a freshly-created, not-yet-persisted chat.
+   * ChatSessionInitializer uses this to avoid clearing the new session while
+   * the URL is intentionally /chat.
+   */
+  pendingNewSessionId: string | null = null;
+
+  /**
    * When reconnecting to a running conversation, the backend history may not
    * include the latest user message (it's only persisted after generation
    * completes). If generating, look up the cached text from sessionStorage
@@ -745,6 +752,10 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
         return this.fetchAndBuildSession(sessionId, fromList.realId, fromList);
       }
 
+      if (this.pendingNewSessionId === sessionId) {
+        return this.getLocalSession(sessionId);
+      }
+
       // Pure local session (not yet sent to backend): wait until updateSession
       // resolves the realId, then fetch history with the real UUID.
       await this.waitForRealId(sessionId);
@@ -784,6 +795,9 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
     const { list, realId } = resolveRealId(this.sessionList, tempId);
     this.sessionList = list;
     if (realId) {
+      if (this.pendingNewSessionId === tempId) {
+        this.pendingNewSessionId = null;
+      }
       this.notifyRealIdResolved(tempId);
       this.onSessionIdResolved?.(tempId, realId);
     }
@@ -817,11 +831,22 @@ class SessionApi implements IAgentScopeRuntimeWebUISessionAPI {
       sessionId: session.id,
       userId: DEFAULT_USER_ID,
       channel: DEFAULT_CHANNEL,
+      messages: [],
+      meta: {},
     } as ExtendedSession;
 
     this.updateWindowVariables(extended);
+    this.pendingNewSessionId = session.id;
+
+    // IMMEDIATELY add to sessionList so that ChatSessionInitializer's
+    // sessions array sees the new session and won't incorrectly clear
+    // the currentSessionId (issue: left + sends message but no AI response).
+    // Also needed so that getSession(timestampId) can find this session
+    // before the backend UUID is resolved.
+    this.sessionList = [extended, ...this.sessionList];
+
     this.onSessionCreated?.(session.id);
-    return this.sessionList;
+    return [...this.sessionList];
   }
 
   async removeSession(session: Partial<IAgentScopeRuntimeWebUISession>) {

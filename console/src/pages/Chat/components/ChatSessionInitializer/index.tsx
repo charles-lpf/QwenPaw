@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useChatAnywhereSessionsState } from "@agentscope-ai/chat";
 import sessionApi from "../../sessionApi";
+import type { ExtendedChatSession } from "../../ChatSessionList/useChatSessionListController";
 
 /**
  * URL chatId → context currentSessionId (one direction of bidirectional sync).
@@ -33,7 +34,20 @@ const ChatSessionInitializer: React.FC = () => {
   const lastAppliedChatIdRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
-    if (!chatId || !sessions.length) return;
+    if (!chatId) {
+      lastAppliedChatIdRef.current = undefined;
+      sessionApi.lastNavigatedChatId = null;
+      const currentSessionId = currentSessionIdRef.current;
+      const isFreshNewChat =
+        currentSessionId === sessionApi.pendingNewSessionId;
+
+      if (currentSessionId && !isFreshNewChat) {
+        setCurrentSessionId(undefined);
+      }
+      return;
+    }
+
+    if (!sessions.length) return;
 
     // Issue #4557: Do NOT trigger setCurrentSessionId while a user-initiated
     // session switch is in progress. This breaks the infinite loop where
@@ -58,9 +72,16 @@ const ChatSessionInitializer: React.FC = () => {
       return;
     }
 
-    const matching = sessions.find((s) => s.id === chatId);
+    // Match by session.id OR session.realId (for URL-driven switching from sidebar)
+    const matching = sessions.find(
+      (s) =>
+        s.id === chatId ||
+        (s as ExtendedChatSession).realId === chatId,
+    ) as ExtendedChatSession | undefined;
+
     if (matching && currentSessionIdRef.current !== matching.id) {
       lastAppliedChatIdRef.current = chatId;
+      // Always set currentSessionId to the frontend session.id (not realId)
       setCurrentSessionId(matching.id);
     } else if (matching) {
       // Already in sync, just record that we've handled this chatId

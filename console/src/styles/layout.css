@@ -1,19 +1,63 @@
+html {
+  --qp-color-primary: #967ae3;
+  --qp-color-primary-hover: #a98bee;
+  --qp-color-primary-active: #7465a9;
+  --qp-color-primary-rgb: 150, 122, 227;
+  --qp-color-primary-hover-rgb: 169, 139, 238;
+  --qp-bg-page: #f7f7ff;
+  --qp-bg-shell: #f9f7fd;
+  --qp-bg-chat: #f6f4fc;
+  --qp-bg-selected: #f0ecfb;
+  --qp-bg-card: #ffffff;
+  --qp-border: #e5e2ea;
+  --qp-text-primary: #1e1930;
+  --qp-text-secondary: #6f6882;
+  --qp-text-muted: #9488b1;
+  --qp-color-success: #55c7a6;
+  --qp-color-info: #45c6e3;
+  --qp-color-warning: #df9559;
+
+  --color-primary: var(--qp-color-primary);
+  --colorPrimary: var(--qp-color-primary);
+  --colorBgBase: var(--qp-bg-card);
+  --colorText: var(--qp-text-primary);
+  --colorTextSecondary: var(--qp-text-secondary);
+  --color-fill-tertiary: var(--qp-bg-selected);
+}
+
 html,
 body {
   height: 100%;
   overflow: hidden;
   margin: 0;
   padding: 0;
-  background: #f9f8f4;
+  background: var(--qp-bg-shell);
 }
 
 .qwenpaw-layout {
-  background: #f9f8f4;
+  background: var(--qp-bg-shell);
 }
 
 /* ─── Dark mode global token overrides ─────────────────────────────────────── */
 html.dark-mode {
   color-scheme: dark;
+  --qp-color-primary: #a98bee;
+  --qp-color-primary-hover: #b9a3f4;
+  --qp-color-primary-active: #7c68c7;
+  --qp-color-primary-rgb: 169, 139, 238;
+  --qp-color-primary-hover-rgb: 185, 163, 244;
+  --qp-bg-page: #15121d;
+  --qp-bg-shell: #1b1726;
+  --qp-bg-chat: #211c2e;
+  --qp-bg-selected: rgba(150, 122, 227, 0.22);
+  --qp-bg-card: #211c2e;
+  --qp-border: rgba(229, 226, 234, 0.14);
+  --qp-text-primary: rgba(255, 255, 255, 0.9);
+  --qp-text-secondary: rgba(255, 255, 255, 0.68);
+  --qp-text-muted: rgba(255, 255, 255, 0.42);
+  --qp-color-success: #64d4b3;
+  --qp-color-info: #64d5ea;
+  --qp-color-warning: #e8a66f;
 }
 
 html.dark-mode body {
@@ -182,8 +226,8 @@ html.dark-mode .ant-pagination .ant-pagination-item a {
 
 html.dark-mode .qwenpaw-pagination .qwenpaw-pagination-item-active,
 html.dark-mode .ant-pagination .ant-pagination-item-active {
-  background: #ff7f16 !important;
-  border-color: #ff7f16 !important;
+  background: var(--qp-color-primary) !important;
+  border-color: var(--qp-color-primary) !important;
 }
 
 html.dark-mode .qwenpaw-pagination .qwenpaw-pagination-item-active a,
@@ -210,7 +254,7 @@ html.dark-mode .qwenpaw-table-column-sorter-up.active,
 html.dark-mode .qwenpaw-table-column-sorter-down.active,
 html.dark-mode .ant-table-column-sorter-up.active,
 html.dark-mode .ant-table-column-sorter-down.active {
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
 }
 
 /* Checkbox in table */
@@ -222,8 +266,8 @@ html.dark-mode .ant-checkbox-inner {
 
 html.dark-mode .qwenpaw-checkbox-checked .qwenpaw-checkbox-inner,
 html.dark-mode .ant-checkbox-checked .ant-checkbox-inner {
-  background: #ff7f16 !important;
-  border-color: #ff7f16 !important;
+  background: var(--qp-color-primary) !important;
+  border-color: var(--qp-color-primary) !important;
 }
 
 /* Page titles (h1) */
@@ -316,7 +360,7 @@ html.dark-mode .ant-select-item-option-active {
 html.dark-mode .qwenpaw-select-item-option-selected,
 html.dark-mode .ant-select-item-option-selected {
   background: rgba(97, 92, 237, 0.2) !important;
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
 }
 
 /* Form labels */
@@ -397,7 +441,7 @@ html.dark-mode
   .ant-picker-time-panel-cell-selected
   .ant-picker-time-panel-cell-inner {
   background: rgba(97, 92, 237, 0.2) !important;
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
 }
 
 /* DatePicker / RangePicker calendar panel */
@@ -467,7 +511,7 @@ html.dark-mode .ant-picker-cell-disabled {
 /* Today marker */
 html.dark-mode .qwenpaw-picker-cell-today .qwenpaw-picker-cell-inner::before,
 html.dark-mode .ant-picker-cell-today .ant-picker-cell-inner::before {
-  border-color: #ff7f16 !important;
+  border-color: var(--qp-color-primary) !important;
 }
 
 /* Selected start/end cell */
@@ -477,7 +521,7 @@ html.dark-mode .qwenpaw-picker-cell-range-start .qwenpaw-picker-cell-inner,
 html.dark-mode .ant-picker-cell-range-start .ant-picker-cell-inner,
 html.dark-mode .qwenpaw-picker-cell-range-end .qwenpaw-picker-cell-inner,
 html.dark-mode .ant-picker-cell-range-end .ant-picker-cell-inner {
-  background: #ff7f16 !important;
+  background: var(--qp-color-primary) !important;
   color: #fff !important;
 }
 
@@ -503,7 +547,7 @@ html.dark-mode
 html.dark-mode
   .qwenpaw-picker-cell-in-view.qwenpaw-picker-cell-range-hover-end::after,
 html.dark-mode .ant-picker-cell-in-view.ant-picker-cell-range-hover-end::after {
-  border-color: #ff7f16 !important;
+  border-color: var(--qp-color-primary) !important;
 }
 
 /* Panel footer (OK button area) */
@@ -515,7 +559,7 @@ html.dark-mode .ant-picker-footer {
 
 html.dark-mode .qwenpaw-picker-today-btn,
 html.dark-mode .ant-picker-today-btn {
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
 }
 
 /* Divider between two panels in RangePicker */
@@ -673,12 +717,12 @@ html.dark-mode .ant-slider-rail {
 
 html.dark-mode .qwenpaw-slider-track,
 html.dark-mode .ant-slider-track {
-  background-color: #ff7f16 !important;
+  background-color: var(--qp-color-primary) !important;
 }
 
 html.dark-mode .qwenpaw-slider-mark-text,
 html.dark-mode .ant-slider-mark-text {
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
 }
 
 html.dark-mode .qwenpaw-form-item-label > label .qwenpaw-form-item-tooltip,
@@ -688,7 +732,7 @@ html.dark-mode .ant-form-item-label > label .ant-form-item-tooltip {
 
 html.dark-mode .qwenpaw-slider-handle::after,
 html.dark-mode .ant-slider-handle::after {
-  box-shadow: 0 0 0 2px #ff7f16 !important;
+  box-shadow: 0 0 0 2px var(--qp-color-primary) !important;
   background-color: #1f1f1f !important;
 }
 
@@ -736,14 +780,6 @@ html.dark-mode [class*="chatDisabledOverlay"] :global(input[type="text"]) {
 html.dark-mode [class*="qwenpaw-sender-content"],
 html.dark-mode [class*="sender-content"] {
   background: #2a2a2a !important;
-}
-
-/* Chat page bottom input area container */
-html.dark-mode .qwenpaw-chat-anywhere-input,
-html.dark-mode [class*="chat-anywhere-input"],
-html.dark-mode [class*="qwenpaw-chat-anywhere-default-footer"],
-html.dark-mode [class*="chat-anywhere-footer"] {
-  background: #141414 !important;
 }
 
 /* Chat input placeholder text in dark mode */
@@ -797,7 +833,7 @@ html.dark-mode [class*="chat-anywhere"] [class*="message"] code {
 }
 
 html.dark-mode [class*="chat-anywhere"] [class*="message"] a {
-  color: #ff7f16 !important;
+  color: var(--qp-color-primary) !important;
 }
 
 #root {
@@ -809,24 +845,40 @@ html.dark-mode [class*="chat-anywhere"] [class*="message"] a {
   min-height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  background: #f9f8f4;
+  background: var(--qp-bg-shell);
 }
 
 .ant-layout-content {
   overflow: hidden;
-  background: #f9f8f4;
+  background: var(--qp-bg-shell);
 }
 
 .qwenpaw-bubble-list-wrapper {
-  background: #fff !important;
+  background: var(--qp-bg-chat) !important;
 }
 
 .qwenpaw-chat-anywhere-input {
-  background: #fff !important;
+  background: var(--qp-bg-chat) !important;
 }
 
 .qwenpaw-chat-anywhere-message-list-welcome {
-  background: #fff !important;
+  background: var(--qp-bg-chat) !important;
+}
+
+.qwenpaw-chat-anywhere-chat,
+.qwenpaw-chat-anywhere-message-list {
+  background: var(--qp-bg-chat) !important;
+}
+
+.qwenpaw-bubble-end .qwenpaw-bubble-content-filled,
+.qwenpaw-bubble-user .qwenpaw-bubble-content-filled {
+  background: #8b68ec !important;
+  color: #fff !important;
+}
+
+.qwenpaw-bubble-end .qwenpaw-bubble-content-filled *,
+.qwenpaw-bubble-user .qwenpaw-bubble-content-filled * {
+  color: #fff !important;
 }
 
 /* Chat bubble list max-width override */
@@ -838,12 +890,12 @@ html.dark-mode [class*="chat-anywhere"] [class*="message"] a {
 html.dark-mode .qwenpaw-chat-anywhere,
 html.dark-mode .qwenpaw-chat-anywhere-message-list,
 html.dark-mode .qwenpaw-bubble-list-wrapper {
-  background: #141414 !important;
+  background: var(--qp-bg-chat) !important;
 }
 
 /* Chat welcome message in dark mode */
 html.dark-mode .qwenpaw-chat-anywhere-welcome-default {
-  background: #141414 !important;
+  background: var(--qp-bg-chat) !important;
 }
 
 /* Chat input area in dark mode */
@@ -856,13 +908,13 @@ html.dark-mode .qwenpaw-sender-content {
 /* Menu background in light mode */
 .qwenpaw-menu,
 .ant-menu {
-  background: #f9f8f4 !important;
+  background: var(--qp-bg-shell) !important;
 }
 
 /* Menu selected item in light mode */
 .qwenpaw-menu-item-selected,
 .ant-menu-item-selected {
-  background: rgba(43, 18, 0, 0.08) !important;
+  background: rgba(var(--qp-color-primary-rgb), 0.12) !important;
   color: inherit !important;
 }
 

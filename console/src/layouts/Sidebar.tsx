@@ -6,16 +6,22 @@ import {
   Input,
   Form,
   Tooltip,
-  Badge,
   type MenuProps,
 } from "antd";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import type { IAgentScopeRuntimeWebUISession } from "@agentscope-ai/chat";
 import { useAppMessage } from "../hooks/useAppMessage";
 import AgentSelector from "../components/AgentSelector";
+import ChatSessionList from "../pages/Chat/components/ChatSessionList";
+import {
+  useChatSessionListController,
+  type ExtendedChatSession,
+} from "../pages/Chat/components/ChatSessionList/useChatSessionListController";
 import {
   SparkChatTabFill,
+  SparkEmailLine,
   SparkWifiLine,
   SparkUserGroupLine,
   SparkDateLine,
@@ -23,30 +29,28 @@ import {
   SparkMagicWandLine,
   SparkLocalFileLine,
   SparkModePlazaLine,
-  SparkInternetLine,
-  SparkModifyLine,
-  SparkBrowseLine,
   SparkMcpMcpLine,
-  SparkScanLine,
   SparkToolLine,
   SparkDataLine,
-  SparkMicLine,
   SparkAgentLine,
+  SparkScanLine,
+  SparkModifyLine,
+  SparkBarChartLine,
+  SparkInternetLine,
+  SparkBrowseLine,
+  SparkSaveLine,
+  SparkMicLine,
+  SparkDebugLine,
   SparkExitFullscreenLine,
   SparkSearchUserLine,
   SparkMenuExpandLine,
   SparkMenuFoldLine,
   SparkOtherLine,
-  SparkBarChartLine,
-  SparkDebugLine,
-  SparkSaveLine,
-  SparkEmailLine,
   SparkCardLine,
 } from "@agentscope-ai/icons";
-import { Package } from "lucide-react";
+import { Package, Plus } from "lucide-react";
 import { clearAuthToken } from "../api/config";
 import { authApi } from "../api/modules/auth";
-import api from "../api";
 import { usePlugins } from "../plugins/PluginContext";
 import { useCodingMode } from "../stores/codingModeStore";
 import styles from "./index.module.less";
@@ -65,18 +69,23 @@ function isMobileSidebarViewport() {
     window.matchMedia(MOBILE_SIDEBAR_QUERY).matches
   );
 }
-const INBOX_BADGE_POLLING_MS = 6000;
+// const INBOX_BADGE_POLLING_MS = 6000;
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
 interface SidebarProps {
   selectedKey: string;
+  showAdvancedMenus: boolean;
 }
 
 // ── Sidebar ───────────────────────────────────────────────────────────────
 
-export default function Sidebar({ selectedKey }: SidebarProps) {
+export default function Sidebar({
+  selectedKey,
+  showAdvancedMenus,
+}: SidebarProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { message } = useAppMessage();
   const { isDark } = useTheme();
@@ -91,7 +100,23 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
   const [accountForm] = Form.useForm();
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(isMobileSidebarViewport);
-  const [hasInboxUnread, setHasInboxUnread] = useState(false);
+  const [sidebarSessions, setSidebarSessions] = useState<
+    IAgentScopeRuntimeWebUISession[]
+  >([]);
+  // const [hasInboxUnread, setHasInboxUnread] = useState(false);
+
+  const sidebarCurrentSessionId = useMemo(() => {
+    const match = location.pathname.match(/^\/chat\/([^/]+)$/);
+    return match?.[1];
+  }, [location.pathname]);
+
+  const sidebarSessionController = useChatSessionListController({
+    sessions: sidebarSessions,
+    setSessions: setSidebarSessions,
+    currentSessionId: sidebarCurrentSessionId,
+    active: !collapsed,
+    poll: true,
+  });
 
   // ── Effects ──────────────────────────────────────────────────────────────
 
@@ -125,36 +150,36 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       mediaQuery.removeEventListener("change", syncMobileSidebar);
     };
   }, []);
-  useEffect(() => {
-    const loadUnreadState = async () => {
-      try {
-        const [inboxRes, pushRes] = await Promise.all([
-          api.getInboxEvents({
-            unread_only: true,
-            limit: 1,
-          }),
-          api.getPushMessages(),
-        ]);
-        const hasUnreadEvents = (inboxRes?.events?.length || 0) > 0;
-        const hasPendingApprovals =
-          (pushRes?.pending_approvals?.length || 0) > 0;
-        setHasInboxUnread(hasUnreadEvents || hasPendingApprovals);
-      } catch {
-        // Keep previous state when polling fails.
-      }
-    };
-    void loadUnreadState();
-    const timer = window.setInterval(() => {
-      void loadUnreadState();
-    }, INBOX_BADGE_POLLING_MS);
-    return () => window.clearInterval(timer);
-  }, []);
+  // useEffect(() => {
+  //   const loadUnreadState = async () => {
+  //     try {
+  //       const [inboxRes, pushRes] = await Promise.all([
+  //         api.getInboxEvents({
+  //           unread_only: true,
+  //           limit: 1,
+  //         }),
+  //         api.getPushMessages(),
+  //       ]);
+  //       const hasUnreadEvents = (inboxRes?.events?.length || 0) > 0;
+  //       const hasPendingApprovals =
+  //         (pushRes?.pending_approvals?.length || 0) > 0;
+  //       setHasInboxUnread(hasUnreadEvents || hasPendingApprovals);
+  //     } catch {
+  //       // Keep previous state when polling fails.
+  //     }
+  //   };
+  //   void loadUnreadState();
+  //   const timer = window.setInterval(() => {
+  //     void loadUnreadState();
+  //   }, INBOX_BADGE_POLLING_MS);
+  //   return () => window.clearInterval(timer);
+  // }, []);
 
-  const inboxLabel = collapsed ? null : (
-    <Badge dot={hasInboxUnread} color="rgba(255, 157, 77, 1)" offset={[5, 7]}>
-      <span>{t("nav.inbox")}</span>
-    </Badge>
-  );
+  // const inboxLabel = collapsed ? null : (
+  //   <Badge dot={hasInboxUnread} color="rgba(255, 157, 77, 1)" offset={[5, 7]}>
+  //     <span>{t("nav.inbox")}</span>
+  //   </Badge>
+  // );
   // ── Handlers ──────────────────────────────────────────────────────────────
 
   const handleUpdateProfile = async (values: {
@@ -219,35 +244,51 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       path: chatPath,
       label: t("nav.chat"),
     },
-    {
-      key: "inbox",
-      icon: (
-        <span style={{ position: "relative", display: "inline-flex" }}>
-          <SparkEmailLine size={18} />
-          {hasInboxUnread && (
-            <span
-              style={{
-                position: "absolute",
-                top: -1,
-                right: -3,
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "rgba(255, 157, 77, 1)",
-              }}
-            />
-          )}
-        </span>
-      ),
-      path: "/inbox",
-      label: t("nav.inbox"),
-    },
-    {
-      key: "channels",
-      icon: <SparkWifiLine size={18} />,
-      path: "/channels",
-      label: t("nav.channels"),
-    },
+    ...(showAdvancedMenus
+      ? [
+          {
+            key: "inbox",
+            icon: <SparkEmailLine size={18} />,
+            path: "/inbox",
+            label: t("nav.inbox"),
+          },
+          {
+            key: "channels",
+            icon: <SparkWifiLine size={18} />,
+            path: "/channels",
+            label: t("nav.channels"),
+          },
+        ]
+      : []),
+    // {
+    //   key: "inbox",
+    //   icon: (
+    //     <span style={{ position: "relative", display: "inline-flex" }}>
+    //       <SparkEmailLine size={18} />
+    //       {hasInboxUnread && (
+    //         <span
+    //           style={{
+    //             position: "absolute",
+    //             top: -1,
+    //             right: -3,
+    //             width: 6,
+    //             height: 6,
+    //             borderRadius: "50%",
+    //             background: "rgba(255, 157, 77, 1)",
+    //           }}
+    //         />
+    //       )}
+    //     </span>
+    //   ),
+    //   path: "/inbox",
+    //   label: t("nav.inbox"),
+    // },
+    // {
+    //   key: "channels",
+    //   icon: <SparkWifiLine size={18} />,
+    //   path: "/channels",
+    //   label: t("nav.channels"),
+    // },
     {
       key: "sessions",
       icon: <SparkUserGroupLine size={18} />,
@@ -260,12 +301,22 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       path: "/cron-jobs",
       label: t("nav.cronJobs"),
     },
-    {
-      key: "heartbeat",
-      icon: <SparkVoiceChat01Line size={18} />,
-      path: "/heartbeat",
-      label: t("nav.heartbeat"),
-    },
+    ...(showAdvancedMenus
+      ? [
+          {
+            key: "heartbeat",
+            icon: <SparkVoiceChat01Line size={18} />,
+            path: "/heartbeat",
+            label: t("nav.heartbeat"),
+          },
+        ]
+      : []),
+    // {
+    //   key: "heartbeat",
+    //   icon: <SparkVoiceChat01Line size={18} />,
+    //   path: "/heartbeat",
+    //   label: t("nav.heartbeat"),
+    // },
     {
       key: "workspace",
       icon: <SparkLocalFileLine size={18} />,
@@ -296,24 +347,46 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       path: "/mcp",
       label: t("nav.mcp"),
     },
-    {
-      key: "acp",
-      icon: <SparkScanLine size={18} />,
-      path: "/acp",
-      label: t("nav.acp"),
-    },
-    {
-      key: "agent-config",
-      icon: <SparkModifyLine size={18} />,
-      path: "/agent-config",
-      label: t("nav.agentConfig"),
-    },
-    {
-      key: "agent-stats",
-      icon: <SparkBarChartLine size={18} />,
-      path: "/agent-stats",
-      label: t("nav.agentStats"),
-    },
+    ...(showAdvancedMenus
+      ? [
+          {
+            key: "acp",
+            icon: <SparkScanLine size={18} />,
+            path: "/acp",
+            label: t("nav.acp"),
+          },
+          {
+            key: "agent-config",
+            icon: <SparkModifyLine size={18} />,
+            path: "/agent-config",
+            label: t("nav.agentConfig"),
+          },
+          {
+            key: "agent-stats",
+            icon: <SparkBarChartLine size={18} />,
+            path: "/agent-stats",
+            label: t("nav.agentStats"),
+          },
+        ]
+      : []),
+    // {
+    //   key: "acp",
+    //   icon: <SparkScanLine size={18} />,
+    //   path: "/acp",
+    //   label: t("nav.acp"),
+    // },
+    // {
+    //   key: "agent-config",
+    //   icon: <SparkModifyLine size={18} />,
+    //   path: "/agent-config",
+    //   label: t("nav.agentConfig"),
+    // },
+    // {
+    //   key: "agent-stats",
+    //   icon: <SparkBarChartLine size={18} />,
+    //   path: "/agent-stats",
+    //   label: t("nav.agentStats"),
+    // },
     {
       key: "agents",
       icon: <SparkAgentLine size={18} />,
@@ -326,48 +399,92 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
       path: "/models",
       label: t("nav.models"),
     },
-    {
-      key: "environments",
-      icon: <SparkInternetLine size={18} />,
-      path: "/environments",
-      label: t("nav.environments"),
-    },
-    {
-      key: "security",
-      icon: <SparkBrowseLine size={18} />,
-      path: "/security",
-      label: t("nav.security"),
-    },
+    ...(showAdvancedMenus
+      ? [
+          {
+            key: "environments",
+            icon: <SparkInternetLine size={18} />,
+            path: "/environments",
+            label: t("nav.environments"),
+          },
+          {
+            key: "security",
+            icon: <SparkBrowseLine size={18} />,
+            path: "/security",
+            label: t("nav.security"),
+          },
+        ]
+      : []),
+    // {
+    //   key: "environments",
+    //   icon: <SparkInternetLine size={18} />,
+    //   path: "/environments",
+    //   label: t("nav.environments"),
+    // },
+    // {
+    //   key: "security",
+    //   icon: <SparkBrowseLine size={18} />,
+    //   path: "/security",
+    //   label: t("nav.security"),
+    // },
     {
       key: "token-usage",
       icon: <SparkDataLine size={18} />,
       path: "/token-usage",
       label: t("nav.tokenUsage"),
     },
-    {
-      key: "backups",
-      icon: <SparkSaveLine size={18} />,
-      path: "/backups",
-      label: t("nav.backups"),
-    },
-    {
-      key: "voice-transcription",
-      icon: <SparkMicLine size={18} />,
-      path: "/voice-transcription",
-      label: t("nav.voiceTranscription"),
-    },
-    {
-      key: "debug",
-      icon: <SparkDebugLine size={18} />,
-      path: "/debug",
-      label: t("nav.debug", "Debug"),
-    },
-    {
-      key: "plugin-manager",
-      icon: <Package size={18} />,
-      path: "/plugin-manager",
-      label: t("nav.pluginManager", "Plugin Manager"),
-    },
+    ...(showAdvancedMenus
+      ? [
+          {
+            key: "backups",
+            icon: <SparkSaveLine size={18} />,
+            path: "/backups",
+            label: t("nav.backups"),
+          },
+          {
+            key: "voice-transcription",
+            icon: <SparkMicLine size={18} />,
+            path: "/voice-transcription",
+            label: t("nav.voiceTranscription"),
+          },
+          {
+            key: "debug",
+            icon: <SparkDebugLine size={18} />,
+            path: "/debug",
+            label: t("nav.debug", "Debug"),
+          },
+          {
+            key: "plugin-manager",
+            icon: <Package size={18} />,
+            path: "/plugin-manager",
+            label: t("nav.pluginManager", "Plugin Manager"),
+          },
+        ]
+      : []),
+    // {
+    //   key: "backups",
+    //   icon: <SparkSaveLine size={18} />,
+    //   path: "/backups",
+    //   label: t("nav.backups"),
+    // },
+    // {
+    //   key: "voice-transcription",
+    //   icon: <SparkMicLine size={18} />,
+    //   path: "/voice-transcription",
+    //   label: t("nav.voiceTranscription"),
+    // },
+    // {
+    //   key: "debug",
+    //   icon: <SparkDebugLine size={18} />,
+    //   path: "/debug",
+    //   label: t("nav.debug", "Debug"),
+    // },
+    // {
+    //   key: "plugin-manager",
+    //   icon: <Package size={18} />,
+    //   path: "/plugin-manager",
+    //   label: t("nav.pluginManager", "Plugin Manager"),
+    // },
     // Append plugin nav items dynamically
     ...pluginRoutes.map((route) => ({
       key: route.path.replace(/^\//, ""),
@@ -381,19 +498,28 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
 
   const agentMenuItems: MenuProps["items"] = [
     {
-      key: "inbox",
-      label: inboxLabel,
-      icon: <SparkEmailLine size={16} />,
-    },
-    {
       key: "control-group",
       label: collapsed ? null : t("nav.control"),
       children: [
-        {
-          key: "channels",
-          label: collapsed ? null : t("nav.channels"),
-          icon: <SparkWifiLine size={16} />,
-        },
+        ...(showAdvancedMenus
+          ? [
+              {
+                key: "inbox",
+                label: collapsed ? null : t("nav.inbox"),
+                icon: <SparkEmailLine size={16} />,
+              },
+              {
+                key: "channels",
+                label: collapsed ? null : t("nav.channels"),
+                icon: <SparkWifiLine size={16} />,
+              },
+            ]
+          : []),
+        // {
+        //   key: "channels",
+        //   label: collapsed ? null : t("nav.channels"),
+        //   icon: <SparkWifiLine size={16} />,
+        // },
         {
           key: "sessions",
           label: collapsed ? null : t("nav.sessions"),
@@ -404,11 +530,20 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
           label: collapsed ? null : t("nav.cronJobs"),
           icon: <SparkDateLine size={16} />,
         },
-        {
-          key: "heartbeat",
-          label: collapsed ? null : t("nav.heartbeat"),
-          icon: <SparkVoiceChat01Line size={16} />,
-        },
+        ...(showAdvancedMenus
+          ? [
+              {
+                key: "heartbeat",
+                label: collapsed ? null : t("nav.heartbeat"),
+                icon: <SparkVoiceChat01Line size={16} />,
+              },
+            ]
+          : []),
+        // {
+        //   key: "heartbeat",
+        //   label: collapsed ? null : t("nav.heartbeat"),
+        //   icon: <SparkVoiceChat01Line size={16} />,
+        // },
       ],
     },
     {
@@ -435,21 +570,40 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
           label: collapsed ? null : t("nav.mcp"),
           icon: <SparkMcpMcpLine size={16} />,
         },
-        {
-          key: "acp",
-          label: collapsed ? null : t("nav.acp"),
-          icon: <SparkScanLine size={16} />,
-        },
-        {
-          key: "agent-config",
-          label: collapsed ? null : t("nav.agentConfig"),
-          icon: <SparkModifyLine size={16} />,
-        },
-        {
-          key: "agent-stats",
-          label: collapsed ? null : t("nav.agentStats"),
-          icon: <SparkBarChartLine size={16} />,
-        },
+        ...(showAdvancedMenus
+          ? [
+              {
+                key: "acp",
+                label: collapsed ? null : t("nav.acp"),
+                icon: <SparkScanLine size={16} />,
+              },
+              {
+                key: "agent-config",
+                label: collapsed ? null : t("nav.agentConfig"),
+                icon: <SparkModifyLine size={16} />,
+              },
+              {
+                key: "agent-stats",
+                label: collapsed ? null : t("nav.agentStats"),
+                icon: <SparkBarChartLine size={16} />,
+              },
+            ]
+          : []),
+        // {
+        //   key: "acp",
+        //   label: collapsed ? null : t("nav.acp"),
+        //   icon: <SparkScanLine size={16} />,
+        // },
+        // {
+        //   key: "agent-config",
+        //   label: collapsed ? null : t("nav.agentConfig"),
+        //   icon: <SparkModifyLine size={16} />,
+        // },
+        // {
+        //   key: "agent-stats",
+        //   label: collapsed ? null : t("nav.agentStats"),
+        //   icon: <SparkBarChartLine size={16} />,
+        // },
       ],
     },
   ];
@@ -481,41 +635,81 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
           label: collapsed ? null : t("nav.market", "Skill Market"),
           icon: <SparkCardLine size={16} />,
         },
-        {
-          key: "environments",
-          label: collapsed ? null : t("nav.environments"),
-          icon: <SparkInternetLine size={16} />,
-        },
-        {
-          key: "security",
-          label: collapsed ? null : t("nav.security"),
-          icon: <SparkBrowseLine size={16} />,
-        },
+        ...(showAdvancedMenus
+          ? [
+              {
+                key: "environments",
+                label: collapsed ? null : t("nav.environments"),
+                icon: <SparkInternetLine size={16} />,
+              },
+              {
+                key: "security",
+                label: collapsed ? null : t("nav.security"),
+                icon: <SparkBrowseLine size={16} />,
+              },
+            ]
+          : []),
+        // {
+        //   key: "environments",
+        //   label: collapsed ? null : t("nav.environments"),
+        //   icon: <SparkInternetLine size={16} />,
+        // },
+        // {
+        //   key: "security",
+        //   label: collapsed ? null : t("nav.security"),
+        //   icon: <SparkBrowseLine size={16} />,
+        // },
         {
           key: "token-usage",
           label: collapsed ? null : t("nav.tokenUsage"),
           icon: <SparkDataLine size={16} />,
         },
-        {
-          key: "backups",
-          label: collapsed ? null : t("nav.backups"),
-          icon: <SparkSaveLine size={16} />,
-        },
-        {
-          key: "voice-transcription",
-          label: collapsed ? null : t("nav.voiceTranscription"),
-          icon: <SparkMicLine size={16} />,
-        },
-        {
-          key: "debug",
-          label: collapsed ? null : t("nav.debug", "Debug"),
-          icon: <SparkDebugLine size={16} />,
-        },
-        {
-          key: "plugin-manager",
-          label: collapsed ? null : t("nav.pluginManager", "Plugin Manager"),
-          icon: <Package size={16} />,
-        },
+        ...(showAdvancedMenus
+          ? [
+              {
+                key: "backups",
+                label: collapsed ? null : t("nav.backups"),
+                icon: <SparkSaveLine size={16} />,
+              },
+              {
+                key: "voice-transcription",
+                label: collapsed ? null : t("nav.voiceTranscription"),
+                icon: <SparkMicLine size={16} />,
+              },
+              {
+                key: "debug",
+                label: collapsed ? null : t("nav.debug", "Debug"),
+                icon: <SparkDebugLine size={16} />,
+              },
+              {
+                key: "plugin-manager",
+                label: collapsed
+                  ? null
+                  : t("nav.pluginManager", "Plugin Manager"),
+                icon: <Package size={16} />,
+              },
+            ]
+          : []),
+        // {
+        //   key: "backups",
+        //   label: collapsed ? null : t("nav.backups"),
+        //   icon: <SparkSaveLine size={16} />,
+        // },
+        // {
+        //   key: "voice-transcription",
+        //   label: collapsed ? null : t("nav.voiceTranscription"),
+        //   icon: <SparkMicLine size={16} />,
+        // },
+        // {
+        //   key: "debug",
+        //   label: collapsed ? null : t("nav.debug", "Debug"),
+        //   icon: <SparkDebugLine size={16} />,
+        // },
+        // {
+        //   key: "plugin-manager",
+        //   label: collapsed ? null : t("nav.pluginManager", "Plugin Manager"),
+        //   icon: <Package size={16} />,
+        // },
       ],
     },
   ];
@@ -577,17 +771,47 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
             <div className={styles.agentSelectorContainer}>
               <AgentSelector collapsed={collapsed} />
               {/* Chat entry — sticky together with agent selector */}
-              <button
-                className={`${styles.stickyChatButton}${
+              <div
+                className={`${styles.stickyChatRow}${
                   selectedKey === "chat"
                     ? ` ${styles.stickyChatButtonActive}`
                     : ""
                 }`}
-                onClick={() => navigate(chatPath)}
               >
-                <SparkChatTabFill size={16} />
-                <span>{t("nav.chat")}</span>
-              </button>
+                <button
+                  className={styles.stickyChatButton}
+                  onClick={() => {
+                    const firstSession = sidebarSessionController.sortedSessions[0];
+                    if (firstSession) {
+                      const targetId =
+                        (firstSession as ExtendedChatSession).realId ||
+                        firstSession.id;
+                      navigate(`/chat/${targetId}`);
+                    } else {
+                      navigate(chatPath);
+                    }
+                  }}
+                >
+                  <SparkChatTabFill size={16} />
+                  <span>{t("nav.chat")}</span>
+                </button>
+                <button
+                  className={styles.stickyChatCreateButton}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    navigate("/chat", {
+                      state: { createNewSession: Date.now() },
+                    });
+                  }}
+                  aria-label={t("chat.newChatTooltip")}
+                >
+                  <Plus size={16} strokeWidth={2.2} />
+                </button>
+              </div>
+              <ChatSessionList
+                controller={sidebarSessionController}
+                variant="sidebar"
+              />
             </div>
             <Menu
               mode="inline"

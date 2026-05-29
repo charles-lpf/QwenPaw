@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Layout, Spin } from "antd";
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -101,6 +101,7 @@ export default function MainLayout() {
   const location = useLocation();
   const currentPath = location.pathname;
   const { pluginRoutes } = usePlugins();
+  const [showAdvancedMenus, setShowAdvancedMenus] = useState(false);
 
   // Backend is the source of truth for Coding Mode state — refill the
   // in-memory store every time the selected agent changes.
@@ -119,9 +120,15 @@ export default function MainLayout() {
 
   return (
     <Layout className={styles.mainLayout}>
-      <Header />
+      <Header
+        showAdvancedMenus={showAdvancedMenus}
+        onAdvancedMenusChange={setShowAdvancedMenus}
+      />
       <Layout>
-        <Sidebar selectedKey={selectedKey} />
+        <Sidebar
+          selectedKey={selectedKey}
+          showAdvancedMenus={showAdvancedMenus}
+        />
         <Content className="page-container">
           <ConsolePollService />
           <div className="page-content">
